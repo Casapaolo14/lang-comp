@@ -1,0 +1,21 @@
+Conf.       Config    ::= [Section] ;
+
+Sect.       Section   ::= "<" "section" "name" "=" Ident ">" [Field] "</" "section" ">" ;
+
+Fld.        Field     ::= "<" "field" "name" "=" Ident ">" Value "</" "field" ">" ;
+
+VInt.       Value     ::= Integer ;
+VBool.      Value     ::= Boolean ;
+VStr.       Value     ::= String ;
+VRef.       Value     ::= Ref ;
+
+RefLocal.   Ref        ::= "$" Ident ;
+RefQual.    Ref        ::= "$" Ident "." Ident ;
+
+BTrue.      Boolean   ::= "true" ;
+BFalse.     Boolean   ::= "false" ;
+
+terminator Section "" ;
+terminator Field "" ;
+
+comment "#" ;
