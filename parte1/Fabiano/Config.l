@@ -11,6 +11,7 @@
 %{
 #include "Absyn.H"
 #include "Bison.H"
+#include "Comments.h"
 
 #define initialize_lexer config__initialize_lexer
 
@@ -80,7 +81,7 @@ IDENT [a-zA-Z0-9'_]
 <INITIAL>"section"      	 return _KW_section;
 <INITIAL>"true"      	 return _KW_true;
 
-<INITIAL>"#"[^\n]* /* skip */; /* BNFC: comment "#" */
+<INITIAL>"#"[^\n]* salvaCommento(yytext);
 
 <INITIAL>"\""        	 LITERAL_BUFFER_CREATE(); BEGIN STRING;
 <STRING>\\             	 BEGIN ESCAPED;

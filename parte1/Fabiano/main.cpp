@@ -4,6 +4,8 @@
 #include "Absyn.H"
 #include "ParserError.H"
 #include "Build.h"
+#include "Comments.h"
+#include "Resolve.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {
@@ -52,6 +54,26 @@ int main(int argc, char** argv) {
             }
             std::cout << std::endl;
         }
+    }
+
+    std::cout << "\n--- Commenti trovati (" << commentiTrovati.size() << ") ---" << std::endl;
+    for (const std::string& c : commentiTrovati) {
+        std::cout << c << std::endl;
+    }
+
+    std::cout << "\n--- Test resolve() ---" << std::endl;
+    try {
+        MyValue risolto = resolve(config, "nomesez3", "miao");
+        std::cout << "nomesez3.miao risolve a: ";
+        switch (risolto.kind) {
+            case ValueKind::Int:  std::cout << risolto.ival; break;
+            case ValueKind::Bool: std::cout << (risolto.bval ? "true" : "false"); break;
+            case ValueKind::Str:  std::cout << "\"" << risolto.sval << "\""; break;
+            default: std::cout << "(non dovrebbe succedere)"; break;
+        }
+        std::cout << std::endl;
+    } catch (std::runtime_error& e) {
+        std::cerr << "Errore in resolve: " << e.what() << std::endl;
     }
 
     delete parse_tree;

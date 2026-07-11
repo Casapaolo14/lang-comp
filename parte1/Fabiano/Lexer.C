@@ -707,6 +707,7 @@ static const flex_int16_t yy_chk[139] =
 #line 12 "Config.l"
 #include "Absyn.H"
 #include "Bison.H"
+#include "Comments.h"
 
 #define initialize_lexer config__initialize_lexer
 
@@ -753,9 +754,9 @@ static void update_loc(YYLTYPE* loc, char* text)
 }
 #define YY_USER_ACTION update_loc(yylloc, yytext);
 
-#line 757 "Lexer.C"
+#line 758 "Lexer.C"
 
-#line 759 "Lexer.C"
+#line 760 "Lexer.C"
 
 #define INITIAL 0
 #define CHAR 1
@@ -1040,10 +1041,10 @@ YY_DECL
 		}
 
 	{
-#line 69 "Config.l"
+#line 70 "Config.l"
 
 
-#line 1047 "Lexer.C"
+#line 1048 "Lexer.C"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1102,151 +1103,151 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 71 "Config.l"
+#line 72 "Config.l"
 return _LT;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 72 "Config.l"
+#line 73 "Config.l"
 return _EQ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 73 "Config.l"
+#line 74 "Config.l"
 return _GT;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 74 "Config.l"
+#line 75 "Config.l"
 return _SYMB_3;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 75 "Config.l"
+#line 76 "Config.l"
 return _DOLLAR;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 76 "Config.l"
+#line 77 "Config.l"
 return _DOT;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 77 "Config.l"
+#line 78 "Config.l"
 return _KW_false;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 78 "Config.l"
+#line 79 "Config.l"
 return _KW_field;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 79 "Config.l"
+#line 80 "Config.l"
 return _KW_name;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 80 "Config.l"
+#line 81 "Config.l"
 return _KW_section;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 81 "Config.l"
+#line 82 "Config.l"
 return _KW_true;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 83 "Config.l"
-/* skip */; /* BNFC: comment "#" */
+#line 84 "Config.l"
+salvaCommento(yytext);
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 85 "Config.l"
+#line 86 "Config.l"
 LITERAL_BUFFER_CREATE(); BEGIN STRING;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 86 "Config.l"
+#line 87 "Config.l"
 BEGIN ESCAPED;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 87 "Config.l"
+#line 88 "Config.l"
 yylval->_string = LITERAL_BUFFER_HARVEST(); BEGIN INITIAL; return _STRING_;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 88 "Config.l"
+#line 89 "Config.l"
 LITERAL_BUFFER_APPEND_CHAR(yytext[0]);
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 89 "Config.l"
+#line 90 "Config.l"
 LITERAL_BUFFER_APPEND_CHAR('\f'); BEGIN STRING;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 90 "Config.l"
+#line 91 "Config.l"
 LITERAL_BUFFER_APPEND_CHAR('\n'); BEGIN STRING;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 91 "Config.l"
+#line 92 "Config.l"
 LITERAL_BUFFER_APPEND_CHAR('\r'); BEGIN STRING;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 92 "Config.l"
+#line 93 "Config.l"
 LITERAL_BUFFER_APPEND_CHAR('\t'); BEGIN STRING;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 93 "Config.l"
+#line 94 "Config.l"
 LITERAL_BUFFER_APPEND_CHAR('"');  BEGIN STRING;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 94 "Config.l"
+#line 95 "Config.l"
 LITERAL_BUFFER_APPEND_CHAR('\\'); BEGIN STRING;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 95 "Config.l"
+#line 96 "Config.l"
 LITERAL_BUFFER_APPEND(yytext);    BEGIN STRING;
 	YY_BREAK
 case YY_STATE_EOF(STRING):
 case YY_STATE_EOF(ESCAPED):
-#line 96 "Config.l"
+#line 97 "Config.l"
 LITERAL_BUFFER_FREE(); return _ERROR_;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 97 "Config.l"
+#line 98 "Config.l"
 yylval->_int = atoi(yytext); return _INTEGER_;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 98 "Config.l"
+#line 99 "Config.l"
 yylval->_string = strdup(yytext); return _IDENT_;
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 99 "Config.l"
+#line 100 "Config.l"
 /* ignore white space. */;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 100 "Config.l"
+#line 101 "Config.l"
 return _ERROR_;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 102 "Config.l"
+#line 103 "Config.l"
 ECHO;
 	YY_BREAK
-#line 1250 "Lexer.C"
+#line 1251 "Lexer.C"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CHAR):
 case YY_STATE_EOF(CHARESC):
@@ -2404,7 +2405,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 102 "Config.l"
+#line 103 "Config.l"
 
 
 yyscan_t initialize_lexer(FILE *inp)
