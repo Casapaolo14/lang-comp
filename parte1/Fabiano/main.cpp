@@ -7,6 +7,7 @@
 #include "Comments.h"
 #include "Resolve.h"
 #include "Delete.h"
+#include "PrettyPrint.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {
@@ -107,6 +108,11 @@ int main(int argc, char** argv) {
             std::cout << "  " << b.name << std::endl;
         }
     }
+
+    std::cout << "\n--- Pretty-print della config (prima delle cancellazioni) ---" << std::endl;
+    MyConfig configOriginale = build(conf);
+    abbinaCommenti(configOriginale);
+    std::cout << prettyPrint(configOriginale) << std::endl;
 
     delete parse_tree;
     return 0;
