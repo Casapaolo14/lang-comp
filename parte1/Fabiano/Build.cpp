@@ -82,17 +82,32 @@ void abbinaCommenti(MyConfig& config) {
         Binding* miglioreB = nullptr;
         int migliorRiga = -1;
 
+        MySection* primoSuccessivoS = nullptr;
+        Binding* primoSuccessivoB = nullptr;
+        int primaRigaSuccessiva = -1;
+
         for (MySection& s : config.sections) {
             if (s.riga <= c.riga && s.riga > migliorRiga) {
                 migliorRiga = s.riga;
                 miglioreS = &s;
                 miglioreB = nullptr;
             }
+            if (s.riga > c.riga && (primaRigaSuccessiva == -1 || s.riga < primaRigaSuccessiva)) {
+                primaRigaSuccessiva = s.riga;
+                primoSuccessivoS = &s;
+                primoSuccessivoB = nullptr;
+            }
+
             for (Binding& b : s.fields) {
                 if (b.riga <= c.riga && b.riga > migliorRiga) {
                     migliorRiga = b.riga;
                     miglioreS = &s;
                     miglioreB = &b;
+                }
+                if (b.riga > c.riga && (primaRigaSuccessiva == -1 || b.riga < primaRigaSuccessiva)) {
+                    primaRigaSuccessiva = b.riga;
+                    primoSuccessivoS = &s;
+                    primoSuccessivoB = &b;
                 }
             }
         }
@@ -101,6 +116,10 @@ void abbinaCommenti(MyConfig& config) {
             miglioreB->commenti.push_back(c.testo);
         } else if (miglioreS) {
             miglioreS->commenti.push_back(c.testo);
+        } else if (primoSuccessivoB) {
+            primoSuccessivoB->commenti.push_back(c.testo);
+        } else if (primoSuccessivoS) {
+            primoSuccessivoS->commenti.push_back(c.testo);
         }
     }
 }
