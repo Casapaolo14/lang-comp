@@ -2,6 +2,9 @@
 #include <stdexcept>
 #include <set>
 
+/* Funzione trovaSezione: cerca linearmente la sezione con nome sectionName.
+Restituisce nullptr se non esiste.
+*/
 const MySection* trovaSezione(const MyConfig& config, const std::string& sectionName) {
     for (const MySection& s : config.sections) {
         if (s.name == sectionName) {
@@ -11,6 +14,9 @@ const MySection* trovaSezione(const MyConfig& config, const std::string& section
     return nullptr;
 }
 
+/* Funzione trovaBinding: cerca linearmente, dentro una sezione già trovata,
+il binding con nome varName. Restituisce nullptr se non esiste.
+*/
 const Binding* trovaBinding(const MySection& sect, const std::string& varName) {
     for (const Binding& b : sect.fields) {
         if (b.name == varName) {
@@ -20,6 +26,12 @@ const Binding* trovaBinding(const MySection& sect, const std::string& varName) {
     return nullptr;
 }
 
+/* Funzione resolve: segue la catena di riferimenti (locali e qualificati) a partire
+da (sectionName, varName) fino a un valore base (Int/Bool/Str). Ad ogni passo
+la coppia corrente viene marcata come "visitata" in una chiave testuale "sezione.nome":
+se si ripresenta la stessa chiave significa che c'è un ciclo, e si lancia un'eccezione.
+Lancia eccezioni anche se la sezione o la variabile cercata non esistono.
+*/
 MyValue resolve(const MyConfig& config, const std::string& sectionName, const std::string& varName) {
     std::set<std::string> visitati;   // per rilevare cicli
 
