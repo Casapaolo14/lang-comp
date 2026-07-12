@@ -77,7 +77,7 @@ extern int config_debug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 52 "Config.y"
+#line 53 "Config.y"
 
   int    _int;
   char   _char;

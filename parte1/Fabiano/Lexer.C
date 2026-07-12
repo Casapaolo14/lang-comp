@@ -1159,7 +1159,7 @@ return _KW_true;
 case 12:
 YY_RULE_SETUP
 #line 84 "Config.l"
-salvaCommento(yytext);
+salvaCommento(yytext, yylloc->first_line);
 	YY_BREAK
 case 13:
 YY_RULE_SETUP

@@ -18,10 +18,14 @@ struct MyValue {
 struct Binding {
     std::string name;
     MyValue value;
+    int riga = 0;
+    std::vector<std::string> commenti;
 };
 
 struct MySection {
     std::string name;
+    int riga = 0;
+    std::vector<std::string> commenti;
     std::vector<Binding> fields;
 };
 

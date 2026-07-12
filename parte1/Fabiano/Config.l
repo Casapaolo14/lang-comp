@@ -81,7 +81,7 @@ IDENT [a-zA-Z0-9'_]
 <INITIAL>"section"      	 return _KW_section;
 <INITIAL>"true"      	 return _KW_true;
 
-<INITIAL>"#"[^\n]* salvaCommento(yytext);
+<INITIAL>"#"[^\n]* salvaCommento(yytext, yylloc->first_line);
 
 <INITIAL>"\""        	 LITERAL_BUFFER_CREATE(); BEGIN STRING;
 <STRING>\\             	 BEGIN ESCAPED;

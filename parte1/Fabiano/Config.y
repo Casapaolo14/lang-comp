@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Absyn.H"
+#include "Positions.h"
 
 #define YYMAXDEPTH 10000000
 
@@ -116,9 +117,9 @@ extern int yylex(YYSTYPE *lvalp, YYLTYPE *llocp, yyscan_t scanner);
 
 Config : ListSection { $$ = new Conf($1); result->config_ = $$; }
 ;
-Section : _LT _KW_section _KW_name _EQ _IDENT_ _GT ListField _SYMB_3 _KW_section _GT { $$ = new Sect($5, $7); result->section_ = $$; }
+Section : _LT _KW_section _KW_name _EQ _IDENT_ _GT ListField _SYMB_3 _KW_section _GT { Sect* tmp = new Sect($5, $7); $$ = tmp; result->section_ = $$; registraRigaSezione(tmp, @$.first_line); }
 ;
-Field : _LT _KW_field _KW_name _EQ _IDENT_ _GT Value _SYMB_3 _KW_field _GT { $$ = new Fld($5, $7); result->field_ = $$; }
+Field : _LT _KW_field _KW_name _EQ _IDENT_ _GT Value _SYMB_3 _KW_field _GT { Fld* tmp = new Fld($5, $7); $$ = tmp; result->field_ = $$; registraRigaField(tmp, @$.first_line); }
 ;
 Value : _INTEGER_ { $$ = new VInt($1); result->value_ = $$; }
   | Boolean { $$ = new VBool($1); result->value_ = $$; }

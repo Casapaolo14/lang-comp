@@ -1,7 +1,7 @@
 #include "Comments.h"
 
-std::vector<std::string> commentiTrovati;
+std::vector<CommentoTrovato> commentiTrovati;
 
-void salvaCommento(const std::string& testo) {
-    commentiTrovati.push_back(testo);
+void salvaCommento(const std::string& testo, int riga) {
+    commentiTrovati.push_back({riga, testo});
 }

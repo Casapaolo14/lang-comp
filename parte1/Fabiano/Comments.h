@@ -4,10 +4,13 @@
 #include <string>
 #include <vector>
 
-// lista globale dei commenti trovati nel file, nell'ordine in cui compaiono
-extern std::vector<std::string> commentiTrovati;
+struct CommentoTrovato {
+    int riga;
+    std::string testo;
+};
 
-// funzione per aggiungere un commento alla lista
-void salvaCommento(const std::string& testo);
+extern std::vector<CommentoTrovato> commentiTrovati;
+
+void salvaCommento(const std::string& testo, int riga);
 
 #endif

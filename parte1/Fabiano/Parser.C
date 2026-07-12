@@ -83,6 +83,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Absyn.H"
+#include "Positions.h"
 
 #define YYMAXDEPTH 10000000
 
@@ -103,7 +104,7 @@ extern yyscan_t config__initialize_lexer(FILE * inp);
 
 /* End C preamble code */
 
-#line 107 "Parser.C"
+#line 108 "Parser.C"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -163,7 +164,7 @@ typedef enum yysymbol_kind_t yysymbol_kind_t;
 
 
 /* Second part of user prologue.  */
-#line 67 "Config.y"
+#line 68 "Config.y"
 
 void yyerror(YYLTYPE *loc, yyscan_t scanner, YYSTYPE *result, const char *msg)
 {
@@ -184,7 +185,7 @@ int yyparse(yyscan_t scanner, YYSTYPE *result);
 
 extern int yylex(YYSTYPE *lvalp, YYLTYPE *llocp, yyscan_t scanner);
 
-#line 188 "Parser.C"
+#line 189 "Parser.C"
 
 
 #ifdef short
@@ -571,8 +572,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   117,   117,   119,   121,   123,   124,   125,   126,   128,
-     129,   131,   132,   134,   135,   137,   138
+       0,   118,   118,   120,   122,   124,   125,   126,   127,   129,
+     130,   132,   133,   135,   136,   138,   139
 };
 #endif
 
@@ -1272,97 +1273,97 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* Config: ListSection  */
-#line 117 "Config.y"
+#line 118 "Config.y"
                      { (yyval.config_) = new Conf((yyvsp[0].listsection_)); result->config_ = (yyval.config_); }
-#line 1278 "Parser.C"
+#line 1279 "Parser.C"
     break;
 
   case 3: /* Section: _LT _KW_section _KW_name _EQ _IDENT_ _GT ListField _SYMB_3 _KW_section _GT  */
-#line 119 "Config.y"
-                                                                                     { (yyval.section_) = new Sect((yyvsp[-5]._string), (yyvsp[-3].listfield_)); result->section_ = (yyval.section_); }
-#line 1284 "Parser.C"
+#line 120 "Config.y"
+                                                                                     { Sect* tmp = new Sect((yyvsp[-5]._string), (yyvsp[-3].listfield_)); (yyval.section_) = tmp; result->section_ = (yyval.section_); registraRigaSezione(tmp, (yyloc).first_line); }
+#line 1285 "Parser.C"
     break;
 
   case 4: /* Field: _LT _KW_field _KW_name _EQ _IDENT_ _GT Value _SYMB_3 _KW_field _GT  */
-#line 121 "Config.y"
-                                                                           { (yyval.field_) = new Fld((yyvsp[-5]._string), (yyvsp[-3].value_)); result->field_ = (yyval.field_); }
-#line 1290 "Parser.C"
+#line 122 "Config.y"
+                                                                           { Fld* tmp = new Fld((yyvsp[-5]._string), (yyvsp[-3].value_)); (yyval.field_) = tmp; result->field_ = (yyval.field_); registraRigaField(tmp, (yyloc).first_line); }
+#line 1291 "Parser.C"
     break;
 
   case 5: /* Value: _INTEGER_  */
-#line 123 "Config.y"
+#line 124 "Config.y"
                   { (yyval.value_) = new VInt((yyvsp[0]._int)); result->value_ = (yyval.value_); }
-#line 1296 "Parser.C"
+#line 1297 "Parser.C"
     break;
 
   case 6: /* Value: Boolean  */
-#line 124 "Config.y"
+#line 125 "Config.y"
             { (yyval.value_) = new VBool((yyvsp[0].boolean_)); result->value_ = (yyval.value_); }
-#line 1302 "Parser.C"
+#line 1303 "Parser.C"
     break;
 
   case 7: /* Value: _STRING_  */
-#line 125 "Config.y"
+#line 126 "Config.y"
              { (yyval.value_) = new VStr((yyvsp[0]._string)); result->value_ = (yyval.value_); }
-#line 1308 "Parser.C"
+#line 1309 "Parser.C"
     break;
 
   case 8: /* Value: Ref  */
-#line 126 "Config.y"
+#line 127 "Config.y"
         { (yyval.value_) = new VRef((yyvsp[0].ref_)); result->value_ = (yyval.value_); }
-#line 1314 "Parser.C"
+#line 1315 "Parser.C"
     break;
 
   case 9: /* Ref: _DOLLAR _IDENT_  */
-#line 128 "Config.y"
+#line 129 "Config.y"
                       { (yyval.ref_) = new RefLocal((yyvsp[0]._string)); result->ref_ = (yyval.ref_); }
-#line 1320 "Parser.C"
+#line 1321 "Parser.C"
     break;
 
   case 10: /* Ref: _DOLLAR _IDENT_ _DOT _IDENT_  */
-#line 129 "Config.y"
+#line 130 "Config.y"
                                  { (yyval.ref_) = new RefQual((yyvsp[-2]._string), (yyvsp[0]._string)); result->ref_ = (yyval.ref_); }
-#line 1326 "Parser.C"
+#line 1327 "Parser.C"
     break;
 
   case 11: /* Boolean: _KW_true  */
-#line 131 "Config.y"
+#line 132 "Config.y"
                    { (yyval.boolean_) = new BTrue(); result->boolean_ = (yyval.boolean_); }
-#line 1332 "Parser.C"
+#line 1333 "Parser.C"
     break;
 
   case 12: /* Boolean: _KW_false  */
-#line 132 "Config.y"
+#line 133 "Config.y"
               { (yyval.boolean_) = new BFalse(); result->boolean_ = (yyval.boolean_); }
-#line 1338 "Parser.C"
+#line 1339 "Parser.C"
     break;
 
   case 13: /* ListSection: %empty  */
-#line 134 "Config.y"
+#line 135 "Config.y"
                           { (yyval.listsection_) = new ListSection(); result->listsection_ = (yyval.listsection_); }
-#line 1344 "Parser.C"
+#line 1345 "Parser.C"
     break;
 
   case 14: /* ListSection: ListSection Section  */
-#line 135 "Config.y"
+#line 136 "Config.y"
                         { (yyvsp[-1].listsection_)->push_back((yyvsp[0].section_)); (yyval.listsection_) = (yyvsp[-1].listsection_); result->listsection_ = (yyval.listsection_); }
-#line 1350 "Parser.C"
+#line 1351 "Parser.C"
     break;
 
   case 15: /* ListField: %empty  */
-#line 137 "Config.y"
+#line 138 "Config.y"
                         { (yyval.listfield_) = new ListField(); result->listfield_ = (yyval.listfield_); }
-#line 1356 "Parser.C"
+#line 1357 "Parser.C"
     break;
 
   case 16: /* ListField: ListField Field  */
-#line 138 "Config.y"
+#line 139 "Config.y"
                     { (yyvsp[-1].listfield_)->push_back((yyvsp[0].field_)); (yyval.listfield_) = (yyvsp[-1].listfield_); result->listfield_ = (yyval.listfield_); }
-#line 1362 "Parser.C"
+#line 1363 "Parser.C"
     break;
 
 
-#line 1366 "Parser.C"
+#line 1367 "Parser.C"
 
       default: break;
     }
@@ -1560,7 +1561,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 141 "Config.y"
+#line 142 "Config.y"
 
 
 

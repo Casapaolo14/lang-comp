@@ -2,6 +2,8 @@
 #include <set>
 #include <iostream>
 #include <cstdlib>
+#include "Positions.h"
+#include "Comments.h"
 
 MyValue convertiValue(Value* v) {
     MyValue result;
@@ -50,6 +52,7 @@ MyConfig build(Conf* ast) {
 
         MySection mySect;
         mySect.name = sect->ident_;
+        mySect.riga = rigaDiSezione[sect];
 
         std::set<std::string> nomiCampiVisti;
         for (Field* f : *(sect->listfield_)) {
@@ -62,9 +65,42 @@ MyConfig build(Conf* ast) {
             nomiCampiVisti.insert(fld->ident_);
 
             MyValue v = convertiValue(fld->value_);
-            mySect.fields.push_back({fld->ident_, v});
+            Binding nuovoBinding;
+            nuovoBinding.name = fld->ident_;
+            nuovoBinding.value = v;
+            nuovoBinding.riga = rigaDiField[fld];
+            mySect.fields.push_back(nuovoBinding);
         }
         result.sections.push_back(mySect);
     }
     return result;
+}
+
+void abbinaCommenti(MyConfig& config) {
+    for (const CommentoTrovato& c : commentiTrovati) {
+        MySection* miglioreS = nullptr;
+        Binding* miglioreB = nullptr;
+        int migliorRiga = -1;
+
+        for (MySection& s : config.sections) {
+            if (s.riga <= c.riga && s.riga > migliorRiga) {
+                migliorRiga = s.riga;
+                miglioreS = &s;
+                miglioreB = nullptr;
+            }
+            for (Binding& b : s.fields) {
+                if (b.riga <= c.riga && b.riga > migliorRiga) {
+                    migliorRiga = b.riga;
+                    miglioreS = &s;
+                    miglioreB = &b;
+                }
+            }
+        }
+
+        if (miglioreB) {
+            miglioreB->commenti.push_back(c.testo);
+        } else if (miglioreS) {
+            miglioreS->commenti.push_back(c.testo);
+        }
+    }
 }
