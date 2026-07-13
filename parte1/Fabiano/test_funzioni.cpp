@@ -1,10 +1,10 @@
-#include <cstdio>
 #include <iostream>
 #include "Parser.H"
 #include "Absyn.H"
 #include "ParserError.H"
 #include "Build.h"
-#include "PrettyPrint.h"
+#include "Resolve.h"
+#include "Delete.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {
@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 
     FILE* input = fopen(argv[1], "r");
     if (!input) {
-        std::cerr << "Impossibile aprire il file: " << argv[1] << std::endl;
+        std::cerr << "Impossibile aprire il file." << std::endl;
         return 1;
     }
 
@@ -26,21 +26,20 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    if (!parse_tree) {
-        std::cerr << "Parsing fallito." << std::endl;
-        return 1;
-    }
-
     Conf* conf = dynamic_cast<Conf*>(parse_tree);
-    if (!conf) {
-        std::cerr << "Errore interno: tipo AST inatteso." << std::endl;
-        return 1;
-    }
-
     MyConfig config = build(conf);
-    abbinaCommenti(config);
 
-    std::cout << prettyPrint(config);
+    std::cout << "Test resolve() su tutte le variabili:" << std::endl;
+    for (const MySection& s : config.sections) {
+        for (const Binding& b : s.fields) {
+            try {
+                MyValue v = resolve(config, s.name, b.name);
+                std::cout << "  " << s.name << "." << b.name << " risolve correttamente" << std::endl;
+            } catch (std::runtime_error& e) {
+                std::cout << "  " << s.name << "." << b.name << " -> ERRORE: " << e.what() << std::endl;
+            }
+        }
+    }
 
     delete parse_tree;
     return 0;
