@@ -42,8 +42,7 @@ Valore convertiValue(Value* v) {
 /*converte l'AST personalizzato basato su Configurazione ed esegue l'analisi semantica.
 Effettua due controlli sull'AST di BNFC:
 1. Rilevazione delle sezioni duplicate: se una sezione si ripete, genera un errore ed esce;
-2. Avviso sui campi duplicati: se un campo si ripete nella stessa sezione, genera un warning. L'ultimo valore inserito sovrascrive i precedenti;
-Infine ritorna un oggetto Configurazione validato.
+2. Avviso sui campi duplicati: se un campo si ripete nella stessa sezione, genera un warning. 
  */
 Configurazione build(Conf* ast) {
     Configurazione result;
