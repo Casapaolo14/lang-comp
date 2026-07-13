@@ -2,7 +2,7 @@
 #include "Risoluzione.h"
 
 /* Funzione esisteRiferimentoA: scandisce tutti i binding di tutte le sezioni
-cercando un riferimento (locale o qualificato) che punti a (sectionName, varName).
+cercando un riferimento (semplice o sezione) che punti a (sectionName, varName).
 Usata come controllo preventivo prima di ogni cancellazione, per evitare di lasciare
 riferimenti pendenti.
 */

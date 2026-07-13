@@ -8,7 +8,7 @@
 /* Funzione convertiValue: converte i valori dell'AST di BNFC nella struttura Valore
 Utilizza il dynamic_cast per determinare il tipo di valore 
 tra intero, booleano, stringa e riferimento impostando il flag 'kind'.
-Nel caso dei riferimenti ($), distingue se sono locali o qualificati
+Nel caso dei riferimenti ($), distingue se sono semplici o con sezione
 separando il nome della sezione dal nome del campo.
  */
 Valore convertiValue(Value* v) {
