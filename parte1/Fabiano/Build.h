@@ -1,5 +1,5 @@
-#ifndef COSTRUZIONE_H
-#define COSTRUZIONE_H
+#ifndef BUILD_H
+#define BUILD_H
 
 #include "Configurazione.h"
 #include "Absyn.H"
