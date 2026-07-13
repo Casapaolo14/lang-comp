@@ -1,3 +1,4 @@
+#ifndef BUILD_H
 #define BUILD_H
 
 #include "Configurazione.h"
@@ -5,3 +6,5 @@
 
 Valore convertiValue(Value* v);
 Configurazione build(Conf* ast);
+
+#endif

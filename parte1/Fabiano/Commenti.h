@@ -1,3 +1,4 @@
+#ifndef COMMENTI_H
 #define COMMENTI_H
 
 #include <string>
@@ -11,3 +12,5 @@ struct CommentoTrovato {
 extern std::vector<CommentoTrovato> commentiTrovati;
 
 void salvaCommento(const std::string& testo, int riga);
+
+#endif
