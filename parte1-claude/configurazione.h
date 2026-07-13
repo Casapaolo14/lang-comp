@@ -1,4 +1,3 @@
-#ifndef CONFIGURAZIONE_H
 #define CONFIGURAZIONE_H
 
 #include <string>
@@ -64,5 +63,3 @@ bool deleteBinding(Config &c, const std::string &sect, const std::string &var);
 /* Serializes the structure in valid input syntax, interleaving the saved
  * comments according to their original line numbers. */
 void prettyPrint(const Config &c, std::ostream &out);
-
-#endif

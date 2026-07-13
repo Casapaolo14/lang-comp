@@ -1,4 +1,3 @@
-#ifndef CONFIGURAZIONE_H
 #define CONFIGURAZIONE_H
 
 #include <string>
@@ -31,5 +30,3 @@ struct Sezione {
 struct Configurazione {
     std::vector<Sezione> sections;
 };
-
-#endif

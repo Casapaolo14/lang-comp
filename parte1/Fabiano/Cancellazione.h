@@ -1,4 +1,3 @@
-#ifndef CANCELLAZIONE_H
 #define CANCELLAZIONE_H
 
 #include "Configurazione.h"
@@ -11,5 +10,3 @@ bool cancellaCampo(Configurazione& config, const std::string& sectionName, const
 
 // Cancella un'intera sezione. Restituisce true se cancellata, false se rifiutata (qualcosa la referenzia)
 bool cancellaSezione(Configurazione& config, const std::string& sectionName);
-
-#endif

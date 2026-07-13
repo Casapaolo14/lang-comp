@@ -1,4 +1,3 @@
-#ifndef RISOLUZIONE_H
 #define RISOLUZIONE_H
 
 #include "Configurazione.h"
@@ -8,5 +7,3 @@
 Valore resolve(const Configurazione& config, const std::string& sectionName, const std::string& varName);
 const Sezione* trovaSezione(const Configurazione& config, const std::string& sectionName);
 const Campo* trovaCampo(const Sezione& sect, const std::string& varName);
-
-#endif

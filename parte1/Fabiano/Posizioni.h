@@ -1,4 +1,3 @@
-#ifndef POSIZIONI_H
 #define POSIZIONI_H
 
 #include <map>
@@ -16,5 +15,3 @@ extern std::map<Fld*, int> rigaDiField;
 void registraRigaSezione(Sect* s, int riga);
 void registraChiusuraSezione(Sect* s, int riga);
 void registraRigaField(Fld* f, int riga);
-
-#endif
