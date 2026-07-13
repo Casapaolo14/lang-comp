@@ -18,7 +18,7 @@ std::string prettyPrintValue(const Valore& v) {
     return "";
 }
 
-/* Funzione prettyPrint: invece di associare prima ogni commento a un elemento
+/*invece di associare prima ogni commento a un elemento
 e poi ristamparlo come se lo precedesse sempre (cosa che sposta i commenti "in
 coda" e rende il round-trip instabile), qui i commenti vengono "scaricati" via
 via che si stampa, nell'ordine in cui sono stati letti dal Lexer: prima di
