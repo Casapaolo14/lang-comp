@@ -5,7 +5,7 @@
 #include "Posizioni.h"
 
 
-/* Funzione convertiValue: converte i valori dell'AST di BNFC nella struttura Valore
+/*converte i valori dell'AST di BNFC nella struttura Valore
 Utilizza il dynamic_cast per determinare il tipo di valore 
 tra intero, booleano, stringa e riferimento impostando il flag 'kind'.
 Nel caso dei riferimenti ($), distingue se sono semplici o con sezione
@@ -39,7 +39,7 @@ Valore convertiValue(Value* v) {
     return result;
 }
 
-/* Funzione build: converte l'AST personalizzato basato su Configurazione ed esegue l'analisi semantica.
+/*converte l'AST personalizzato basato su Configurazione ed esegue l'analisi semantica.
 Effettua due controlli sull'AST di BNFC:
 1. Rilevazione delle sezioni duplicate: se una sezione si ripete, genera un errore ed esce;
 2. Avviso sui campi duplicati: se un campo si ripete nella stessa sezione, genera un warning. L'ultimo valore inserito sovrascrive i precedenti;

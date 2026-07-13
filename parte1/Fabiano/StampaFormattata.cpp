@@ -28,29 +28,30 @@ scaricati prima della chiusura della sezione, così un commento resta "dentro"
 la sezione anche se segue l'ultimo campo. Eventuali commenti avanzati alla
 fine (nessun elemento successivo li reclama) vengono stampati in coda.
 */
+static void scaricaCommenti(std::ostringstream& out, size_t& prossimo, int finoARiga) {
+    
+    while (prossimo < commentiTrovati.size() && commentiTrovati[prossimo].riga <= finoARiga) {
+        out << commentiTrovati[prossimo].testo << "\n";
+        prossimo++;
+    }
+}
+
 std::string prettyPrint(const Configurazione& config) {
     std::ostringstream out;
-
     size_t prossimo = 0;
-    auto scaricaCommenti = [&](int finoARiga) {
-        while (prossimo < commentiTrovati.size() && commentiTrovati[prossimo].riga <= finoARiga) {
-            out << commentiTrovati[prossimo].testo << "\n";
-            prossimo++;
-        }
-    };
 
     for (const Sezione& sect : config.sections) {
-        scaricaCommenti(sect.riga);
+        scaricaCommenti(out, prossimo, sect.riga);
         out << "<section name=" << sect.name << ">\n";
 
         for (const Campo& b : sect.fields) {
-            scaricaCommenti(b.riga);
+            scaricaCommenti(out, prossimo, b.riga);
             out << "<field name=" << b.name << ">"
                 << prettyPrintValue(b.value)
                 << "</field>\n";
         }
 
-        scaricaCommenti(sect.rigaChiusura);
+        scaricaCommenti(out, prossimo, sect.rigaChiusura);
         out << "</section>\n";
     }
 
