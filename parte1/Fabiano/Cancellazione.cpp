@@ -1,8 +1,8 @@
 #include "Cancellazione.h"
 #include "Risoluzione.h"
 
-/* Funzione esisteRiferimentoA: scandisce tutti i binding di tutte le sezioni
-cercando un riferimento (semplice o sezione) che punti a (sectionName, varName).
+/*scandisce tutti i binding di tutte le sezioni cercando un riferimento (semplice o sezione) 
+che punti a (sectionName, varName).
 Usata come controllo preventivo prima di ogni cancellazione, per evitare di lasciare
 riferimenti pendenti.
 */
@@ -25,7 +25,7 @@ bool esisteRiferimentoA(const Configurazione& config, const std::string& section
     return false;
 }
 
-/* Funzione cancellaCampo: cancella un singolo binding (sectionName, varName)
+/*cancella un singolo binding (sectionName, varName)
 se esiste e se non è referenziato da nessun altro punto della configurazione;
 altrimenti rifiuta la cancellazione restituendo false.
 */
@@ -48,7 +48,7 @@ bool cancellaCampo(Configurazione& config, const std::string& sectionName, const
     return false;   // sezione non trovata
 }
 
-/* Funzione cancellaSezione: cancella un'intera sezione solo se nessuno dei suoi
+/*cancella un'intera sezione solo se nessuno dei suoi
 binding è referenziato da altre sezioni; altrimenti rifiuta la cancellazione
 restituendo false, per non lasciare riferimenti pendenti.
 */
