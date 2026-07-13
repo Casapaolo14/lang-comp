@@ -1,6 +1,6 @@
 /* Executable required by the assignment: parses the given file and emits
  * the serialization of the resulting structure on stdout. */
-#include "config.h"
+#include "configurazione.h"
 
 #include <cstdio>
 #include <iostream>

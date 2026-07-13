@@ -35,14 +35,14 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_CONFIG_BISON_H_INCLUDED
-# define YY_CONFIG_BISON_H_INCLUDED
+#ifndef YY_GRAMMATICA_BISON_H_INCLUDED
+# define YY_GRAMMATICA_BISON_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
 #endif
 #if YYDEBUG
-extern int config_debug;
+extern int grammatica_debug;
 #endif
 
 /* Token kinds.  */
@@ -77,7 +77,7 @@ extern int config_debug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 53 "Config.y"
+#line 53 "Grammatica.y"
 
   int    _int;
   char   _char;
@@ -117,7 +117,7 @@ struct YYLTYPE
 
 
 
-int config_parse (yyscan_t scanner, YYSTYPE *result);
+int grammatica_parse (yyscan_t scanner, YYSTYPE *result);
 
 
-#endif /* !YY_CONFIG_BISON_H_INCLUDED  */
+#endif /* !YY_GRAMMATICA_BISON_H_INCLUDED  */

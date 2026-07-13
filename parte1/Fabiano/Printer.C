@@ -239,7 +239,7 @@ void PrintAbsyn::visitVRef(VRef *p)
 
 void PrintAbsyn::visitRef(Ref *p) {} //abstract class
 
-void PrintAbsyn::visitRefLocal(RefLocal *p)
+void PrintAbsyn::visitRiferimentoSemplice(RiferimentoSemplice *p)
 {
   int oldi = _i_;
   if (oldi > 0) render(_L_PAREN);
@@ -251,7 +251,7 @@ void PrintAbsyn::visitRefLocal(RefLocal *p)
   _i_ = oldi;
 }
 
-void PrintAbsyn::visitRefQual(RefQual *p)
+void PrintAbsyn::visitRiferimentoConSezione(RiferimentoConSezione *p)
 {
   int oldi = _i_;
   if (oldi > 0) render(_L_PAREN);
@@ -449,18 +449,18 @@ void ShowAbsyn::visitVRef(VRef *p)
 }
 void ShowAbsyn::visitRef(Ref *p) {} //abstract class
 
-void ShowAbsyn::visitRefLocal(RefLocal *p)
+void ShowAbsyn::visitRiferimentoSemplice(RiferimentoSemplice *p)
 {
   bufAppend('(');
-  bufAppend("RefLocal");
+  bufAppend("RiferimentoSemplice");
   bufAppend(' ');
   visitIdent(p->ident_);
   bufAppend(')');
 }
-void ShowAbsyn::visitRefQual(RefQual *p)
+void ShowAbsyn::visitRiferimentoConSezione(RiferimentoConSezione *p)
 {
   bufAppend('(');
-  bufAppend("RefQual");
+  bufAppend("RiferimentoConSezione");
   bufAppend(' ');
   visitIdent(p->ident_1);
   bufAppend(' ');

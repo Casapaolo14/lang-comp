@@ -318,91 +318,91 @@ VRef *VRef::clone() const
 
 
 
-/********************   RefLocal    ********************/
-RefLocal::RefLocal(Ident p1)
+/********************   RiferimentoSemplice    ********************/
+RiferimentoSemplice::RiferimentoSemplice(Ident p1)
 {
   ident_ = p1;
 
 }
 
-RefLocal::RefLocal(const RefLocal & other)
+RiferimentoSemplice::RiferimentoSemplice(const RiferimentoSemplice & other)
 {
   ident_ = other.ident_;
 
 }
 
-RefLocal &RefLocal::operator=(const RefLocal & other)
+RiferimentoSemplice &RiferimentoSemplice::operator=(const RiferimentoSemplice & other)
 {
-  RefLocal tmp(other);
+  RiferimentoSemplice tmp(other);
   swap(tmp);
   return *this;
 }
 
-void RefLocal::swap(RefLocal & other)
+void RiferimentoSemplice::swap(RiferimentoSemplice & other)
 {
   std::swap(ident_, other.ident_);
 
 }
 
-RefLocal::~RefLocal()
+RiferimentoSemplice::~RiferimentoSemplice()
 {
 
 }
 
-void RefLocal::accept(Visitor *v)
+void RiferimentoSemplice::accept(Visitor *v)
 {
-  v->visitRefLocal(this);
+  v->visitRiferimentoSemplice(this);
 }
 
-RefLocal *RefLocal::clone() const
+RiferimentoSemplice *RiferimentoSemplice::clone() const
 {
-  return new RefLocal(*this);
+  return new RiferimentoSemplice(*this);
 }
 
 
 
-/********************   RefQual    ********************/
-RefQual::RefQual(Ident p1, Ident p2)
+/********************   RiferimentoConSezione    ********************/
+RiferimentoConSezione::RiferimentoConSezione(Ident p1, Ident p2)
 {
   ident_1 = p1;
   ident_2 = p2;
 
 }
 
-RefQual::RefQual(const RefQual & other)
+RiferimentoConSezione::RiferimentoConSezione(const RiferimentoConSezione & other)
 {
   ident_1 = other.ident_1;
   ident_2 = other.ident_2;
 
 }
 
-RefQual &RefQual::operator=(const RefQual & other)
+RiferimentoConSezione &RiferimentoConSezione::operator=(const RiferimentoConSezione & other)
 {
-  RefQual tmp(other);
+  RiferimentoConSezione tmp(other);
   swap(tmp);
   return *this;
 }
 
-void RefQual::swap(RefQual & other)
+void RiferimentoConSezione::swap(RiferimentoConSezione & other)
 {
   std::swap(ident_1, other.ident_1);
   std::swap(ident_2, other.ident_2);
 
 }
 
-RefQual::~RefQual()
+RiferimentoConSezione::~RiferimentoConSezione()
 {
 
 }
 
-void RefQual::accept(Visitor *v)
+void RiferimentoConSezione::accept(Visitor *v)
 {
-  v->visitRefQual(this);
+  v->visitRiferimentoConSezione(this);
 }
 
-RefQual *RefQual::clone() const
+RiferimentoConSezione *RiferimentoConSezione::clone() const
 {
-  return new RefQual(*this);
+  return new RiferimentoConSezione(*this);
 }
 
 

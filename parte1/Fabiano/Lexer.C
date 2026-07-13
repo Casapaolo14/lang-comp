@@ -15,237 +15,237 @@
 #endif
 
 #ifdef yy_create_buffer
-#define config__create_buffer_ALREADY_DEFINED
+#define grammatica__create_buffer_ALREADY_DEFINED
 #else
-#define yy_create_buffer config__create_buffer
+#define yy_create_buffer grammatica__create_buffer
 #endif
 
 #ifdef yy_delete_buffer
-#define config__delete_buffer_ALREADY_DEFINED
+#define grammatica__delete_buffer_ALREADY_DEFINED
 #else
-#define yy_delete_buffer config__delete_buffer
+#define yy_delete_buffer grammatica__delete_buffer
 #endif
 
 #ifdef yy_scan_buffer
-#define config__scan_buffer_ALREADY_DEFINED
+#define grammatica__scan_buffer_ALREADY_DEFINED
 #else
-#define yy_scan_buffer config__scan_buffer
+#define yy_scan_buffer grammatica__scan_buffer
 #endif
 
 #ifdef yy_scan_string
-#define config__scan_string_ALREADY_DEFINED
+#define grammatica__scan_string_ALREADY_DEFINED
 #else
-#define yy_scan_string config__scan_string
+#define yy_scan_string grammatica__scan_string
 #endif
 
 #ifdef yy_scan_bytes
-#define config__scan_bytes_ALREADY_DEFINED
+#define grammatica__scan_bytes_ALREADY_DEFINED
 #else
-#define yy_scan_bytes config__scan_bytes
+#define yy_scan_bytes grammatica__scan_bytes
 #endif
 
 #ifdef yy_init_buffer
-#define config__init_buffer_ALREADY_DEFINED
+#define grammatica__init_buffer_ALREADY_DEFINED
 #else
-#define yy_init_buffer config__init_buffer
+#define yy_init_buffer grammatica__init_buffer
 #endif
 
 #ifdef yy_flush_buffer
-#define config__flush_buffer_ALREADY_DEFINED
+#define grammatica__flush_buffer_ALREADY_DEFINED
 #else
-#define yy_flush_buffer config__flush_buffer
+#define yy_flush_buffer grammatica__flush_buffer
 #endif
 
 #ifdef yy_load_buffer_state
-#define config__load_buffer_state_ALREADY_DEFINED
+#define grammatica__load_buffer_state_ALREADY_DEFINED
 #else
-#define yy_load_buffer_state config__load_buffer_state
+#define yy_load_buffer_state grammatica__load_buffer_state
 #endif
 
 #ifdef yy_switch_to_buffer
-#define config__switch_to_buffer_ALREADY_DEFINED
+#define grammatica__switch_to_buffer_ALREADY_DEFINED
 #else
-#define yy_switch_to_buffer config__switch_to_buffer
+#define yy_switch_to_buffer grammatica__switch_to_buffer
 #endif
 
 #ifdef yypush_buffer_state
-#define config_push_buffer_state_ALREADY_DEFINED
+#define grammatica_push_buffer_state_ALREADY_DEFINED
 #else
-#define yypush_buffer_state config_push_buffer_state
+#define yypush_buffer_state grammatica_push_buffer_state
 #endif
 
 #ifdef yypop_buffer_state
-#define config_pop_buffer_state_ALREADY_DEFINED
+#define grammatica_pop_buffer_state_ALREADY_DEFINED
 #else
-#define yypop_buffer_state config_pop_buffer_state
+#define yypop_buffer_state grammatica_pop_buffer_state
 #endif
 
 #ifdef yyensure_buffer_stack
-#define config_ensure_buffer_stack_ALREADY_DEFINED
+#define grammatica_ensure_buffer_stack_ALREADY_DEFINED
 #else
-#define yyensure_buffer_stack config_ensure_buffer_stack
+#define yyensure_buffer_stack grammatica_ensure_buffer_stack
 #endif
 
 #ifdef yylex
-#define config_lex_ALREADY_DEFINED
+#define grammatica_lex_ALREADY_DEFINED
 #else
-#define yylex config_lex
+#define yylex grammatica_lex
 #endif
 
 #ifdef yyrestart
-#define config_restart_ALREADY_DEFINED
+#define grammatica_restart_ALREADY_DEFINED
 #else
-#define yyrestart config_restart
+#define yyrestart grammatica_restart
 #endif
 
 #ifdef yylex_init
-#define config_lex_init_ALREADY_DEFINED
+#define grammatica_lex_init_ALREADY_DEFINED
 #else
-#define yylex_init config_lex_init
+#define yylex_init grammatica_lex_init
 #endif
 
 #ifdef yylex_init_extra
-#define config_lex_init_extra_ALREADY_DEFINED
+#define grammatica_lex_init_extra_ALREADY_DEFINED
 #else
-#define yylex_init_extra config_lex_init_extra
+#define yylex_init_extra grammatica_lex_init_extra
 #endif
 
 #ifdef yylex_destroy
-#define config_lex_destroy_ALREADY_DEFINED
+#define grammatica_lex_destroy_ALREADY_DEFINED
 #else
-#define yylex_destroy config_lex_destroy
+#define yylex_destroy grammatica_lex_destroy
 #endif
 
 #ifdef yyget_debug
-#define config_get_debug_ALREADY_DEFINED
+#define grammatica_get_debug_ALREADY_DEFINED
 #else
-#define yyget_debug config_get_debug
+#define yyget_debug grammatica_get_debug
 #endif
 
 #ifdef yyset_debug
-#define config_set_debug_ALREADY_DEFINED
+#define grammatica_set_debug_ALREADY_DEFINED
 #else
-#define yyset_debug config_set_debug
+#define yyset_debug grammatica_set_debug
 #endif
 
 #ifdef yyget_extra
-#define config_get_extra_ALREADY_DEFINED
+#define grammatica_get_extra_ALREADY_DEFINED
 #else
-#define yyget_extra config_get_extra
+#define yyget_extra grammatica_get_extra
 #endif
 
 #ifdef yyset_extra
-#define config_set_extra_ALREADY_DEFINED
+#define grammatica_set_extra_ALREADY_DEFINED
 #else
-#define yyset_extra config_set_extra
+#define yyset_extra grammatica_set_extra
 #endif
 
 #ifdef yyget_in
-#define config_get_in_ALREADY_DEFINED
+#define grammatica_get_in_ALREADY_DEFINED
 #else
-#define yyget_in config_get_in
+#define yyget_in grammatica_get_in
 #endif
 
 #ifdef yyset_in
-#define config_set_in_ALREADY_DEFINED
+#define grammatica_set_in_ALREADY_DEFINED
 #else
-#define yyset_in config_set_in
+#define yyset_in grammatica_set_in
 #endif
 
 #ifdef yyget_out
-#define config_get_out_ALREADY_DEFINED
+#define grammatica_get_out_ALREADY_DEFINED
 #else
-#define yyget_out config_get_out
+#define yyget_out grammatica_get_out
 #endif
 
 #ifdef yyset_out
-#define config_set_out_ALREADY_DEFINED
+#define grammatica_set_out_ALREADY_DEFINED
 #else
-#define yyset_out config_set_out
+#define yyset_out grammatica_set_out
 #endif
 
 #ifdef yyget_leng
-#define config_get_leng_ALREADY_DEFINED
+#define grammatica_get_leng_ALREADY_DEFINED
 #else
-#define yyget_leng config_get_leng
+#define yyget_leng grammatica_get_leng
 #endif
 
 #ifdef yyget_text
-#define config_get_text_ALREADY_DEFINED
+#define grammatica_get_text_ALREADY_DEFINED
 #else
-#define yyget_text config_get_text
+#define yyget_text grammatica_get_text
 #endif
 
 #ifdef yyget_lineno
-#define config_get_lineno_ALREADY_DEFINED
+#define grammatica_get_lineno_ALREADY_DEFINED
 #else
-#define yyget_lineno config_get_lineno
+#define yyget_lineno grammatica_get_lineno
 #endif
 
 #ifdef yyset_lineno
-#define config_set_lineno_ALREADY_DEFINED
+#define grammatica_set_lineno_ALREADY_DEFINED
 #else
-#define yyset_lineno config_set_lineno
+#define yyset_lineno grammatica_set_lineno
 #endif
 
 #ifdef yyget_column
-#define config_get_column_ALREADY_DEFINED
+#define grammatica_get_column_ALREADY_DEFINED
 #else
-#define yyget_column config_get_column
+#define yyget_column grammatica_get_column
 #endif
 
 #ifdef yyset_column
-#define config_set_column_ALREADY_DEFINED
+#define grammatica_set_column_ALREADY_DEFINED
 #else
-#define yyset_column config_set_column
+#define yyset_column grammatica_set_column
 #endif
 
 #ifdef yywrap
-#define config_wrap_ALREADY_DEFINED
+#define grammatica_wrap_ALREADY_DEFINED
 #else
-#define yywrap config_wrap
+#define yywrap grammatica_wrap
 #endif
 
 #ifdef yyget_lval
-#define config_get_lval_ALREADY_DEFINED
+#define grammatica_get_lval_ALREADY_DEFINED
 #else
-#define yyget_lval config_get_lval
+#define yyget_lval grammatica_get_lval
 #endif
 
 #ifdef yyset_lval
-#define config_set_lval_ALREADY_DEFINED
+#define grammatica_set_lval_ALREADY_DEFINED
 #else
-#define yyset_lval config_set_lval
+#define yyset_lval grammatica_set_lval
 #endif
 
 #ifdef yyget_lloc
-#define config_get_lloc_ALREADY_DEFINED
+#define grammatica_get_lloc_ALREADY_DEFINED
 #else
-#define yyget_lloc config_get_lloc
+#define yyget_lloc grammatica_get_lloc
 #endif
 
 #ifdef yyset_lloc
-#define config_set_lloc_ALREADY_DEFINED
+#define grammatica_set_lloc_ALREADY_DEFINED
 #else
-#define yyset_lloc config_set_lloc
+#define yyset_lloc grammatica_set_lloc
 #endif
 
 #ifdef yyalloc
-#define config_alloc_ALREADY_DEFINED
+#define grammatica_alloc_ALREADY_DEFINED
 #else
-#define yyalloc config_alloc
+#define yyalloc grammatica_alloc
 #endif
 
 #ifdef yyrealloc
-#define config_realloc_ALREADY_DEFINED
+#define grammatica_realloc_ALREADY_DEFINED
 #else
-#define yyrealloc config_realloc
+#define yyrealloc grammatica_realloc
 #endif
 
 #ifdef yyfree
-#define config_free_ALREADY_DEFINED
+#define grammatica_free_ALREADY_DEFINED
 #else
-#define yyfree config_free
+#define yyfree grammatica_free
 #endif
 
 /* First, we deal with  platform-specific or compiler-specific issues. */
@@ -551,7 +551,7 @@ void yyfree ( void * , yyscan_t yyscanner );
 
 /* Begin user sect3 */
 
-#define config_wrap(yyscanner) (/*CONSTCOND*/1)
+#define grammatica_wrap(yyscanner) (/*CONSTCOND*/1)
 #define YY_SKIP_YYWRAP
 typedef flex_uint8_t YY_CHAR;
 
@@ -699,17 +699,17 @@ static const flex_int16_t yy_chk[139] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "Config.l"
+#line 1 "Grammatica.l"
 /* -*- c++ -*- File generated by the BNF Converter (bnfc 2.9.6.3). */
 /* Lexer definition for use with FLex */
 #define YY_NO_INPUT 1
 /* Additional data for the lexer: a buffer for lexing string literals. */
-#line 12 "Config.l"
+#line 12 "Grammatica.l"
 #include "Absyn.H"
 #include "Bison.H"
-#include "Comments.h"
+#include "Commenti.h"
 
-#define initialize_lexer config__initialize_lexer
+#define initialize_lexer grammatica__initialize_lexer
 
 /* BEGIN extensible string buffer */
 
@@ -1041,7 +1041,7 @@ YY_DECL
 		}
 
 	{
-#line 70 "Config.l"
+#line 70 "Grammatica.l"
 
 
 #line 1048 "Lexer.C"
@@ -1103,148 +1103,148 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 72 "Config.l"
+#line 72 "Grammatica.l"
 return _LT;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 73 "Config.l"
+#line 73 "Grammatica.l"
 return _EQ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 74 "Config.l"
+#line 74 "Grammatica.l"
 return _GT;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 75 "Config.l"
+#line 75 "Grammatica.l"
 return _SYMB_3;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 76 "Config.l"
+#line 76 "Grammatica.l"
 return _DOLLAR;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 77 "Config.l"
+#line 77 "Grammatica.l"
 return _DOT;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 78 "Config.l"
+#line 78 "Grammatica.l"
 return _KW_false;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 79 "Config.l"
+#line 79 "Grammatica.l"
 return _KW_field;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 80 "Config.l"
+#line 80 "Grammatica.l"
 return _KW_name;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 81 "Config.l"
+#line 81 "Grammatica.l"
 return _KW_section;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 82 "Config.l"
+#line 82 "Grammatica.l"
 return _KW_true;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 84 "Config.l"
+#line 84 "Grammatica.l"
 salvaCommento(yytext, yylloc->first_line);
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 86 "Config.l"
+#line 86 "Grammatica.l"
 LITERAL_BUFFER_CREATE(); BEGIN STRING;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 87 "Config.l"
+#line 87 "Grammatica.l"
 BEGIN ESCAPED;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 88 "Config.l"
+#line 88 "Grammatica.l"
 yylval->_string = LITERAL_BUFFER_HARVEST(); BEGIN INITIAL; return _STRING_;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 89 "Config.l"
+#line 89 "Grammatica.l"
 LITERAL_BUFFER_APPEND_CHAR(yytext[0]);
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 90 "Config.l"
+#line 90 "Grammatica.l"
 LITERAL_BUFFER_APPEND_CHAR('\f'); BEGIN STRING;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 91 "Config.l"
+#line 91 "Grammatica.l"
 LITERAL_BUFFER_APPEND_CHAR('\n'); BEGIN STRING;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 92 "Config.l"
+#line 92 "Grammatica.l"
 LITERAL_BUFFER_APPEND_CHAR('\r'); BEGIN STRING;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 93 "Config.l"
+#line 93 "Grammatica.l"
 LITERAL_BUFFER_APPEND_CHAR('\t'); BEGIN STRING;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 94 "Config.l"
+#line 94 "Grammatica.l"
 LITERAL_BUFFER_APPEND_CHAR('"');  BEGIN STRING;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 95 "Config.l"
+#line 95 "Grammatica.l"
 LITERAL_BUFFER_APPEND_CHAR('\\'); BEGIN STRING;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 96 "Config.l"
+#line 96 "Grammatica.l"
 LITERAL_BUFFER_APPEND(yytext);    BEGIN STRING;
 	YY_BREAK
 case YY_STATE_EOF(STRING):
 case YY_STATE_EOF(ESCAPED):
-#line 97 "Config.l"
+#line 97 "Grammatica.l"
 LITERAL_BUFFER_FREE(); return _ERROR_;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 98 "Config.l"
+#line 98 "Grammatica.l"
 yylval->_int = atoi(yytext); return _INTEGER_;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 99 "Config.l"
+#line 99 "Grammatica.l"
 yylval->_string = strdup(yytext); return _IDENT_;
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 100 "Config.l"
+#line 100 "Grammatica.l"
 /* ignore white space. */;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 101 "Config.l"
+#line 101 "Grammatica.l"
 return _ERROR_;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 103 "Config.l"
+#line 103 "Grammatica.l"
 ECHO;
 	YY_BREAK
 #line 1251 "Lexer.C"
@@ -2405,7 +2405,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 103 "Config.l"
+#line 103 "Grammatica.l"
 
 
 yyscan_t initialize_lexer(FILE *inp)

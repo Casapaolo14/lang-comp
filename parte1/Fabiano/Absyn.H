@@ -34,8 +34,8 @@ class VInt;
 class VBool;
 class VStr;
 class VRef;
-class RefLocal;
-class RefQual;
+class RiferimentoSemplice;
+class RiferimentoConSezione;
 class BTrue;
 class BFalse;
 class ListSection;
@@ -60,8 +60,8 @@ public:
   virtual void visitVBool(VBool *p) = 0;
   virtual void visitVStr(VStr *p) = 0;
   virtual void visitVRef(VRef *p) = 0;
-  virtual void visitRefLocal(RefLocal *p) = 0;
-  virtual void visitRefQual(RefQual *p) = 0;
+  virtual void visitRiferimentoSemplice(RiferimentoSemplice *p) = 0;
+  virtual void visitRiferimentoConSezione(RiferimentoConSezione *p) = 0;
   virtual void visitBTrue(BTrue *p) = 0;
   virtual void visitBFalse(BFalse *p) = 0;
   virtual void visitListSection(ListSection *p) = 0;
@@ -231,33 +231,33 @@ public:
   void swap(VRef &);
 };
 
-class RefLocal : public Ref
+class RiferimentoSemplice : public Ref
 {
 public:
   Ident ident_;
 
-  RefLocal(const RefLocal &);
-  RefLocal &operator=(const RefLocal &);
-  RefLocal(Ident p1);
-  ~RefLocal();
+  RiferimentoSemplice(const RiferimentoSemplice &);
+  RiferimentoSemplice &operator=(const RiferimentoSemplice &);
+  RiferimentoSemplice(Ident p1);
+  ~RiferimentoSemplice();
   virtual void accept(Visitor *v);
-  virtual RefLocal *clone() const;
-  void swap(RefLocal &);
+  virtual RiferimentoSemplice *clone() const;
+  void swap(RiferimentoSemplice &);
 };
 
-class RefQual : public Ref
+class RiferimentoConSezione : public Ref
 {
 public:
   Ident ident_1;
   Ident ident_2;
 
-  RefQual(const RefQual &);
-  RefQual &operator=(const RefQual &);
-  RefQual(Ident p1, Ident p2);
-  ~RefQual();
+  RiferimentoConSezione(const RiferimentoConSezione &);
+  RiferimentoConSezione &operator=(const RiferimentoConSezione &);
+  RiferimentoConSezione(Ident p1, Ident p2);
+  ~RiferimentoConSezione();
   virtual void accept(Visitor *v);
-  virtual RefQual *clone() const;
-  void swap(RefQual &);
+  virtual RiferimentoConSezione *clone() const;
+  void swap(RiferimentoConSezione &);
 };
 
 class BTrue : public Boolean

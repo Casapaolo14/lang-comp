@@ -1,21 +1,21 @@
-#include "Delete.h"
-#include "Resolve.h"
+#include "Cancellazione.h"
+#include "Risoluzione.h"
 
 /* Funzione esisteRiferimentoA: scandisce tutti i binding di tutte le sezioni
 cercando un riferimento (locale o qualificato) che punti a (sectionName, varName).
 Usata come controllo preventivo prima di ogni cancellazione, per evitare di lasciare
 riferimenti pendenti.
 */
-bool esisteRiferimentoA(const MyConfig& config, const std::string& sectionName, const std::string& varName) {
-    for (const MySection& s : config.sections) {
-        for (const Binding& b : s.fields) {
-            if (b.value.kind == ValueKind::RefLocal) {
+bool esisteRiferimentoA(const Configurazione& config, const std::string& sectionName, const std::string& varName) {
+    for (const Sezione& s : config.sections) {
+        for (const Campo& b : s.fields) {
+            if (b.value.kind == ValueKind::RiferimentoSemplice) {
                 // riferimento locale: la sezione è quella in cui si trova attualmente il binding
                 if (s.name == sectionName && b.value.refName == varName) {
                     return true;
                 }
             }
-            else if (b.value.kind == ValueKind::RefQual) {
+            else if (b.value.kind == ValueKind::RiferimentoConSezione) {
                 if (b.value.refSection == sectionName && b.value.refName == varName) {
                     return true;
                 }
@@ -25,16 +25,16 @@ bool esisteRiferimentoA(const MyConfig& config, const std::string& sectionName, 
     return false;
 }
 
-/* Funzione cancellaBinding: cancella un singolo binding (sectionName, varName)
+/* Funzione cancellaCampo: cancella un singolo binding (sectionName, varName)
 se esiste e se non è referenziato da nessun altro punto della configurazione;
 altrimenti rifiuta la cancellazione restituendo false.
 */
-bool cancellaBinding(MyConfig& config, const std::string& sectionName, const std::string& varName) {
+bool cancellaCampo(Configurazione& config, const std::string& sectionName, const std::string& varName) {
     if (esisteRiferimentoA(config, sectionName, varName)) {
         return false;   // qualcuno lo referenzia, non lo cancelliamo
     }
 
-    for (MySection& s : config.sections) {
+    for (Sezione& s : config.sections) {
         if (s.name == sectionName) {
             for (size_t i = 0; i < s.fields.size(); i++) {
                 if (s.fields[i].name == varName) {
@@ -52,14 +52,14 @@ bool cancellaBinding(MyConfig& config, const std::string& sectionName, const std
 binding è referenziato da altre sezioni; altrimenti rifiuta la cancellazione
 restituendo false, per non lasciare riferimenti pendenti.
 */
-bool cancellaSezione(MyConfig& config, const std::string& sectionName) {
-    const MySection* sect = trovaSezione(config, sectionName);
+bool cancellaSezione(Configurazione& config, const std::string& sectionName) {
+    const Sezione* sect = trovaSezione(config, sectionName);
     if (!sect) {
         return false;   // sezione non trovata
     }
 
     // controlliamo che nessun binding di QUESTA sezione sia referenziato da alre parti
-    for (const Binding& b : sect->fields) {
+    for (const Campo& b : sect->fields) {
         if (esisteRiferimentoA(config, sectionName, b.name)) {
             return false;   // la variabile in questa sezione è referenziata da un'altra sezione, non la cancelliamo
         }

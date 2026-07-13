@@ -3,8 +3,8 @@
 #include "Parser.H"
 #include "Absyn.H"
 #include "ParserError.H"
-#include "Build.h"
-#include "PrettyPrint.h"
+#include "Costruzione.h"
+#include "StampaFormattata.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {
@@ -37,8 +37,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    MyConfig config = build(conf);
-    abbinaCommenti(config);
+    Configurazione config = build(conf);
 
     std::cout << prettyPrint(config);
 

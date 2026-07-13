@@ -11,7 +11,7 @@
 %lex-param   { yyscan_t scanner }
 %parse-param { yyscan_t scanner }
 
-/* Turn on line/column tracking in the config_lloc structure: */
+/* Turn on line/column tracking in the grammatica_lloc structure: */
 %locations
 
 /* Argument to the parser to be filled with the parsed tree. */
@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Absyn.H"
-#include "Positions.h"
+#include "Posizioni.h"
 
 #define YYMAXDEPTH 10000000
 
@@ -38,13 +38,13 @@ typedef void* yyscan_t;
 #endif
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
-extern YY_BUFFER_STATE config__scan_string(const char *str, yyscan_t scanner);
-extern void config__delete_buffer(YY_BUFFER_STATE buf, yyscan_t scanner);
+extern YY_BUFFER_STATE grammatica__scan_string(const char *str, yyscan_t scanner);
+extern void grammatica__delete_buffer(YY_BUFFER_STATE buf, yyscan_t scanner);
 
-extern int config_lex_destroy(yyscan_t scanner);
-extern char* config_get_text(yyscan_t scanner);
+extern int grammatica_lex_destroy(yyscan_t scanner);
+extern char* grammatica_get_text(yyscan_t scanner);
 
-extern yyscan_t config__initialize_lexer(FILE * inp);
+extern yyscan_t grammatica__initialize_lexer(FILE * inp);
 
 /* End C preamble code */
 %}
@@ -76,7 +76,7 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, YYSTYPE *result, const char *msg)
     error_msg += oss.str();
   }
   if (scanner) {
-    error_msg += ": '" + std::string(config_get_text(scanner)) + "'";
+    error_msg += ": '" + std::string(grammatica_get_text(scanner)) + "'";
   }
   throw parse_error(loc ? loc->first_line : -1, error_msg);
 }
@@ -117,7 +117,7 @@ extern int yylex(YYSTYPE *lvalp, YYLTYPE *llocp, yyscan_t scanner);
 
 Config : ListSection { $$ = new Conf($1); result->config_ = $$; }
 ;
-Section : _LT _KW_section _KW_name _EQ _IDENT_ _GT ListField _SYMB_3 _KW_section _GT { Sect* tmp = new Sect($5, $7); $$ = tmp; result->section_ = $$; registraRigaSezione(tmp, @$.first_line); }
+Section : _LT _KW_section _KW_name _EQ _IDENT_ _GT ListField _SYMB_3 _KW_section _GT { Sect* tmp = new Sect($5, $7); $$ = tmp; result->section_ = $$; registraRigaSezione(tmp, @$.first_line); registraChiusuraSezione(tmp, @$.last_line); }
 ;
 Field : _LT _KW_field _KW_name _EQ _IDENT_ _GT Value _SYMB_3 _KW_field _GT { Fld* tmp = new Fld($5, $7); $$ = tmp; result->field_ = $$; registraRigaField(tmp, @$.first_line); }
 ;
@@ -126,8 +126,8 @@ Value : _INTEGER_ { $$ = new VInt($1); result->value_ = $$; }
   | _STRING_ { $$ = new VStr($1); result->value_ = $$; }
   | Ref { $$ = new VRef($1); result->value_ = $$; }
 ;
-Ref : _DOLLAR _IDENT_ { $$ = new RefLocal($2); result->ref_ = $$; }
-  | _DOLLAR _IDENT_ _DOT _IDENT_ { $$ = new RefQual($2, $4); result->ref_ = $$; }
+Ref : _DOLLAR _IDENT_ { $$ = new RiferimentoSemplice($2); result->ref_ = $$; }
+  | _DOLLAR _IDENT_ _DOT _IDENT_ { $$ = new RiferimentoConSezione($2, $4); result->ref_ = $$; }
 ;
 Boolean : _KW_true { $$ = new BTrue(); result->boolean_ = $$; }
   | _KW_false { $$ = new BFalse(); result->boolean_ = $$; }
@@ -146,13 +146,13 @@ ListField : /* empty */ { $$ = new ListField(); result->listfield_ = $$; }
 Config* pConfig(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -167,15 +167,15 @@ Config* pConfig(FILE *inp)
 Config* pConfig(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -190,13 +190,13 @@ Config* pConfig(const char *str)
 Section* pSection(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -211,15 +211,15 @@ Section* pSection(FILE *inp)
 Section* pSection(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -234,13 +234,13 @@ Section* pSection(const char *str)
 Field* pField(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -255,15 +255,15 @@ Field* pField(FILE *inp)
 Field* pField(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -278,13 +278,13 @@ Field* pField(const char *str)
 Value* pValue(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -299,15 +299,15 @@ Value* pValue(FILE *inp)
 Value* pValue(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -322,13 +322,13 @@ Value* pValue(const char *str)
 Ref* pRef(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -343,15 +343,15 @@ Ref* pRef(FILE *inp)
 Ref* pRef(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -366,13 +366,13 @@ Ref* pRef(const char *str)
 Boolean* pBoolean(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -387,15 +387,15 @@ Boolean* pBoolean(FILE *inp)
 Boolean* pBoolean(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -410,13 +410,13 @@ Boolean* pBoolean(const char *str)
 ListSection* pListSection(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -431,15 +431,15 @@ ListSection* pListSection(FILE *inp)
 ListSection* pListSection(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -454,13 +454,13 @@ ListSection* pListSection(const char *str)
 ListField* pListField(FILE *inp)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(inp);
+  yyscan_t scanner = grammatica__initialize_lexer(inp);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
   int error = yyparse(scanner, &result);
-  config_lex_destroy(scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;
@@ -475,15 +475,15 @@ ListField* pListField(FILE *inp)
 ListField* pListField(const char *str)
 {
   YYSTYPE result;
-  yyscan_t scanner = config__initialize_lexer(0);
+  yyscan_t scanner = grammatica__initialize_lexer(0);
   if (!scanner) {
     fprintf(stderr, "Failed to initialize lexer.\n");
     return 0;
   }
-  YY_BUFFER_STATE buf = config__scan_string(str, scanner);
+  YY_BUFFER_STATE buf = grammatica__scan_string(str, scanner);
   int error = yyparse(scanner, &result);
-  config__delete_buffer(buf, scanner);
-  config_lex_destroy(scanner);
+  grammatica__delete_buffer(buf, scanner);
+  grammatica_lex_destroy(scanner);
   if (error)
   { /* Failure */
     return 0;

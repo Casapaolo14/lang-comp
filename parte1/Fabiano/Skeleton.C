@@ -75,20 +75,20 @@ void Skeleton::visitVRef(VRef *v_ref)
 
 }
 
-void Skeleton::visitRefLocal(RefLocal *ref_local)
+void Skeleton::visitRiferimentoSemplice(RiferimentoSemplice *riferimento_semplice)
 {
-  /* Code For RefLocal Goes Here */
+  /* Code For RiferimentoSemplice Goes Here */
 
-  visitIdent(ref_local->ident_);
+  visitIdent(riferimento_semplice->ident_);
 
 }
 
-void Skeleton::visitRefQual(RefQual *ref_qual)
+void Skeleton::visitRiferimentoConSezione(RiferimentoConSezione *riferimento_con_sezione)
 {
-  /* Code For RefQual Goes Here */
+  /* Code For RiferimentoConSezione Goes Here */
 
-  visitIdent(ref_qual->ident_1);
-  visitIdent(ref_qual->ident_2);
+  visitIdent(riferimento_con_sezione->ident_1);
+  visitIdent(riferimento_con_sezione->ident_2);
 
 }
 

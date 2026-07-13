@@ -11,9 +11,9 @@
 %{
 #include "Absyn.H"
 #include "Bison.H"
-#include "Comments.h"
+#include "Commenti.h"
 
-#define initialize_lexer config__initialize_lexer
+#define initialize_lexer grammatica__initialize_lexer
 
 /* BEGIN extensible string buffer */
 

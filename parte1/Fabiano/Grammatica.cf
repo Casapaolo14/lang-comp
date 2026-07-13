@@ -9,8 +9,8 @@ VBool.      Value     ::= Boolean ;
 VStr.       Value     ::= String ;
 VRef.       Value     ::= Ref ;
 
-RefLocal.   Ref        ::= "$" Ident ;
-RefQual.    Ref        ::= "$" Ident "." Ident ;
+RiferimentoSemplice.    Ref        ::= "$" Ident ;
+RiferimentoConSezione.  Ref        ::= "$" Ident "." Ident ;
 
 BTrue.      Boolean   ::= "true" ;
 BFalse.     Boolean   ::= "false" ;

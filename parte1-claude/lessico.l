@@ -3,8 +3,8 @@
 %option noyywrap nounput noinput yylineno
 
 %{
-#include "config.h"
-#include "parser.tab.hpp"
+#include "configurazione.h"
+#include "grammatica.tab.hpp"
 
 #include <cstdlib>
 #include <cstring>

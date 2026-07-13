@@ -47,8 +47,8 @@ class PrintAbsyn : public Visitor
   void visitVStr(VStr *p);
   void visitVRef(VRef *p);
   void visitRef(Ref *p); /* abstract class */
-  void visitRefLocal(RefLocal *p);
-  void visitRefQual(RefQual *p);
+  void visitRiferimentoSemplice(RiferimentoSemplice *p);
+  void visitRiferimentoConSezione(RiferimentoConSezione *p);
   void visitBoolean(Boolean *p); /* abstract class */
   void visitBTrue(BTrue *p);
   void visitBFalse(BFalse *p);
@@ -162,8 +162,8 @@ class ShowAbsyn : public Visitor
   void visitVStr(VStr *p);
   void visitVRef(VRef *p);
   void visitRef(Ref *p); /* abstract class */
-  void visitRefLocal(RefLocal *p);
-  void visitRefQual(RefQual *p);
+  void visitRiferimentoSemplice(RiferimentoSemplice *p);
+  void visitRiferimentoConSezione(RiferimentoConSezione *p);
   void visitBoolean(Boolean *p); /* abstract class */
   void visitBTrue(BTrue *p);
   void visitBFalse(BFalse *p);

@@ -2,9 +2,9 @@
 #include "Parser.H"
 #include "Absyn.H"
 #include "ParserError.H"
-#include "Build.h"
-#include "Resolve.h"
-#include "Delete.h"
+#include "Costruzione.h"
+#include "Risoluzione.h"
+#include "Cancellazione.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {
@@ -27,13 +27,13 @@ int main(int argc, char** argv) {
     }
 
     Conf* conf = dynamic_cast<Conf*>(parse_tree);
-    MyConfig config = build(conf);
+    Configurazione config = build(conf);
 
     std::cout << "Test resolve() su tutte le variabili:" << std::endl;
-    for (const MySection& s : config.sections) {
-        for (const Binding& b : s.fields) {
+    for (const Sezione& s : config.sections) {
+        for (const Campo& b : s.fields) {
             try {
-                MyValue v = resolve(config, s.name, b.name);
+                Valore v = resolve(config, s.name, b.name);
                 std::cout << "  " << s.name << "." << b.name << " risolve correttamente" << std::endl;
             } catch (std::runtime_error& e) {
                 std::cout << "  " << s.name << "." << b.name << " -> ERRORE: " << e.what() << std::endl;

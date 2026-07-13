@@ -1,7 +1,7 @@
 /* Parser for the XML-like configuration language (alternative 1: references
  * are resolved here, the structure holds base values only). */
 %{
-#include "config.h"
+#include "configurazione.h"
 
 #include <cstdio>
 #include <cstdlib>

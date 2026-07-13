@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARSER_TAB_HPP_INCLUDED
-# define YY_YY_PARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_GRAMMATICA_TAB_HPP_INCLUDED
+# define YY_YY_GRAMMATICA_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -69,14 +69,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 17 "parser.y"
+#line 17 "grammatica.y"
 
     long num;
     bool boolean;
     char *str;
     Value *val;
 
-#line 80 "parser.tab.hpp"
+#line 80 "grammatica.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -105,4 +105,4 @@ extern YYLTYPE yylloc;
 int yyparse (void);
 
 
-#endif /* !YY_YY_PARSER_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_GRAMMATICA_TAB_HPP_INCLUDED  */

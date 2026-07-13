@@ -1,12 +1,12 @@
-#include "Resolve.h"
+#include "Risoluzione.h"
 #include <stdexcept>
 #include <set>
 
 /* Funzione trovaSezione: cerca linearmente la sezione con nome sectionName.
 Restituisce nullptr se non esiste.
 */
-const MySection* trovaSezione(const MyConfig& config, const std::string& sectionName) {
-    for (const MySection& s : config.sections) {
+const Sezione* trovaSezione(const Configurazione& config, const std::string& sectionName) {
+    for (const Sezione& s : config.sections) {
         if (s.name == sectionName) {
             return &s;
         }
@@ -14,11 +14,11 @@ const MySection* trovaSezione(const MyConfig& config, const std::string& section
     return nullptr;
 }
 
-/* Funzione trovaBinding: cerca linearmente, dentro una sezione già trovata,
+/* Funzione trovaCampo: cerca linearmente, dentro una sezione già trovata,
 il binding con nome varName. Restituisce nullptr se non esiste.
 */
-const Binding* trovaBinding(const MySection& sect, const std::string& varName) {
-    for (const Binding& b : sect.fields) {
+const Campo* trovaCampo(const Sezione& sect, const std::string& varName) {
+    for (const Campo& b : sect.fields) {
         if (b.name == varName) {
             return &b;
         }
@@ -32,7 +32,7 @@ la coppia corrente viene marcata come "visitata" in una chiave testuale "sezione
 se si ripresenta la stessa chiave significa che c'è un ciclo, e si lancia un'eccezione.
 Lancia eccezioni anche se la sezione o la variabile cercata non esistono.
 */
-MyValue resolve(const MyConfig& config, const std::string& sectionName, const std::string& varName) {
+Valore resolve(const Configurazione& config, const std::string& sectionName, const std::string& varName) {
     std::set<std::string> visitati;   // per rilevare cicli
 
     std::string currentSection = sectionName;
@@ -45,26 +45,26 @@ MyValue resolve(const MyConfig& config, const std::string& sectionName, const st
         }
         visitati.insert(chiave);
 
-        const MySection* sect = trovaSezione(config, currentSection);
+        const Sezione* sect = trovaSezione(config, currentSection);
         if (!sect) {
             throw std::runtime_error("Sezione non trovata: " + currentSection);
         }
 
-        const Binding* b = trovaBinding(*sect, currentName);
+        const Campo* b = trovaCampo(*sect, currentName);
         if (!b) {
             throw std::runtime_error("Variabile non trovata: " + currentName + " in " + currentSection);
         }
 
-        const MyValue& v = b->value;
+        const Valore& v = b->value;
 
         if (v.kind == ValueKind::Int || v.kind == ValueKind::Bool || v.kind == ValueKind::Str) {
             return v;   // valore base, fine della catena
         }
-        else if (v.kind == ValueKind::RefLocal) {
+        else if (v.kind == ValueKind::RiferimentoSemplice) {
             currentName = v.refName;
             // currentSection resta la stessa
         }
-        else if (v.kind == ValueKind::RefQual) {
+        else if (v.kind == ValueKind::RiferimentoConSezione) {
             currentSection = v.refSection;
             currentName = v.refName;
         }

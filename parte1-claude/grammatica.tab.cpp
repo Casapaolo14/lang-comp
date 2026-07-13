@@ -67,9 +67,9 @@
 
 
 /* First part of user prologue.  */
-#line 3 "parser.y"
+#line 3 "grammatica.y"
 
-#include "config.h"
+#include "configurazione.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -79,7 +79,7 @@ void yyerror(const char *msg);
 
 Config cfg; /* parse result, read by main */
 
-#line 83 "parser.tab.cpp"
+#line 83 "grammatica.tab.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -102,7 +102,7 @@ Config cfg; /* parse result, read by main */
 #  endif
 # endif
 
-#include "parser.tab.hpp"
+#include "grammatica.tab.hpp"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1207,56 +1207,56 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* section: sectionhead fields '<' '/' SECTION '>'  */
-#line 37 "parser.y"
+#line 37 "grammatica.y"
               { cfg.sections.back().endLine = (yylsp[0]).first_line; }
-#line 1213 "parser.tab.cpp"
+#line 1213 "grammatica.tab.cpp"
     break;
 
   case 5: /* sectionhead: '<' SECTION NAME '=' IDENT '>'  */
-#line 44 "parser.y"
+#line 44 "grammatica.y"
                   { addSection(cfg, (yyvsp[-1].str), (yylsp[-1]).first_line); free((yyvsp[-1].str)); }
-#line 1219 "parser.tab.cpp"
+#line 1219 "grammatica.tab.cpp"
     break;
 
   case 8: /* field: '<' FIELD NAME '=' IDENT '>' value '<' '/' FIELD '>'  */
-#line 52 "parser.y"
+#line 52 "grammatica.y"
             { addBinding(cfg, (yyvsp[-6].str), (yyvsp[-4].val), (yylsp[-6]).first_line); free((yyvsp[-6].str)); }
-#line 1225 "parser.tab.cpp"
+#line 1225 "grammatica.tab.cpp"
     break;
 
   case 9: /* value: INT  */
-#line 55 "parser.y"
+#line 55 "grammatica.y"
                             { (yyval.val) = mkInt((yyvsp[0].num)); }
-#line 1231 "parser.tab.cpp"
+#line 1231 "grammatica.tab.cpp"
     break;
 
   case 10: /* value: BOOL  */
-#line 56 "parser.y"
+#line 56 "grammatica.y"
                             { (yyval.val) = mkBool((yyvsp[0].boolean)); }
-#line 1237 "parser.tab.cpp"
+#line 1237 "grammatica.tab.cpp"
     break;
 
   case 11: /* value: STRING  */
-#line 57 "parser.y"
+#line 57 "grammatica.y"
                             { (yyval.val) = mkStr((yyvsp[0].str)); free((yyvsp[0].str)); }
-#line 1243 "parser.tab.cpp"
+#line 1243 "grammatica.tab.cpp"
     break;
 
   case 12: /* value: '$' IDENT  */
-#line 58 "parser.y"
+#line 58 "grammatica.y"
                             { (yyval.val) = resolveRef(cfg, nullptr, (yyvsp[0].str), (yylsp[0]).first_line); free((yyvsp[0].str)); }
-#line 1249 "parser.tab.cpp"
+#line 1249 "grammatica.tab.cpp"
     break;
 
   case 13: /* value: '$' IDENT '.' IDENT  */
-#line 59 "parser.y"
+#line 59 "grammatica.y"
                             { (yyval.val) = resolveRef(cfg, (yyvsp[-2].str), (yyvsp[0].str), (yylsp[-2]).first_line);
                               free((yyvsp[-2].str)); free((yyvsp[0].str)); }
-#line 1256 "parser.tab.cpp"
+#line 1256 "grammatica.tab.cpp"
     break;
 
 
-#line 1260 "parser.tab.cpp"
+#line 1260 "grammatica.tab.cpp"
 
       default: break;
     }
@@ -1454,7 +1454,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 63 "parser.y"
+#line 63 "grammatica.y"
 
 
 void yyerror(const char *msg) {

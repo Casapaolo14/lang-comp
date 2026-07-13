@@ -1,6 +1,6 @@
-#line 2 "lex.yy.cpp"
+#line 2 "lessico.yy.cpp"
 
-#line 4 "lex.yy.cpp"
+#line 4 "lessico.yy.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -494,20 +494,20 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lexer.l"
+#line 1 "lessico.l"
 /* Lexer for the XML-like configuration language. Comments are not turned
  * into tokens: they are saved (with their line) for the pretty-printer. */
 #define YY_NO_INPUT 1
-#line 6 "lexer.l"
-#include "config.h"
-#include "parser.tab.hpp"
+#line 6 "lessico.l"
+#include "configurazione.h"
+#include "grammatica.tab.hpp"
 
 #include <cstdlib>
 #include <cstring>
 
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
-#line 510 "lex.yy.cpp"
-#line 511 "lex.yy.cpp"
+#line 510 "lessico.yy.cpp"
+#line 511 "lessico.yy.cpp"
 
 #define INITIAL 0
 
@@ -722,10 +722,10 @@ YY_DECL
 		}
 
 	{
-#line 15 "lexer.l"
+#line 15 "lessico.l"
 
 
-#line 729 "lex.yy.cpp"
+#line 729 "lessico.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -795,72 +795,72 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 17 "lexer.l"
+#line 17 "lessico.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 18 "lexer.l"
+#line 18 "lessico.l"
 saveComment(yylineno, yytext);
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "lexer.l"
+#line 19 "lessico.l"
 return SECTION;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 20 "lexer.l"
+#line 20 "lessico.l"
 return FIELD;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 21 "lexer.l"
+#line 21 "lessico.l"
 return NAME;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 22 "lexer.l"
+#line 22 "lessico.l"
 { yylval.boolean = true;  return BOOL; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "lexer.l"
+#line 23 "lessico.l"
 { yylval.boolean = false; return BOOL; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 24 "lexer.l"
+#line 24 "lessico.l"
 { yylval.num = atol(yytext); return INT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 25 "lexer.l"
+#line 25 "lessico.l"
 { yylval.str = strdup(yytext); return IDENT; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 26 "lexer.l"
+#line 26 "lessico.l"
 { yylval.str = strndup(yytext + 1, yyleng - 2); return STRING; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 27 "lessico.l"
 return yytext[0];
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 28 "lexer.l"
+#line 28 "lessico.l"
 { fprintf(stderr, "error: line %d: unexpected character '%s'\n",
                                   yylineno, yytext);
                           exit(1); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 32 "lexer.l"
+#line 32 "lessico.l"
 ECHO;
 	YY_BREAK
-#line 864 "lex.yy.cpp"
+#line 864 "lessico.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1836,6 +1836,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 32 "lexer.l"
+#line 32 "lessico.l"
 
 

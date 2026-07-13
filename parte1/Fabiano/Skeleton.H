@@ -23,8 +23,8 @@ public:
   void visitVBool(VBool *p);
   void visitVStr(VStr *p);
   void visitVRef(VRef *p);
-  void visitRefLocal(RefLocal *p);
-  void visitRefQual(RefQual *p);
+  void visitRiferimentoSemplice(RiferimentoSemplice *p);
+  void visitRiferimentoConSezione(RiferimentoConSezione *p);
   void visitBTrue(BTrue *p);
   void visitBFalse(BFalse *p);
   void visitListSection(ListSection *p);

@@ -2,19 +2,19 @@
 CXX      = g++
 CXXFLAGS = -std=c++17 -Wall
 EXE      = confparser
-SRCS     = parser.tab.cpp lex.yy.cpp config.cpp main.cpp
+SRCS     = grammatica.tab.cpp lessico.yy.cpp configurazione.cpp main.cpp
 
 all: $(EXE)
 
-$(EXE): $(SRCS) config.h
+$(EXE): $(SRCS) configurazione.h
 	$(CXX) $(CXXFLAGS) -o $@ $(SRCS)
 
-# Bison first: it also generates parser.tab.hpp, needed by the lexer.
-parser.tab.cpp parser.tab.hpp: parser.y
-	bison -d -o parser.tab.cpp parser.y
+# Bison first: it also generates grammatica.tab.hpp, needed by the lexer.
+grammatica.tab.cpp grammatica.tab.hpp: grammatica.y
+	bison -d -o grammatica.tab.cpp grammatica.y
 
-lex.yy.cpp: lexer.l parser.tab.hpp
-	flex -o $@ lexer.l
+lessico.yy.cpp: lessico.l grammatica.tab.hpp
+	flex -o $@ lessico.l
 
 demo: $(EXE)
 	@echo "=== example from the assignment: parse + serialization (comments preserved) ==="
@@ -39,6 +39,6 @@ demo: $(EXE)
 	rm -f out1.tmp out2.tmp
 
 clean:
-	rm -f $(EXE) parser.tab.cpp parser.tab.hpp lex.yy.cpp out1.tmp out2.tmp
+	rm -f $(EXE) grammatica.tab.cpp grammatica.tab.hpp lessico.yy.cpp out1.tmp out2.tmp
 
 .PHONY: all demo clean
