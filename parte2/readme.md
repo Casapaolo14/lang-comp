@@ -20,7 +20,7 @@ Cosa fare:
 ---
 
 ## Step 2 — Sintassi concreta/astratta + prototipo BNFC
-**Stato: 🔄 in corso (si riscrive pezzo per pezzo)**
+**Stato: ✅ completato** (`Linguaggio.cf`: 0 conflitti shift/reduce, testato con precedenza, dangling-else, array-di-puntatori, l-expr composte)
 **Pagine:** 29–52
 **Durata stimata:** 3–5 h
 
@@ -34,6 +34,7 @@ Cosa fare:
 ---
 
 ## Step 3 — Lexer con Alex
+**Stato: 🔄 in corso**
 **Pagine:** 132–154
 **Durata stimata:** 2–3 h
 
