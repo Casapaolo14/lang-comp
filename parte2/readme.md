@@ -20,7 +20,7 @@ Cosa fare:
 ---
 
 ## Step 2 — Sintassi concreta/astratta + prototipo BNFC
-**Stato: ✅ completato** (`Linguaggio.cf`: 0 conflitti shift/reduce, testato con precedenza, dangling-else, array-di-puntatori, l-expr composte)
+**Stato: ✅ completato e validato in locale dall'utente** (`bnfc`+`make`: 68 rules accepted, 0 conflitti shift/reduce; 4 test case eseguiti — precedenza, dangling-else, array-di-puntatori/l-expr composte P9, programma completo — tutti con AST corretto, output confermato via terminale dell'utente)
 **Pagine:** 29–52
 **Durata stimata:** 3–5 h
 
