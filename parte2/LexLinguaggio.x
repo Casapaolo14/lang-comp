@@ -43,7 +43,7 @@ $l $i*
     { tok (\p s -> PT p (TC s))  }
 $d+
     { tok (\p s -> PT p (TI s))    }
-$d+ \. $d+ (e (\-)? $d+)?
+$d+ \. $d+ ([eE] [\+\-]? $d+)?
     { tok (\p s -> PT p (TD s)) }
 
 {

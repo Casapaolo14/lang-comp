@@ -1,0 +1,10 @@
+// programma di verifica finale lexer
+var soglia: real = 2.5E-3; /* notazione scientifica,
+   commento multi-riga */
+var messaggio: string = "riga1\nriga2\ttab \"quotato\"";
+var proc_counter: int = 0;  // identificatore con prefisso keyword
+
+proc main(): void {
+    writeString(messaggio);
+    writeReal(soglia);
+}
