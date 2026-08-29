@@ -34,7 +34,7 @@ Cosa fare:
 ---
 
 ## Step 3 — Lexer con Alex
-**Stato: 🔄 in corso**
+**Stato: ✅ completato e validato in locale dall'utente** (P1/P2 corretti di default; P3 — notazione scientifica — richiedeva un fix manuale alla regex `Double` in `LexLinguaggio.x`, applicato e verificato con `e`/`E`/`+`/`-`; maximal munch keyword-vs-identificatori verificato; test finale integrato con commenti multi-riga, escape, notazione scientifica e identificatore con prefisso keyword insieme — tutti superati; toolchain fissata a GHC 9.2.8 + BNFC 2.9.1 esatti, come richiesto dal testo)
 **Pagine:** 132–154
 **Durata stimata:** 2–3 h
 
@@ -46,6 +46,7 @@ Cosa fare:
 ---
 
 ## Step 4 — Parser Happy monadico + AST definitiva
+**Stato: ✅ completato (solo verifica, nessuna modifica al codice necessaria)** — `%monad`/`Err = Either String` già puro (niente `IORef`/`STRef`); `happyError` testato su 3 casi reali (token inatteso, punto e virgola mancante, EOF) e giudicato adeguato; scelta motivata di non implementare `catch`/error-recovery di Happy (coerente con le raccomandazioni del corso); `AbsLinguaggio.hs` verificato conforme al design (`Exp` unificata, livelli di precedenza scomparsi dopo `coercions`, come atteso)
 **Pagine:** 155–177, 265–267, 268–297, 298–307, 381–390
 **Durata stimata:** 4–6 h
 
@@ -58,6 +59,7 @@ Cosa fare:
 ---
 
 ## Step 5 — Visibilità e progettazione del sistema di tipi
+**Stato: 🔄 prossimo**
 **Pagine:** 305–347
 **Durata stimata:** 2–3 h
 
