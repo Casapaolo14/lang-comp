@@ -59,8 +59,8 @@ Cosa fare:
 ---
 
 ## Step 5 — Visibilità e progettazione del sistema di tipi
-**Stato: 🔄 prossimo**
-**Pagine:** 305–347
+**Stato: ✅ completato (design)** — visibilità dal punto di dichiarazione a fine blocco + doppio passaggio per mutua ricorsione, scoping statico; compatibilità tipi semplici (solo INT→REAL, ERROR assorbente, grafo disegnato); compatibilità array/puntatori (invarianza totale, nessun widening); regole parametri T6 (valore, compatibile)/T7 (riferimento, identico + l-expr); principi T1/T2/T4/S1/S2/S3 applicati (AST aumentata con tipi, nodi di cast espliciti, ambiente esplicito senza stack, array a inizializzazione obbligatoria — nota: solo per copia/chiamata funzione, niente letterali array in grammatica)
+**Pagine:** 305–307, 308–334, 358–363
 **Durata stimata:** 2–3 h
 
 Cosa fare:
@@ -71,6 +71,7 @@ Cosa fare:
 ---
 
 ## Step 6 — Type checker (implementazione)
+**Stato: 🔄 prossimo**
 **Pagine:** 348–363
 **Durata stimata:** 6–10 h
 
