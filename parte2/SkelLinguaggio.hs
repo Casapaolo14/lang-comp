@@ -17,76 +17,76 @@ transIdent :: AbsLinguaggio.Ident -> Result
 transIdent x = case x of
   AbsLinguaggio.Ident string -> failure x
 
-transProgram :: AbsLinguaggio.Program -> Result
+transProgram :: Show a => AbsLinguaggio.Program' a -> Result
 transProgram x = case x of
-  AbsLinguaggio.Prog topdecls -> failure x
+  AbsLinguaggio.Prog _ topdecls -> failure x
 
-transTopDecl :: AbsLinguaggio.TopDecl -> Result
+transTopDecl :: Show a => AbsLinguaggio.TopDecl' a -> Result
 transTopDecl x = case x of
-  AbsLinguaggio.DVar ident type_ -> failure x
-  AbsLinguaggio.DVarInit ident type_ exp -> failure x
-  AbsLinguaggio.DProc ident params type_ block -> failure x
+  AbsLinguaggio.DVar _ ident type_ -> failure x
+  AbsLinguaggio.DVarInit _ ident type_ exp -> failure x
+  AbsLinguaggio.DProc _ ident params type_ block -> failure x
 
-transParam :: AbsLinguaggio.Param -> Result
+transParam :: Show a => AbsLinguaggio.Param' a -> Result
 transParam x = case x of
-  AbsLinguaggio.Par intent ident type_ -> failure x
+  AbsLinguaggio.Par _ intent ident type_ -> failure x
 
-transIntent :: AbsLinguaggio.Intent -> Result
+transIntent :: Show a => AbsLinguaggio.Intent' a -> Result
 transIntent x = case x of
-  AbsLinguaggio.IIn -> failure x
-  AbsLinguaggio.IRef -> failure x
+  AbsLinguaggio.IIn _ -> failure x
+  AbsLinguaggio.IRef _ -> failure x
 
-transType :: AbsLinguaggio.Type -> Result
+transType :: Show a => AbsLinguaggio.Type' a -> Result
 transType x = case x of
-  AbsLinguaggio.TInt -> failure x
-  AbsLinguaggio.TBool -> failure x
-  AbsLinguaggio.TReal -> failure x
-  AbsLinguaggio.TChar -> failure x
-  AbsLinguaggio.TStr -> failure x
-  AbsLinguaggio.TVoid -> failure x
-  AbsLinguaggio.TArr integer1 integer2 type_ -> failure x
-  AbsLinguaggio.TPtr type_ -> failure x
+  AbsLinguaggio.TInt _ -> failure x
+  AbsLinguaggio.TBool _ -> failure x
+  AbsLinguaggio.TReal _ -> failure x
+  AbsLinguaggio.TChar _ -> failure x
+  AbsLinguaggio.TStr _ -> failure x
+  AbsLinguaggio.TVoid _ -> failure x
+  AbsLinguaggio.TArr _ integer1 integer2 type_ -> failure x
+  AbsLinguaggio.TPtr _ type_ -> failure x
 
-transBlock :: AbsLinguaggio.Block -> Result
+transBlock :: Show a => AbsLinguaggio.Block' a -> Result
 transBlock x = case x of
-  AbsLinguaggio.BBlock stmts -> failure x
+  AbsLinguaggio.BBlock _ stmts -> failure x
 
-transStmt :: AbsLinguaggio.Stmt -> Result
+transStmt :: Show a => AbsLinguaggio.Stmt' a -> Result
 transStmt x = case x of
-  AbsLinguaggio.SBlock block -> failure x
-  AbsLinguaggio.SAssign exp1 exp2 -> failure x
-  AbsLinguaggio.SCall ident exps -> failure x
-  AbsLinguaggio.SReturn exp -> failure x
-  AbsLinguaggio.SReturnV -> failure x
-  AbsLinguaggio.SDecl topdecl -> failure x
-  AbsLinguaggio.SIf exp block -> failure x
-  AbsLinguaggio.SIfElse exp block1 block2 -> failure x
-  AbsLinguaggio.SWhile exp block -> failure x
+  AbsLinguaggio.SBlock _ block -> failure x
+  AbsLinguaggio.SAssign _ exp1 exp2 -> failure x
+  AbsLinguaggio.SCall _ ident exps -> failure x
+  AbsLinguaggio.SReturn _ exp -> failure x
+  AbsLinguaggio.SReturnV _ -> failure x
+  AbsLinguaggio.SDecl _ topdecl -> failure x
+  AbsLinguaggio.SIf _ exp block -> failure x
+  AbsLinguaggio.SIfElse _ exp block1 block2 -> failure x
+  AbsLinguaggio.SWhile _ exp block -> failure x
 
-transExp :: AbsLinguaggio.Exp -> Result
+transExp :: Show a => AbsLinguaggio.Exp' a -> Result
 transExp x = case x of
-  AbsLinguaggio.EOr exp1 exp2 -> failure x
-  AbsLinguaggio.EAnd exp1 exp2 -> failure x
-  AbsLinguaggio.EEq exp1 exp2 -> failure x
-  AbsLinguaggio.ENeq exp1 exp2 -> failure x
-  AbsLinguaggio.ELt exp1 exp2 -> failure x
-  AbsLinguaggio.ELe exp1 exp2 -> failure x
-  AbsLinguaggio.EGt exp1 exp2 -> failure x
-  AbsLinguaggio.EGe exp1 exp2 -> failure x
-  AbsLinguaggio.EAdd exp1 exp2 -> failure x
-  AbsLinguaggio.ESub exp1 exp2 -> failure x
-  AbsLinguaggio.EMul exp1 exp2 -> failure x
-  AbsLinguaggio.EDiv exp1 exp2 -> failure x
-  AbsLinguaggio.ENeg exp -> failure x
-  AbsLinguaggio.ENot exp -> failure x
-  AbsLinguaggio.EDeref exp -> failure x
-  AbsLinguaggio.EAddr exp -> failure x
-  AbsLinguaggio.EIdx exp1 exp2 -> failure x
-  AbsLinguaggio.ECall ident exps -> failure x
-  AbsLinguaggio.EVar ident -> failure x
-  AbsLinguaggio.EInt integer -> failure x
-  AbsLinguaggio.EReal double -> failure x
-  AbsLinguaggio.EChar char -> failure x
-  AbsLinguaggio.EStr string -> failure x
-  AbsLinguaggio.ETrue -> failure x
-  AbsLinguaggio.EFalse -> failure x
+  AbsLinguaggio.EOr _ exp1 exp2 -> failure x
+  AbsLinguaggio.EAnd _ exp1 exp2 -> failure x
+  AbsLinguaggio.EEq _ exp1 exp2 -> failure x
+  AbsLinguaggio.ENeq _ exp1 exp2 -> failure x
+  AbsLinguaggio.ELt _ exp1 exp2 -> failure x
+  AbsLinguaggio.ELe _ exp1 exp2 -> failure x
+  AbsLinguaggio.EGt _ exp1 exp2 -> failure x
+  AbsLinguaggio.EGe _ exp1 exp2 -> failure x
+  AbsLinguaggio.EAdd _ exp1 exp2 -> failure x
+  AbsLinguaggio.ESub _ exp1 exp2 -> failure x
+  AbsLinguaggio.EMul _ exp1 exp2 -> failure x
+  AbsLinguaggio.EDiv _ exp1 exp2 -> failure x
+  AbsLinguaggio.ENeg _ exp -> failure x
+  AbsLinguaggio.ENot _ exp -> failure x
+  AbsLinguaggio.EDeref _ exp -> failure x
+  AbsLinguaggio.EAddr _ exp -> failure x
+  AbsLinguaggio.EIdx _ exp1 exp2 -> failure x
+  AbsLinguaggio.ECall _ ident exps -> failure x
+  AbsLinguaggio.EVar _ ident -> failure x
+  AbsLinguaggio.EInt _ integer -> failure x
+  AbsLinguaggio.EReal _ double -> failure x
+  AbsLinguaggio.EChar _ char -> failure x
+  AbsLinguaggio.EStr _ string -> failure x
+  AbsLinguaggio.ETrue _ -> failure x
+  AbsLinguaggio.EFalse _ -> failure x

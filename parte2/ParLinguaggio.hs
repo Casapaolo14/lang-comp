@@ -44,169 +44,169 @@ type HappyAny = Happy_GHC_Exts.Any
 #else
 type HappyAny = forall a . a
 #endif
-newtype HappyWrap5 = HappyWrap5 (AbsLinguaggio.Ident)
-happyIn5 :: (AbsLinguaggio.Ident) -> (HappyAbsSyn )
+newtype HappyWrap5 = HappyWrap5 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Ident))
+happyIn5 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Ident)) -> (HappyAbsSyn )
 happyIn5 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap5 x)
 {-# INLINE happyIn5 #-}
 happyOut5 :: (HappyAbsSyn ) -> HappyWrap5
 happyOut5 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut5 #-}
-newtype HappyWrap6 = HappyWrap6 (Char)
-happyIn6 :: (Char) -> (HappyAbsSyn )
+newtype HappyWrap6 = HappyWrap6 ((AbsLinguaggio.BNFC'Position, Char))
+happyIn6 :: ((AbsLinguaggio.BNFC'Position, Char)) -> (HappyAbsSyn )
 happyIn6 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap6 x)
 {-# INLINE happyIn6 #-}
 happyOut6 :: (HappyAbsSyn ) -> HappyWrap6
 happyOut6 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut6 #-}
-newtype HappyWrap7 = HappyWrap7 (Double)
-happyIn7 :: (Double) -> (HappyAbsSyn )
+newtype HappyWrap7 = HappyWrap7 ((AbsLinguaggio.BNFC'Position, Double))
+happyIn7 :: ((AbsLinguaggio.BNFC'Position, Double)) -> (HappyAbsSyn )
 happyIn7 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap7 x)
 {-# INLINE happyIn7 #-}
 happyOut7 :: (HappyAbsSyn ) -> HappyWrap7
 happyOut7 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut7 #-}
-newtype HappyWrap8 = HappyWrap8 (Integer)
-happyIn8 :: (Integer) -> (HappyAbsSyn )
+newtype HappyWrap8 = HappyWrap8 ((AbsLinguaggio.BNFC'Position, Integer))
+happyIn8 :: ((AbsLinguaggio.BNFC'Position, Integer)) -> (HappyAbsSyn )
 happyIn8 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap8 x)
 {-# INLINE happyIn8 #-}
 happyOut8 :: (HappyAbsSyn ) -> HappyWrap8
 happyOut8 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut8 #-}
-newtype HappyWrap9 = HappyWrap9 (String)
-happyIn9 :: (String) -> (HappyAbsSyn )
+newtype HappyWrap9 = HappyWrap9 ((AbsLinguaggio.BNFC'Position, String))
+happyIn9 :: ((AbsLinguaggio.BNFC'Position, String)) -> (HappyAbsSyn )
 happyIn9 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap9 x)
 {-# INLINE happyIn9 #-}
 happyOut9 :: (HappyAbsSyn ) -> HappyWrap9
 happyOut9 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut9 #-}
-newtype HappyWrap10 = HappyWrap10 (AbsLinguaggio.Program)
-happyIn10 :: (AbsLinguaggio.Program) -> (HappyAbsSyn )
+newtype HappyWrap10 = HappyWrap10 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Program))
+happyIn10 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Program)) -> (HappyAbsSyn )
 happyIn10 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap10 x)
 {-# INLINE happyIn10 #-}
 happyOut10 :: (HappyAbsSyn ) -> HappyWrap10
 happyOut10 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut10 #-}
-newtype HappyWrap11 = HappyWrap11 (AbsLinguaggio.TopDecl)
-happyIn11 :: (AbsLinguaggio.TopDecl) -> (HappyAbsSyn )
+newtype HappyWrap11 = HappyWrap11 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.TopDecl))
+happyIn11 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.TopDecl)) -> (HappyAbsSyn )
 happyIn11 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap11 x)
 {-# INLINE happyIn11 #-}
 happyOut11 :: (HappyAbsSyn ) -> HappyWrap11
 happyOut11 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut11 #-}
-newtype HappyWrap12 = HappyWrap12 ([AbsLinguaggio.TopDecl])
-happyIn12 :: ([AbsLinguaggio.TopDecl]) -> (HappyAbsSyn )
+newtype HappyWrap12 = HappyWrap12 ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.TopDecl]))
+happyIn12 :: ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.TopDecl])) -> (HappyAbsSyn )
 happyIn12 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap12 x)
 {-# INLINE happyIn12 #-}
 happyOut12 :: (HappyAbsSyn ) -> HappyWrap12
 happyOut12 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut12 #-}
-newtype HappyWrap13 = HappyWrap13 (AbsLinguaggio.Param)
-happyIn13 :: (AbsLinguaggio.Param) -> (HappyAbsSyn )
+newtype HappyWrap13 = HappyWrap13 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Param))
+happyIn13 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Param)) -> (HappyAbsSyn )
 happyIn13 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap13 x)
 {-# INLINE happyIn13 #-}
 happyOut13 :: (HappyAbsSyn ) -> HappyWrap13
 happyOut13 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut13 #-}
-newtype HappyWrap14 = HappyWrap14 ([AbsLinguaggio.Param])
-happyIn14 :: ([AbsLinguaggio.Param]) -> (HappyAbsSyn )
+newtype HappyWrap14 = HappyWrap14 ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Param]))
+happyIn14 :: ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Param])) -> (HappyAbsSyn )
 happyIn14 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap14 x)
 {-# INLINE happyIn14 #-}
 happyOut14 :: (HappyAbsSyn ) -> HappyWrap14
 happyOut14 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut14 #-}
-newtype HappyWrap15 = HappyWrap15 (AbsLinguaggio.Intent)
-happyIn15 :: (AbsLinguaggio.Intent) -> (HappyAbsSyn )
+newtype HappyWrap15 = HappyWrap15 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Intent))
+happyIn15 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Intent)) -> (HappyAbsSyn )
 happyIn15 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap15 x)
 {-# INLINE happyIn15 #-}
 happyOut15 :: (HappyAbsSyn ) -> HappyWrap15
 happyOut15 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut15 #-}
-newtype HappyWrap16 = HappyWrap16 (AbsLinguaggio.Type)
-happyIn16 :: (AbsLinguaggio.Type) -> (HappyAbsSyn )
+newtype HappyWrap16 = HappyWrap16 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Type))
+happyIn16 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Type)) -> (HappyAbsSyn )
 happyIn16 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap16 x)
 {-# INLINE happyIn16 #-}
 happyOut16 :: (HappyAbsSyn ) -> HappyWrap16
 happyOut16 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut16 #-}
-newtype HappyWrap17 = HappyWrap17 (AbsLinguaggio.Block)
-happyIn17 :: (AbsLinguaggio.Block) -> (HappyAbsSyn )
+newtype HappyWrap17 = HappyWrap17 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Block))
+happyIn17 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Block)) -> (HappyAbsSyn )
 happyIn17 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap17 x)
 {-# INLINE happyIn17 #-}
 happyOut17 :: (HappyAbsSyn ) -> HappyWrap17
 happyOut17 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut17 #-}
-newtype HappyWrap18 = HappyWrap18 ([AbsLinguaggio.Stmt])
-happyIn18 :: ([AbsLinguaggio.Stmt]) -> (HappyAbsSyn )
+newtype HappyWrap18 = HappyWrap18 ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Stmt]))
+happyIn18 :: ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Stmt])) -> (HappyAbsSyn )
 happyIn18 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap18 x)
 {-# INLINE happyIn18 #-}
 happyOut18 :: (HappyAbsSyn ) -> HappyWrap18
 happyOut18 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut18 #-}
-newtype HappyWrap19 = HappyWrap19 (AbsLinguaggio.Stmt)
-happyIn19 :: (AbsLinguaggio.Stmt) -> (HappyAbsSyn )
+newtype HappyWrap19 = HappyWrap19 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Stmt))
+happyIn19 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Stmt)) -> (HappyAbsSyn )
 happyIn19 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap19 x)
 {-# INLINE happyIn19 #-}
 happyOut19 :: (HappyAbsSyn ) -> HappyWrap19
 happyOut19 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut19 #-}
-newtype HappyWrap20 = HappyWrap20 ([AbsLinguaggio.Exp])
-happyIn20 :: ([AbsLinguaggio.Exp]) -> (HappyAbsSyn )
+newtype HappyWrap20 = HappyWrap20 ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Exp]))
+happyIn20 :: ((AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Exp])) -> (HappyAbsSyn )
 happyIn20 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap20 x)
 {-# INLINE happyIn20 #-}
 happyOut20 :: (HappyAbsSyn ) -> HappyWrap20
 happyOut20 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut20 #-}
-newtype HappyWrap21 = HappyWrap21 (AbsLinguaggio.Exp)
-happyIn21 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap21 = HappyWrap21 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn21 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn21 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap21 x)
 {-# INLINE happyIn21 #-}
 happyOut21 :: (HappyAbsSyn ) -> HappyWrap21
 happyOut21 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut21 #-}
-newtype HappyWrap22 = HappyWrap22 (AbsLinguaggio.Exp)
-happyIn22 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap22 = HappyWrap22 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn22 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn22 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap22 x)
 {-# INLINE happyIn22 #-}
 happyOut22 :: (HappyAbsSyn ) -> HappyWrap22
 happyOut22 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut22 #-}
-newtype HappyWrap23 = HappyWrap23 (AbsLinguaggio.Exp)
-happyIn23 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap23 = HappyWrap23 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn23 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn23 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap23 x)
 {-# INLINE happyIn23 #-}
 happyOut23 :: (HappyAbsSyn ) -> HappyWrap23
 happyOut23 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut23 #-}
-newtype HappyWrap24 = HappyWrap24 (AbsLinguaggio.Exp)
-happyIn24 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap24 = HappyWrap24 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn24 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn24 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap24 x)
 {-# INLINE happyIn24 #-}
 happyOut24 :: (HappyAbsSyn ) -> HappyWrap24
 happyOut24 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut24 #-}
-newtype HappyWrap25 = HappyWrap25 (AbsLinguaggio.Exp)
-happyIn25 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap25 = HappyWrap25 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn25 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn25 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap25 x)
 {-# INLINE happyIn25 #-}
 happyOut25 :: (HappyAbsSyn ) -> HappyWrap25
 happyOut25 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut25 #-}
-newtype HappyWrap26 = HappyWrap26 (AbsLinguaggio.Exp)
-happyIn26 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap26 = HappyWrap26 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn26 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn26 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap26 x)
 {-# INLINE happyIn26 #-}
 happyOut26 :: (HappyAbsSyn ) -> HappyWrap26
 happyOut26 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut26 #-}
-newtype HappyWrap27 = HappyWrap27 (AbsLinguaggio.Exp)
-happyIn27 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap27 = HappyWrap27 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn27 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn27 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap27 x)
 {-# INLINE happyIn27 #-}
 happyOut27 :: (HappyAbsSyn ) -> HappyWrap27
 happyOut27 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut27 #-}
-newtype HappyWrap28 = HappyWrap28 (AbsLinguaggio.Exp)
-happyIn28 :: (AbsLinguaggio.Exp) -> (HappyAbsSyn )
+newtype HappyWrap28 = HappyWrap28 ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp))
+happyIn28 :: ((AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp)) -> (HappyAbsSyn )
 happyIn28 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap28 x)
 {-# INLINE happyIn28 #-}
 happyOut28 :: (HappyAbsSyn ) -> HappyWrap28
@@ -327,44 +327,44 @@ happy_n_starts = 1 :: Happy_Prelude.Int
 
 happyReduce_1 = happySpecReduce_1  0# happyReduction_1
 happyReduction_1 happy_x_1
-         =  case happyOutTok happy_x_1 of { (PT _ (TV happy_var_1)) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
         happyIn5
-                 (AbsLinguaggio.Ident happy_var_1
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.Ident (tokenText happy_var_1))
         )}
 
 happyReduce_2 = happySpecReduce_1  1# happyReduction_2
 happyReduction_2 happy_x_1
-         =  case happyOutTok happy_x_1 of { (PT _ (TC happy_var_1)) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
         happyIn6
-                 ((read happy_var_1) :: Char
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), (read (tokenText happy_var_1)) :: Char)
         )}
 
 happyReduce_3 = happySpecReduce_1  2# happyReduction_3
 happyReduction_3 happy_x_1
-         =  case happyOutTok happy_x_1 of { (PT _ (TD happy_var_1)) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
         happyIn7
-                 ((read happy_var_1) :: Double
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), (read (tokenText happy_var_1)) :: Double)
         )}
 
 happyReduce_4 = happySpecReduce_1  3# happyReduction_4
 happyReduction_4 happy_x_1
-         =  case happyOutTok happy_x_1 of { (PT _ (TI happy_var_1)) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
         happyIn8
-                 ((read happy_var_1) :: Integer
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), (read (tokenText happy_var_1)) :: Integer)
         )}
 
 happyReduce_5 = happySpecReduce_1  4# happyReduction_5
 happyReduction_5 happy_x_1
-         =  case happyOutTok happy_x_1 of { (PT _ (TL happy_var_1)) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
         happyIn9
-                 (happy_var_1
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), ((\(PT _ (TL s)) -> s) happy_var_1))
         )}
 
 happyReduce_6 = happySpecReduce_1  5# happyReduction_6
 happyReduction_6 happy_x_1
          =  case happyOut12 happy_x_1 of { (HappyWrap12 happy_var_1) -> 
         happyIn10
-                 (AbsLinguaggio.Prog happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.Prog (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_7 = happyReduce 5# 6# happyReduction_7
@@ -374,11 +374,12 @@ happyReduction_7 (happy_x_5 `HappyStk`
         happy_x_2 `HappyStk`
         happy_x_1 `HappyStk`
         happyRest)
-         = case happyOut5 happy_x_2 of { (HappyWrap5 happy_var_2) -> 
+         = case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut5 happy_x_2 of { (HappyWrap5 happy_var_2) -> 
         case happyOut16 happy_x_4 of { (HappyWrap16 happy_var_4) -> 
         happyIn11
-                 (AbsLinguaggio.DVar happy_var_2 happy_var_4
-        ) `HappyStk` happyRest}}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.DVar (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2) (snd happy_var_4))
+        ) `HappyStk` happyRest}}}
 
 happyReduce_8 = happyReduce 7# 6# happyReduction_8
 happyReduction_8 (happy_x_7 `HappyStk`
@@ -389,12 +390,13 @@ happyReduction_8 (happy_x_7 `HappyStk`
         happy_x_2 `HappyStk`
         happy_x_1 `HappyStk`
         happyRest)
-         = case happyOut5 happy_x_2 of { (HappyWrap5 happy_var_2) -> 
+         = case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut5 happy_x_2 of { (HappyWrap5 happy_var_2) -> 
         case happyOut16 happy_x_4 of { (HappyWrap16 happy_var_4) -> 
         case happyOut21 happy_x_6 of { (HappyWrap21 happy_var_6) -> 
         happyIn11
-                 (AbsLinguaggio.DVarInit happy_var_2 happy_var_4 happy_var_6
-        ) `HappyStk` happyRest}}}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.DVarInit (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2) (snd happy_var_4) (snd happy_var_6))
+        ) `HappyStk` happyRest}}}}
 
 happyReduce_9 = happyReduce 8# 6# happyReduction_9
 happyReduction_9 (happy_x_8 `HappyStk`
@@ -406,17 +408,18 @@ happyReduction_9 (happy_x_8 `HappyStk`
         happy_x_2 `HappyStk`
         happy_x_1 `HappyStk`
         happyRest)
-         = case happyOut5 happy_x_2 of { (HappyWrap5 happy_var_2) -> 
+         = case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut5 happy_x_2 of { (HappyWrap5 happy_var_2) -> 
         case happyOut14 happy_x_4 of { (HappyWrap14 happy_var_4) -> 
         case happyOut16 happy_x_7 of { (HappyWrap16 happy_var_7) -> 
         case happyOut17 happy_x_8 of { (HappyWrap17 happy_var_8) -> 
         happyIn11
-                 (AbsLinguaggio.DProc happy_var_2 happy_var_4 happy_var_7 happy_var_8
-        ) `HappyStk` happyRest}}}}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.DProc (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2) (snd happy_var_4) (snd happy_var_7) (snd happy_var_8))
+        ) `HappyStk` happyRest}}}}}
 
 happyReduce_10 = happySpecReduce_0  7# happyReduction_10
 happyReduction_10  =  happyIn12
-                 ([]
+                 ((AbsLinguaggio.BNFC'NoPosition, [])
         )
 
 happyReduce_11 = happySpecReduce_2  7# happyReduction_11
@@ -425,7 +428,7 @@ happyReduction_11 happy_x_2
          =  case happyOut11 happy_x_1 of { (HappyWrap11 happy_var_1) -> 
         case happyOut12 happy_x_2 of { (HappyWrap12 happy_var_2) -> 
         happyIn12
-                 ((:) happy_var_1 happy_var_2
+                 ((fst happy_var_1, (:) (snd happy_var_1) (snd happy_var_2))
         )}}
 
 happyReduce_12 = happyReduce 4# 8# happyReduction_12
@@ -438,19 +441,19 @@ happyReduction_12 (happy_x_4 `HappyStk`
         case happyOut5 happy_x_2 of { (HappyWrap5 happy_var_2) -> 
         case happyOut16 happy_x_4 of { (HappyWrap16 happy_var_4) -> 
         happyIn13
-                 (AbsLinguaggio.Par happy_var_1 happy_var_2 happy_var_4
+                 ((fst happy_var_1, AbsLinguaggio.Par (fst happy_var_1) (snd happy_var_1) (snd happy_var_2) (snd happy_var_4))
         ) `HappyStk` happyRest}}}
 
 happyReduce_13 = happySpecReduce_0  9# happyReduction_13
 happyReduction_13  =  happyIn14
-                 ([]
+                 ((AbsLinguaggio.BNFC'NoPosition, [])
         )
 
 happyReduce_14 = happySpecReduce_1  9# happyReduction_14
 happyReduction_14 happy_x_1
          =  case happyOut13 happy_x_1 of { (HappyWrap13 happy_var_1) -> 
         happyIn14
-                 ((:[]) happy_var_1
+                 ((fst happy_var_1, (:[]) (snd happy_var_1))
         )}
 
 happyReduce_15 = happySpecReduce_3  9# happyReduction_15
@@ -460,55 +463,62 @@ happyReduction_15 happy_x_3
          =  case happyOut13 happy_x_1 of { (HappyWrap13 happy_var_1) -> 
         case happyOut14 happy_x_3 of { (HappyWrap14 happy_var_3) -> 
         happyIn14
-                 ((:) happy_var_1 happy_var_3
+                 ((fst happy_var_1, (:) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_16 = happySpecReduce_0  10# happyReduction_16
 happyReduction_16  =  happyIn15
-                 (AbsLinguaggio.IIn
+                 ((AbsLinguaggio.BNFC'NoPosition, AbsLinguaggio.IIn AbsLinguaggio.BNFC'NoPosition)
         )
 
 happyReduce_17 = happySpecReduce_1  10# happyReduction_17
 happyReduction_17 happy_x_1
-         =  happyIn15
-                 (AbsLinguaggio.IRef
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn15
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.IRef (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_18 = happySpecReduce_1  11# happyReduction_18
 happyReduction_18 happy_x_1
-         =  happyIn16
-                 (AbsLinguaggio.TInt
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn16
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TInt (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_19 = happySpecReduce_1  11# happyReduction_19
 happyReduction_19 happy_x_1
-         =  happyIn16
-                 (AbsLinguaggio.TBool
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn16
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TBool (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_20 = happySpecReduce_1  11# happyReduction_20
 happyReduction_20 happy_x_1
-         =  happyIn16
-                 (AbsLinguaggio.TReal
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn16
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TReal (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_21 = happySpecReduce_1  11# happyReduction_21
 happyReduction_21 happy_x_1
-         =  happyIn16
-                 (AbsLinguaggio.TChar
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn16
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TChar (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_22 = happySpecReduce_1  11# happyReduction_22
 happyReduction_22 happy_x_1
-         =  happyIn16
-                 (AbsLinguaggio.TStr
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn16
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TStr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_23 = happySpecReduce_1  11# happyReduction_23
 happyReduction_23 happy_x_1
-         =  happyIn16
-                 (AbsLinguaggio.TVoid
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn16
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TVoid (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_24 = happyReduce 6# 11# happyReduction_24
 happyReduction_24 (happy_x_6 `HappyStk`
@@ -518,12 +528,13 @@ happyReduction_24 (happy_x_6 `HappyStk`
         happy_x_2 `HappyStk`
         happy_x_1 `HappyStk`
         happyRest)
-         = case happyOut8 happy_x_2 of { (HappyWrap8 happy_var_2) -> 
+         = case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut8 happy_x_2 of { (HappyWrap8 happy_var_2) -> 
         case happyOut8 happy_x_4 of { (HappyWrap8 happy_var_4) -> 
         case happyOut16 happy_x_6 of { (HappyWrap16 happy_var_6) -> 
         happyIn16
-                 (AbsLinguaggio.TArr happy_var_2 happy_var_4 happy_var_6
-        ) `HappyStk` happyRest}}}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TArr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2) (snd happy_var_4) (snd happy_var_6))
+        ) `HappyStk` happyRest}}}}
 
 happyReduce_25 = happyReduce 4# 11# happyReduction_25
 happyReduction_25 (happy_x_4 `HappyStk`
@@ -531,23 +542,25 @@ happyReduction_25 (happy_x_4 `HappyStk`
         happy_x_2 `HappyStk`
         happy_x_1 `HappyStk`
         happyRest)
-         = case happyOut16 happy_x_3 of { (HappyWrap16 happy_var_3) -> 
+         = case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut16 happy_x_3 of { (HappyWrap16 happy_var_3) -> 
         happyIn16
-                 (AbsLinguaggio.TPtr happy_var_3
-        ) `HappyStk` happyRest}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.TPtr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_3))
+        ) `HappyStk` happyRest}}
 
 happyReduce_26 = happySpecReduce_3  12# happyReduction_26
 happyReduction_26 happy_x_3
         happy_x_2
         happy_x_1
-         =  case happyOut18 happy_x_2 of { (HappyWrap18 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut18 happy_x_2 of { (HappyWrap18 happy_var_2) -> 
         happyIn17
-                 (AbsLinguaggio.BBlock happy_var_2
-        )}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.BBlock (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2))
+        )}}
 
 happyReduce_27 = happySpecReduce_0  13# happyReduction_27
 happyReduction_27  =  happyIn18
-                 ([]
+                 ((AbsLinguaggio.BNFC'NoPosition, [])
         )
 
 happyReduce_28 = happySpecReduce_2  13# happyReduction_28
@@ -556,14 +569,14 @@ happyReduction_28 happy_x_2
          =  case happyOut19 happy_x_1 of { (HappyWrap19 happy_var_1) -> 
         case happyOut18 happy_x_2 of { (HappyWrap18 happy_var_2) -> 
         happyIn18
-                 ((:) happy_var_1 happy_var_2
+                 ((fst happy_var_1, (:) (snd happy_var_1) (snd happy_var_2))
         )}}
 
 happyReduce_29 = happySpecReduce_1  14# happyReduction_29
 happyReduction_29 happy_x_1
          =  case happyOut17 happy_x_1 of { (HappyWrap17 happy_var_1) -> 
         happyIn19
-                 (AbsLinguaggio.SBlock happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.SBlock (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_30 = happyReduce 4# 14# happyReduction_30
@@ -575,7 +588,7 @@ happyReduction_30 (happy_x_4 `HappyStk`
          = case happyOut21 happy_x_1 of { (HappyWrap21 happy_var_1) -> 
         case happyOut21 happy_x_3 of { (HappyWrap21 happy_var_3) -> 
         happyIn19
-                 (AbsLinguaggio.SAssign happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.SAssign (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         ) `HappyStk` happyRest}}
 
 happyReduce_31 = happyReduce 5# 14# happyReduction_31
@@ -588,41 +601,44 @@ happyReduction_31 (happy_x_5 `HappyStk`
          = case happyOut5 happy_x_1 of { (HappyWrap5 happy_var_1) -> 
         case happyOut20 happy_x_3 of { (HappyWrap20 happy_var_3) -> 
         happyIn19
-                 (AbsLinguaggio.SCall happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.SCall (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         ) `HappyStk` happyRest}}
 
 happyReduce_32 = happySpecReduce_3  14# happyReduction_32
 happyReduction_32 happy_x_3
         happy_x_2
         happy_x_1
-         =  case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
         happyIn19
-                 (AbsLinguaggio.SReturn happy_var_2
-        )}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.SReturn (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2))
+        )}}
 
 happyReduce_33 = happySpecReduce_2  14# happyReduction_33
 happyReduction_33 happy_x_2
         happy_x_1
-         =  happyIn19
-                 (AbsLinguaggio.SReturnV
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn19
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.SReturnV (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_34 = happySpecReduce_1  14# happyReduction_34
 happyReduction_34 happy_x_1
          =  case happyOut11 happy_x_1 of { (HappyWrap11 happy_var_1) -> 
         happyIn19
-                 (AbsLinguaggio.SDecl happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.SDecl (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_35 = happySpecReduce_3  14# happyReduction_35
 happyReduction_35 happy_x_3
         happy_x_2
         happy_x_1
-         =  case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
         case happyOut17 happy_x_3 of { (HappyWrap17 happy_var_3) -> 
         happyIn19
-                 (AbsLinguaggio.SIf happy_var_2 happy_var_3
-        )}}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.SIf (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2) (snd happy_var_3))
+        )}}}
 
 happyReduce_36 = happyReduce 5# 14# happyReduction_36
 happyReduction_36 (happy_x_5 `HappyStk`
@@ -631,33 +647,35 @@ happyReduction_36 (happy_x_5 `HappyStk`
         happy_x_2 `HappyStk`
         happy_x_1 `HappyStk`
         happyRest)
-         = case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
+         = case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
         case happyOut17 happy_x_3 of { (HappyWrap17 happy_var_3) -> 
         case happyOut17 happy_x_5 of { (HappyWrap17 happy_var_5) -> 
         happyIn19
-                 (AbsLinguaggio.SIfElse happy_var_2 happy_var_3 happy_var_5
-        ) `HappyStk` happyRest}}}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.SIfElse (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2) (snd happy_var_3) (snd happy_var_5))
+        ) `HappyStk` happyRest}}}}
 
 happyReduce_37 = happySpecReduce_3  14# happyReduction_37
 happyReduction_37 happy_x_3
         happy_x_2
         happy_x_1
-         =  case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
         case happyOut17 happy_x_3 of { (HappyWrap17 happy_var_3) -> 
         happyIn19
-                 (AbsLinguaggio.SWhile happy_var_2 happy_var_3
-        )}}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.SWhile (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2) (snd happy_var_3))
+        )}}}
 
 happyReduce_38 = happySpecReduce_0  15# happyReduction_38
 happyReduction_38  =  happyIn20
-                 ([]
+                 ((AbsLinguaggio.BNFC'NoPosition, [])
         )
 
 happyReduce_39 = happySpecReduce_1  15# happyReduction_39
 happyReduction_39 happy_x_1
          =  case happyOut21 happy_x_1 of { (HappyWrap21 happy_var_1) -> 
         happyIn20
-                 ((:[]) happy_var_1
+                 ((fst happy_var_1, (:[]) (snd happy_var_1))
         )}
 
 happyReduce_40 = happySpecReduce_3  15# happyReduction_40
@@ -667,7 +685,7 @@ happyReduction_40 happy_x_3
          =  case happyOut21 happy_x_1 of { (HappyWrap21 happy_var_1) -> 
         case happyOut20 happy_x_3 of { (HappyWrap20 happy_var_3) -> 
         happyIn20
-                 ((:) happy_var_1 happy_var_3
+                 ((fst happy_var_1, (:) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_41 = happySpecReduce_3  16# happyReduction_41
@@ -677,14 +695,14 @@ happyReduction_41 happy_x_3
          =  case happyOut21 happy_x_1 of { (HappyWrap21 happy_var_1) -> 
         case happyOut22 happy_x_3 of { (HappyWrap22 happy_var_3) -> 
         happyIn21
-                 (AbsLinguaggio.EOr happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EOr (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_42 = happySpecReduce_1  16# happyReduction_42
 happyReduction_42 happy_x_1
          =  case happyOut22 happy_x_1 of { (HappyWrap22 happy_var_1) -> 
         happyIn21
-                 (happy_var_1
+                 ((fst happy_var_1, (snd happy_var_1))
         )}
 
 happyReduce_43 = happySpecReduce_3  17# happyReduction_43
@@ -694,14 +712,14 @@ happyReduction_43 happy_x_3
          =  case happyOut22 happy_x_1 of { (HappyWrap22 happy_var_1) -> 
         case happyOut23 happy_x_3 of { (HappyWrap23 happy_var_3) -> 
         happyIn22
-                 (AbsLinguaggio.EAnd happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EAnd (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_44 = happySpecReduce_1  17# happyReduction_44
 happyReduction_44 happy_x_1
          =  case happyOut23 happy_x_1 of { (HappyWrap23 happy_var_1) -> 
         happyIn22
-                 (happy_var_1
+                 ((fst happy_var_1, (snd happy_var_1))
         )}
 
 happyReduce_45 = happySpecReduce_3  18# happyReduction_45
@@ -711,7 +729,7 @@ happyReduction_45 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut24 happy_x_3 of { (HappyWrap24 happy_var_3) -> 
         happyIn23
-                 (AbsLinguaggio.EEq happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EEq (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_46 = happySpecReduce_3  18# happyReduction_46
@@ -721,7 +739,7 @@ happyReduction_46 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut24 happy_x_3 of { (HappyWrap24 happy_var_3) -> 
         happyIn23
-                 (AbsLinguaggio.ENeq happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.ENeq (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_47 = happySpecReduce_3  18# happyReduction_47
@@ -731,7 +749,7 @@ happyReduction_47 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut24 happy_x_3 of { (HappyWrap24 happy_var_3) -> 
         happyIn23
-                 (AbsLinguaggio.ELt happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.ELt (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_48 = happySpecReduce_3  18# happyReduction_48
@@ -741,7 +759,7 @@ happyReduction_48 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut24 happy_x_3 of { (HappyWrap24 happy_var_3) -> 
         happyIn23
-                 (AbsLinguaggio.ELe happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.ELe (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_49 = happySpecReduce_3  18# happyReduction_49
@@ -751,7 +769,7 @@ happyReduction_49 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut24 happy_x_3 of { (HappyWrap24 happy_var_3) -> 
         happyIn23
-                 (AbsLinguaggio.EGt happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EGt (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_50 = happySpecReduce_3  18# happyReduction_50
@@ -761,14 +779,14 @@ happyReduction_50 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut24 happy_x_3 of { (HappyWrap24 happy_var_3) -> 
         happyIn23
-                 (AbsLinguaggio.EGe happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EGe (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_51 = happySpecReduce_1  18# happyReduction_51
 happyReduction_51 happy_x_1
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         happyIn23
-                 (happy_var_1
+                 ((fst happy_var_1, (snd happy_var_1))
         )}
 
 happyReduce_52 = happySpecReduce_3  19# happyReduction_52
@@ -778,7 +796,7 @@ happyReduction_52 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut25 happy_x_3 of { (HappyWrap25 happy_var_3) -> 
         happyIn24
-                 (AbsLinguaggio.EAdd happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EAdd (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_53 = happySpecReduce_3  19# happyReduction_53
@@ -788,14 +806,14 @@ happyReduction_53 happy_x_3
          =  case happyOut24 happy_x_1 of { (HappyWrap24 happy_var_1) -> 
         case happyOut25 happy_x_3 of { (HappyWrap25 happy_var_3) -> 
         happyIn24
-                 (AbsLinguaggio.ESub happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.ESub (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_54 = happySpecReduce_1  19# happyReduction_54
 happyReduction_54 happy_x_1
          =  case happyOut25 happy_x_1 of { (HappyWrap25 happy_var_1) -> 
         happyIn24
-                 (happy_var_1
+                 ((fst happy_var_1, (snd happy_var_1))
         )}
 
 happyReduce_55 = happySpecReduce_3  20# happyReduction_55
@@ -805,7 +823,7 @@ happyReduction_55 happy_x_3
          =  case happyOut25 happy_x_1 of { (HappyWrap25 happy_var_1) -> 
         case happyOut26 happy_x_3 of { (HappyWrap26 happy_var_3) -> 
         happyIn25
-                 (AbsLinguaggio.EMul happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EMul (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_56 = happySpecReduce_3  20# happyReduction_56
@@ -815,39 +833,42 @@ happyReduction_56 happy_x_3
          =  case happyOut25 happy_x_1 of { (HappyWrap25 happy_var_1) -> 
         case happyOut26 happy_x_3 of { (HappyWrap26 happy_var_3) -> 
         happyIn25
-                 (AbsLinguaggio.EDiv happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EDiv (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         )}}
 
 happyReduce_57 = happySpecReduce_1  20# happyReduction_57
 happyReduction_57 happy_x_1
          =  case happyOut26 happy_x_1 of { (HappyWrap26 happy_var_1) -> 
         happyIn25
-                 (happy_var_1
+                 ((fst happy_var_1, (snd happy_var_1))
         )}
 
 happyReduce_58 = happySpecReduce_2  21# happyReduction_58
 happyReduction_58 happy_x_2
         happy_x_1
-         =  case happyOut26 happy_x_2 of { (HappyWrap26 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut26 happy_x_2 of { (HappyWrap26 happy_var_2) -> 
         happyIn26
-                 (AbsLinguaggio.ENeg happy_var_2
-        )}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.ENeg (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2))
+        )}}
 
 happyReduce_59 = happySpecReduce_2  21# happyReduction_59
 happyReduction_59 happy_x_2
         happy_x_1
-         =  case happyOut26 happy_x_2 of { (HappyWrap26 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut26 happy_x_2 of { (HappyWrap26 happy_var_2) -> 
         happyIn26
-                 (AbsLinguaggio.ENot happy_var_2
-        )}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.ENot (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2))
+        )}}
 
 happyReduce_60 = happySpecReduce_2  21# happyReduction_60
 happyReduction_60 happy_x_2
         happy_x_1
-         =  case happyOut26 happy_x_2 of { (HappyWrap26 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut26 happy_x_2 of { (HappyWrap26 happy_var_2) -> 
         happyIn26
-                 (AbsLinguaggio.EDeref happy_var_2
-        )}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.EDeref (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_2))
+        )}}
 
 happyReduce_61 = happyReduce 4# 21# happyReduction_61
 happyReduction_61 (happy_x_4 `HappyStk`
@@ -855,16 +876,17 @@ happyReduction_61 (happy_x_4 `HappyStk`
         happy_x_2 `HappyStk`
         happy_x_1 `HappyStk`
         happyRest)
-         = case happyOut21 happy_x_3 of { (HappyWrap21 happy_var_3) -> 
+         = case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut21 happy_x_3 of { (HappyWrap21 happy_var_3) -> 
         happyIn26
-                 (AbsLinguaggio.EAddr happy_var_3
-        ) `HappyStk` happyRest}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.EAddr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)) (snd happy_var_3))
+        ) `HappyStk` happyRest}}
 
 happyReduce_62 = happySpecReduce_1  21# happyReduction_62
 happyReduction_62 happy_x_1
          =  case happyOut27 happy_x_1 of { (HappyWrap27 happy_var_1) -> 
         happyIn26
-                 (happy_var_1
+                 ((fst happy_var_1, (snd happy_var_1))
         )}
 
 happyReduce_63 = happyReduce 4# 22# happyReduction_63
@@ -876,7 +898,7 @@ happyReduction_63 (happy_x_4 `HappyStk`
          = case happyOut27 happy_x_1 of { (HappyWrap27 happy_var_1) -> 
         case happyOut21 happy_x_3 of { (HappyWrap21 happy_var_3) -> 
         happyIn27
-                 (AbsLinguaggio.EIdx happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.EIdx (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         ) `HappyStk` happyRest}}
 
 happyReduce_64 = happyReduce 4# 22# happyReduction_64
@@ -888,71 +910,74 @@ happyReduction_64 (happy_x_4 `HappyStk`
          = case happyOut5 happy_x_1 of { (HappyWrap5 happy_var_1) -> 
         case happyOut20 happy_x_3 of { (HappyWrap20 happy_var_3) -> 
         happyIn27
-                 (AbsLinguaggio.ECall happy_var_1 happy_var_3
+                 ((fst happy_var_1, AbsLinguaggio.ECall (fst happy_var_1) (snd happy_var_1) (snd happy_var_3))
         ) `HappyStk` happyRest}}
 
 happyReduce_65 = happySpecReduce_1  22# happyReduction_65
 happyReduction_65 happy_x_1
          =  case happyOut28 happy_x_1 of { (HappyWrap28 happy_var_1) -> 
         happyIn27
-                 (happy_var_1
+                 ((fst happy_var_1, (snd happy_var_1))
         )}
 
 happyReduce_66 = happySpecReduce_1  23# happyReduction_66
 happyReduction_66 happy_x_1
          =  case happyOut5 happy_x_1 of { (HappyWrap5 happy_var_1) -> 
         happyIn28
-                 (AbsLinguaggio.EVar happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.EVar (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_67 = happySpecReduce_1  23# happyReduction_67
 happyReduction_67 happy_x_1
          =  case happyOut8 happy_x_1 of { (HappyWrap8 happy_var_1) -> 
         happyIn28
-                 (AbsLinguaggio.EInt happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.EInt (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_68 = happySpecReduce_1  23# happyReduction_68
 happyReduction_68 happy_x_1
          =  case happyOut7 happy_x_1 of { (HappyWrap7 happy_var_1) -> 
         happyIn28
-                 (AbsLinguaggio.EReal happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.EReal (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_69 = happySpecReduce_1  23# happyReduction_69
 happyReduction_69 happy_x_1
          =  case happyOut6 happy_x_1 of { (HappyWrap6 happy_var_1) -> 
         happyIn28
-                 (AbsLinguaggio.EChar happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.EChar (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_70 = happySpecReduce_1  23# happyReduction_70
 happyReduction_70 happy_x_1
          =  case happyOut9 happy_x_1 of { (HappyWrap9 happy_var_1) -> 
         happyIn28
-                 (AbsLinguaggio.EStr happy_var_1
+                 ((fst happy_var_1, AbsLinguaggio.EStr (fst happy_var_1) (snd happy_var_1))
         )}
 
 happyReduce_71 = happySpecReduce_1  23# happyReduction_71
 happyReduction_71 happy_x_1
-         =  happyIn28
-                 (AbsLinguaggio.ETrue
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn28
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.ETrue (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_72 = happySpecReduce_1  23# happyReduction_72
 happyReduction_72 happy_x_1
-         =  happyIn28
-                 (AbsLinguaggio.EFalse
-        )
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        happyIn28
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), AbsLinguaggio.EFalse (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1)))
+        )}
 
 happyReduce_73 = happySpecReduce_3  23# happyReduction_73
 happyReduction_73 happy_x_3
         happy_x_2
         happy_x_1
-         =  case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
+         =  case happyOutTok happy_x_1 of { happy_var_1 -> 
+        case happyOut21 happy_x_2 of { (HappyWrap21 happy_var_2) -> 
         happyIn28
-                 (happy_var_2
-        )}
+                 ((uncurry AbsLinguaggio.BNFC'Position (tokenLineCol happy_var_1), (snd happy_var_2))
+        )}}
 
 happyTerminalToTok term = case term of {
         PT _ (TS _ 1) -> 2#;
@@ -996,11 +1021,11 @@ happyTerminalToTok term = case term of {
         PT _ (TS _ 39) -> 40#;
         PT _ (TS _ 40) -> 41#;
         PT _ (TS _ 41) -> 42#;
-        PT _ (TV happy_dollar_dollar) -> 43#;
-        PT _ (TC happy_dollar_dollar) -> 44#;
-        PT _ (TD happy_dollar_dollar) -> 45#;
-        PT _ (TI happy_dollar_dollar) -> 46#;
-        PT _ (TL happy_dollar_dollar) -> 47#;
+        PT _ (TV _) -> 43#;
+        PT _ (TC _) -> 44#;
+        PT _ (TD _) -> 45#;
+        PT _ (TI _) -> 46#;
+        PT _ (TL _) -> 47#;
         _ -> -1#;
         }
 {-# NOINLINE happyTerminalToTok #-}
@@ -1029,7 +1054,7 @@ happyReport' = (\tokens expected resume -> happyError tokens)
 happyAbort :: () => [(Token)] -> (Err a)
 happyAbort = Happy_Prelude.error "Called abort handler in non-resumptive parser"
 
-pProgram tks = happySomeParser where
+pProgram_internal tks = happySomeParser where
  happySomeParser = happyThen (happyDoParse 0# tks) (\x -> happyReturn (let {(HappyWrap10 x') = happyOut10 x} in x'))
 
 happySeq = happyDontSeq
@@ -1047,6 +1072,11 @@ happyError ts = Left $
 
 myLexer :: String -> [Token]
 myLexer = tokens
+
+-- Entrypoints
+
+pProgram :: [Token] -> Err AbsLinguaggio.Program
+pProgram = fmap snd . pProgram_internal
 #define HAPPY_COERCE 1
 -- $Id: GenericTemplate.hs,v 1.26 2005/01/14 14:47:22 simonmar Exp $
 

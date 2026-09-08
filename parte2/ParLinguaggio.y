@@ -14,7 +14,7 @@ import LexLinguaggio
 
 }
 
-%name pProgram Program
+%name pProgram_internal Program
 -- no lexer declaration
 %monad { Err } { (>>=) } { return }
 %tokentype {Token}
@@ -60,131 +60,134 @@ import LexLinguaggio
   '{' { PT _ (TS _ 39) }
   '||' { PT _ (TS _ 40) }
   '}' { PT _ (TS _ 41) }
-  L_Ident  { PT _ (TV $$) }
-  L_charac { PT _ (TC $$) }
-  L_doubl  { PT _ (TD $$) }
-  L_integ  { PT _ (TI $$) }
-  L_quoted { PT _ (TL $$) }
+  L_Ident  { PT _ (TV _) }
+  L_charac { PT _ (TC _) }
+  L_doubl  { PT _ (TD _) }
+  L_integ  { PT _ (TI _) }
+  L_quoted { PT _ (TL _) }
 
 %%
 
-Ident :: { AbsLinguaggio.Ident }
-Ident  : L_Ident { AbsLinguaggio.Ident $1 }
+Ident :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Ident) }
+Ident  : L_Ident { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.Ident (tokenText $1)) }
 
-Char    :: { Char }
-Char     : L_charac { (read $1) :: Char }
+Char    :: { (AbsLinguaggio.BNFC'Position, Char) }
+Char     : L_charac { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), (read (tokenText $1)) :: Char) }
 
-Double  :: { Double }
-Double   : L_doubl  { (read $1) :: Double }
+Double  :: { (AbsLinguaggio.BNFC'Position, Double) }
+Double   : L_doubl  { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), (read (tokenText $1)) :: Double) }
 
-Integer :: { Integer }
-Integer  : L_integ  { (read $1) :: Integer }
+Integer :: { (AbsLinguaggio.BNFC'Position, Integer) }
+Integer  : L_integ  { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), (read (tokenText $1)) :: Integer) }
 
-String  :: { String }
-String   : L_quoted { $1 }
+String  :: { (AbsLinguaggio.BNFC'Position, String) }
+String   : L_quoted { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), ((\(PT _ (TL s)) -> s) $1)) }
 
-Program :: { AbsLinguaggio.Program }
-Program : ListTopDecl { AbsLinguaggio.Prog $1 }
+Program :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Program) }
+Program : ListTopDecl { (fst $1, AbsLinguaggio.Prog (fst $1) (snd $1)) }
 
-TopDecl :: { AbsLinguaggio.TopDecl }
-TopDecl : 'var' Ident ':' Type ';' { AbsLinguaggio.DVar $2 $4 }
-        | 'var' Ident ':' Type '=' Exp ';' { AbsLinguaggio.DVarInit $2 $4 $6 }
-        | 'proc' Ident '(' ListParam ')' ':' Type Block { AbsLinguaggio.DProc $2 $4 $7 $8 }
+TopDecl :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.TopDecl) }
+TopDecl : 'var' Ident ':' Type ';' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.DVar (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $4)) }
+        | 'var' Ident ':' Type '=' Exp ';' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.DVarInit (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $4) (snd $6)) }
+        | 'proc' Ident '(' ListParam ')' ':' Type Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.DProc (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $4) (snd $7) (snd $8)) }
 
-ListTopDecl :: { [AbsLinguaggio.TopDecl] }
-ListTopDecl : {- empty -} { [] }
-            | TopDecl ListTopDecl { (:) $1 $2 }
+ListTopDecl :: { (AbsLinguaggio.BNFC'Position, [AbsLinguaggio.TopDecl]) }
+ListTopDecl : {- empty -} { (AbsLinguaggio.BNFC'NoPosition, []) }
+            | TopDecl ListTopDecl { (fst $1, (:) (snd $1) (snd $2)) }
 
-Param :: { AbsLinguaggio.Param }
-Param : Intent Ident ':' Type { AbsLinguaggio.Par $1 $2 $4 }
+Param :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Param) }
+Param : Intent Ident ':' Type { (fst $1, AbsLinguaggio.Par (fst $1) (snd $1) (snd $2) (snd $4)) }
 
-ListParam :: { [AbsLinguaggio.Param] }
-ListParam : {- empty -} { [] }
-          | Param { (:[]) $1 }
-          | Param ',' ListParam { (:) $1 $3 }
+ListParam :: { (AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Param]) }
+ListParam : {- empty -} { (AbsLinguaggio.BNFC'NoPosition, []) }
+          | Param { (fst $1, (:[]) (snd $1)) }
+          | Param ',' ListParam { (fst $1, (:) (snd $1) (snd $3)) }
 
-Intent :: { AbsLinguaggio.Intent }
-Intent : {- empty -} { AbsLinguaggio.IIn }
-       | 'ref' { AbsLinguaggio.IRef }
+Intent :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Intent) }
+Intent : {- empty -} { (AbsLinguaggio.BNFC'NoPosition, AbsLinguaggio.IIn AbsLinguaggio.BNFC'NoPosition) }
+       | 'ref' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.IRef (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
 
-Type :: { AbsLinguaggio.Type }
-Type : 'int' { AbsLinguaggio.TInt }
-     | 'bool' { AbsLinguaggio.TBool }
-     | 'real' { AbsLinguaggio.TReal }
-     | 'char' { AbsLinguaggio.TChar }
-     | 'string' { AbsLinguaggio.TStr }
-     | 'void' { AbsLinguaggio.TVoid }
-     | '[' Integer '..' Integer ']' Type { AbsLinguaggio.TArr $2 $4 $6 }
-     | 'c_ptr' '(' Type ')' { AbsLinguaggio.TPtr $3 }
+Type :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Type) }
+Type : 'int' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TInt (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | 'bool' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TBool (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | 'real' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TReal (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | 'char' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TChar (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | 'string' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TStr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | 'void' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TVoid (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | '[' Integer '..' Integer ']' Type { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TArr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $4) (snd $6)) }
+     | 'c_ptr' '(' Type ')' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.TPtr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $3)) }
 
-Block :: { AbsLinguaggio.Block }
-Block : '{' ListStmt '}' { AbsLinguaggio.BBlock $2 }
+Block :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Block) }
+Block : '{' ListStmt '}' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.BBlock (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
 
-ListStmt :: { [AbsLinguaggio.Stmt] }
-ListStmt : {- empty -} { [] } | Stmt ListStmt { (:) $1 $2 }
+ListStmt :: { (AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Stmt]) }
+ListStmt : {- empty -} { (AbsLinguaggio.BNFC'NoPosition, []) }
+         | Stmt ListStmt { (fst $1, (:) (snd $1) (snd $2)) }
 
-Stmt :: { AbsLinguaggio.Stmt }
-Stmt : Block { AbsLinguaggio.SBlock $1 }
-     | Exp '=' Exp ';' { AbsLinguaggio.SAssign $1 $3 }
-     | Ident '(' ListExp ')' ';' { AbsLinguaggio.SCall $1 $3 }
-     | 'return' Exp ';' { AbsLinguaggio.SReturn $2 }
-     | 'return' ';' { AbsLinguaggio.SReturnV }
-     | TopDecl { AbsLinguaggio.SDecl $1 }
-     | 'if' Exp Block { AbsLinguaggio.SIf $2 $3 }
-     | 'if' Exp Block 'else' Block { AbsLinguaggio.SIfElse $2 $3 $5 }
-     | 'while' Exp Block { AbsLinguaggio.SWhile $2 $3 }
+Stmt :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Stmt) }
+Stmt : Block { (fst $1, AbsLinguaggio.SBlock (fst $1) (snd $1)) }
+     | Exp '=' Exp ';' { (fst $1, AbsLinguaggio.SAssign (fst $1) (snd $1) (snd $3)) }
+     | Ident '(' ListExp ')' ';' { (fst $1, AbsLinguaggio.SCall (fst $1) (snd $1) (snd $3)) }
+     | 'return' Exp ';' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SReturn (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
+     | 'return' ';' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SReturnV (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | TopDecl { (fst $1, AbsLinguaggio.SDecl (fst $1) (snd $1)) }
+     | 'if' Exp Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SIf (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $3)) }
+     | 'if' Exp Block 'else' Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SIfElse (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $3) (snd $5)) }
+     | 'while' Exp Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SWhile (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $3)) }
 
-ListExp :: { [AbsLinguaggio.Exp] }
-ListExp : {- empty -} { [] }
-        | Exp { (:[]) $1 }
-        | Exp ',' ListExp { (:) $1 $3 }
+ListExp :: { (AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Exp]) }
+ListExp : {- empty -} { (AbsLinguaggio.BNFC'NoPosition, []) }
+        | Exp { (fst $1, (:[]) (snd $1)) }
+        | Exp ',' ListExp { (fst $1, (:) (snd $1) (snd $3)) }
 
-Exp :: { AbsLinguaggio.Exp }
-Exp : Exp '||' Exp1 { AbsLinguaggio.EOr $1 $3 } | Exp1 { $1 }
+Exp :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp : Exp '||' Exp1 { (fst $1, AbsLinguaggio.EOr (fst $1) (snd $1) (snd $3)) }
+    | Exp1 { (fst $1, (snd $1)) }
 
-Exp1 :: { AbsLinguaggio.Exp }
-Exp1 : Exp1 '&&' Exp2 { AbsLinguaggio.EAnd $1 $3 } | Exp2 { $1 }
+Exp1 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp1 : Exp1 '&&' Exp2 { (fst $1, AbsLinguaggio.EAnd (fst $1) (snd $1) (snd $3)) }
+     | Exp2 { (fst $1, (snd $1)) }
 
-Exp2 :: { AbsLinguaggio.Exp }
-Exp2 : Exp3 '==' Exp3 { AbsLinguaggio.EEq $1 $3 }
-     | Exp3 '!=' Exp3 { AbsLinguaggio.ENeq $1 $3 }
-     | Exp3 '<' Exp3 { AbsLinguaggio.ELt $1 $3 }
-     | Exp3 '<=' Exp3 { AbsLinguaggio.ELe $1 $3 }
-     | Exp3 '>' Exp3 { AbsLinguaggio.EGt $1 $3 }
-     | Exp3 '>=' Exp3 { AbsLinguaggio.EGe $1 $3 }
-     | Exp3 { $1 }
+Exp2 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp2 : Exp3 '==' Exp3 { (fst $1, AbsLinguaggio.EEq (fst $1) (snd $1) (snd $3)) }
+     | Exp3 '!=' Exp3 { (fst $1, AbsLinguaggio.ENeq (fst $1) (snd $1) (snd $3)) }
+     | Exp3 '<' Exp3 { (fst $1, AbsLinguaggio.ELt (fst $1) (snd $1) (snd $3)) }
+     | Exp3 '<=' Exp3 { (fst $1, AbsLinguaggio.ELe (fst $1) (snd $1) (snd $3)) }
+     | Exp3 '>' Exp3 { (fst $1, AbsLinguaggio.EGt (fst $1) (snd $1) (snd $3)) }
+     | Exp3 '>=' Exp3 { (fst $1, AbsLinguaggio.EGe (fst $1) (snd $1) (snd $3)) }
+     | Exp3 { (fst $1, (snd $1)) }
 
-Exp3 :: { AbsLinguaggio.Exp }
-Exp3 : Exp3 '+' Exp4 { AbsLinguaggio.EAdd $1 $3 }
-     | Exp3 '-' Exp4 { AbsLinguaggio.ESub $1 $3 }
-     | Exp4 { $1 }
+Exp3 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp3 : Exp3 '+' Exp4 { (fst $1, AbsLinguaggio.EAdd (fst $1) (snd $1) (snd $3)) }
+     | Exp3 '-' Exp4 { (fst $1, AbsLinguaggio.ESub (fst $1) (snd $1) (snd $3)) }
+     | Exp4 { (fst $1, (snd $1)) }
 
-Exp4 :: { AbsLinguaggio.Exp }
-Exp4 : Exp4 '*' Exp5 { AbsLinguaggio.EMul $1 $3 }
-     | Exp4 '/' Exp5 { AbsLinguaggio.EDiv $1 $3 }
-     | Exp5 { $1 }
+Exp4 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp4 : Exp4 '*' Exp5 { (fst $1, AbsLinguaggio.EMul (fst $1) (snd $1) (snd $3)) }
+     | Exp4 '/' Exp5 { (fst $1, AbsLinguaggio.EDiv (fst $1) (snd $1) (snd $3)) }
+     | Exp5 { (fst $1, (snd $1)) }
 
-Exp5 :: { AbsLinguaggio.Exp }
-Exp5 : '-' Exp5 { AbsLinguaggio.ENeg $2 }
-     | '!' Exp5 { AbsLinguaggio.ENot $2 }
-     | '*' Exp5 { AbsLinguaggio.EDeref $2 }
-     | 'c_ptrTo' '(' Exp ')' { AbsLinguaggio.EAddr $3 }
-     | Exp6 { $1 }
+Exp5 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp5 : '-' Exp5 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ENeg (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
+     | '!' Exp5 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ENot (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
+     | '*' Exp5 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EDeref (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
+     | 'c_ptrTo' '(' Exp ')' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EAddr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $3)) }
+     | Exp6 { (fst $1, (snd $1)) }
 
-Exp6 :: { AbsLinguaggio.Exp }
-Exp6 : Exp6 '[' Exp ']' { AbsLinguaggio.EIdx $1 $3 }
-     | Ident '(' ListExp ')' { AbsLinguaggio.ECall $1 $3 }
-     | Exp7 { $1 }
+Exp6 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp6 : Exp6 '[' Exp ']' { (fst $1, AbsLinguaggio.EIdx (fst $1) (snd $1) (snd $3)) }
+     | Ident '(' ListExp ')' { (fst $1, AbsLinguaggio.ECall (fst $1) (snd $1) (snd $3)) }
+     | Exp7 { (fst $1, (snd $1)) }
 
-Exp7 :: { AbsLinguaggio.Exp }
-Exp7 : Ident { AbsLinguaggio.EVar $1 }
-     | Integer { AbsLinguaggio.EInt $1 }
-     | Double { AbsLinguaggio.EReal $1 }
-     | Char { AbsLinguaggio.EChar $1 }
-     | String { AbsLinguaggio.EStr $1 }
-     | 'true' { AbsLinguaggio.ETrue }
-     | 'false' { AbsLinguaggio.EFalse }
-     | '(' Exp ')' { $2 }
+Exp7 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp7 : Ident { (fst $1, AbsLinguaggio.EVar (fst $1) (snd $1)) }
+     | Integer { (fst $1, AbsLinguaggio.EInt (fst $1) (snd $1)) }
+     | Double { (fst $1, AbsLinguaggio.EReal (fst $1) (snd $1)) }
+     | Char { (fst $1, AbsLinguaggio.EChar (fst $1) (snd $1)) }
+     | String { (fst $1, AbsLinguaggio.EStr (fst $1) (snd $1)) }
+     | 'true' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ETrue (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | 'false' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EFalse (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | '(' Exp ')' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), (snd $2)) }
 {
 
 type Err = Either String
@@ -200,5 +203,9 @@ happyError ts = Left $
 myLexer :: String -> [Token]
 myLexer = tokens
 
+-- Entrypoints
+
+pProgram :: [Token] -> Err AbsLinguaggio.Program
+pProgram = fmap snd . pProgram_internal
 }
 

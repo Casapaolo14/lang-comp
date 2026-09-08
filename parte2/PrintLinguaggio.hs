@@ -110,98 +110,98 @@ instance Print Double where
 instance Print AbsLinguaggio.Ident where
   prt _ (AbsLinguaggio.Ident i) = doc $ showString i
 
-instance Print AbsLinguaggio.Program where
+instance Print (AbsLinguaggio.Program' a) where
   prt i = \case
-    AbsLinguaggio.Prog topdecls -> prPrec i 0 (concatD [prt 0 topdecls])
+    AbsLinguaggio.Prog _ topdecls -> prPrec i 0 (concatD [prt 0 topdecls])
 
-instance Print AbsLinguaggio.TopDecl where
+instance Print (AbsLinguaggio.TopDecl' a) where
   prt i = \case
-    AbsLinguaggio.DVar id_ type_ -> prPrec i 0 (concatD [doc (showString "var"), prt 0 id_, doc (showString ":"), prt 0 type_, doc (showString ";")])
-    AbsLinguaggio.DVarInit id_ type_ exp -> prPrec i 0 (concatD [doc (showString "var"), prt 0 id_, doc (showString ":"), prt 0 type_, doc (showString "="), prt 0 exp, doc (showString ";")])
-    AbsLinguaggio.DProc id_ params type_ block -> prPrec i 0 (concatD [doc (showString "proc"), prt 0 id_, doc (showString "("), prt 0 params, doc (showString ")"), doc (showString ":"), prt 0 type_, prt 0 block])
+    AbsLinguaggio.DVar _ id_ type_ -> prPrec i 0 (concatD [doc (showString "var"), prt 0 id_, doc (showString ":"), prt 0 type_, doc (showString ";")])
+    AbsLinguaggio.DVarInit _ id_ type_ exp -> prPrec i 0 (concatD [doc (showString "var"), prt 0 id_, doc (showString ":"), prt 0 type_, doc (showString "="), prt 0 exp, doc (showString ";")])
+    AbsLinguaggio.DProc _ id_ params type_ block -> prPrec i 0 (concatD [doc (showString "proc"), prt 0 id_, doc (showString "("), prt 0 params, doc (showString ")"), doc (showString ":"), prt 0 type_, prt 0 block])
   prtList _ [] = concatD []
   prtList _ (x:xs) = concatD [prt 0 x, prt 0 xs]
 
-instance Print [AbsLinguaggio.TopDecl] where
+instance Print [AbsLinguaggio.TopDecl' a] where
   prt = prtList
 
-instance Print AbsLinguaggio.Param where
+instance Print (AbsLinguaggio.Param' a) where
   prt i = \case
-    AbsLinguaggio.Par intent id_ type_ -> prPrec i 0 (concatD [prt 0 intent, prt 0 id_, doc (showString ":"), prt 0 type_])
+    AbsLinguaggio.Par _ intent id_ type_ -> prPrec i 0 (concatD [prt 0 intent, prt 0 id_, doc (showString ":"), prt 0 type_])
   prtList _ [] = concatD []
   prtList _ [x] = concatD [prt 0 x]
   prtList _ (x:xs) = concatD [prt 0 x, doc (showString ","), prt 0 xs]
 
-instance Print [AbsLinguaggio.Param] where
+instance Print [AbsLinguaggio.Param' a] where
   prt = prtList
 
-instance Print AbsLinguaggio.Intent where
+instance Print (AbsLinguaggio.Intent' a) where
   prt i = \case
-    AbsLinguaggio.IIn -> prPrec i 0 (concatD [])
-    AbsLinguaggio.IRef -> prPrec i 0 (concatD [doc (showString "ref")])
+    AbsLinguaggio.IIn _ -> prPrec i 0 (concatD [])
+    AbsLinguaggio.IRef _ -> prPrec i 0 (concatD [doc (showString "ref")])
 
-instance Print AbsLinguaggio.Type where
+instance Print (AbsLinguaggio.Type' a) where
   prt i = \case
-    AbsLinguaggio.TInt -> prPrec i 0 (concatD [doc (showString "int")])
-    AbsLinguaggio.TBool -> prPrec i 0 (concatD [doc (showString "bool")])
-    AbsLinguaggio.TReal -> prPrec i 0 (concatD [doc (showString "real")])
-    AbsLinguaggio.TChar -> prPrec i 0 (concatD [doc (showString "char")])
-    AbsLinguaggio.TStr -> prPrec i 0 (concatD [doc (showString "string")])
-    AbsLinguaggio.TVoid -> prPrec i 0 (concatD [doc (showString "void")])
-    AbsLinguaggio.TArr n1 n2 type_ -> prPrec i 0 (concatD [doc (showString "["), prt 0 n1, doc (showString ".."), prt 0 n2, doc (showString "]"), prt 0 type_])
-    AbsLinguaggio.TPtr type_ -> prPrec i 0 (concatD [doc (showString "c_ptr"), doc (showString "("), prt 0 type_, doc (showString ")")])
+    AbsLinguaggio.TInt _ -> prPrec i 0 (concatD [doc (showString "int")])
+    AbsLinguaggio.TBool _ -> prPrec i 0 (concatD [doc (showString "bool")])
+    AbsLinguaggio.TReal _ -> prPrec i 0 (concatD [doc (showString "real")])
+    AbsLinguaggio.TChar _ -> prPrec i 0 (concatD [doc (showString "char")])
+    AbsLinguaggio.TStr _ -> prPrec i 0 (concatD [doc (showString "string")])
+    AbsLinguaggio.TVoid _ -> prPrec i 0 (concatD [doc (showString "void")])
+    AbsLinguaggio.TArr _ n1 n2 type_ -> prPrec i 0 (concatD [doc (showString "["), prt 0 n1, doc (showString ".."), prt 0 n2, doc (showString "]"), prt 0 type_])
+    AbsLinguaggio.TPtr _ type_ -> prPrec i 0 (concatD [doc (showString "c_ptr"), doc (showString "("), prt 0 type_, doc (showString ")")])
 
-instance Print AbsLinguaggio.Block where
+instance Print (AbsLinguaggio.Block' a) where
   prt i = \case
-    AbsLinguaggio.BBlock stmts -> prPrec i 0 (concatD [doc (showString "{"), prt 0 stmts, doc (showString "}")])
+    AbsLinguaggio.BBlock _ stmts -> prPrec i 0 (concatD [doc (showString "{"), prt 0 stmts, doc (showString "}")])
 
-instance Print [AbsLinguaggio.Stmt] where
+instance Print [AbsLinguaggio.Stmt' a] where
   prt = prtList
 
-instance Print AbsLinguaggio.Stmt where
+instance Print (AbsLinguaggio.Stmt' a) where
   prt i = \case
-    AbsLinguaggio.SBlock block -> prPrec i 0 (concatD [prt 0 block])
-    AbsLinguaggio.SAssign exp1 exp2 -> prPrec i 0 (concatD [prt 0 exp1, doc (showString "="), prt 0 exp2, doc (showString ";")])
-    AbsLinguaggio.SCall id_ exps -> prPrec i 0 (concatD [prt 0 id_, doc (showString "("), prt 0 exps, doc (showString ")"), doc (showString ";")])
-    AbsLinguaggio.SReturn exp -> prPrec i 0 (concatD [doc (showString "return"), prt 0 exp, doc (showString ";")])
-    AbsLinguaggio.SReturnV -> prPrec i 0 (concatD [doc (showString "return"), doc (showString ";")])
-    AbsLinguaggio.SDecl topdecl -> prPrec i 0 (concatD [prt 0 topdecl])
-    AbsLinguaggio.SIf exp block -> prPrec i 0 (concatD [doc (showString "if"), prt 0 exp, prt 0 block])
-    AbsLinguaggio.SIfElse exp block1 block2 -> prPrec i 0 (concatD [doc (showString "if"), prt 0 exp, prt 0 block1, doc (showString "else"), prt 0 block2])
-    AbsLinguaggio.SWhile exp block -> prPrec i 0 (concatD [doc (showString "while"), prt 0 exp, prt 0 block])
+    AbsLinguaggio.SBlock _ block -> prPrec i 0 (concatD [prt 0 block])
+    AbsLinguaggio.SAssign _ exp1 exp2 -> prPrec i 0 (concatD [prt 0 exp1, doc (showString "="), prt 0 exp2, doc (showString ";")])
+    AbsLinguaggio.SCall _ id_ exps -> prPrec i 0 (concatD [prt 0 id_, doc (showString "("), prt 0 exps, doc (showString ")"), doc (showString ";")])
+    AbsLinguaggio.SReturn _ exp -> prPrec i 0 (concatD [doc (showString "return"), prt 0 exp, doc (showString ";")])
+    AbsLinguaggio.SReturnV _ -> prPrec i 0 (concatD [doc (showString "return"), doc (showString ";")])
+    AbsLinguaggio.SDecl _ topdecl -> prPrec i 0 (concatD [prt 0 topdecl])
+    AbsLinguaggio.SIf _ exp block -> prPrec i 0 (concatD [doc (showString "if"), prt 0 exp, prt 0 block])
+    AbsLinguaggio.SIfElse _ exp block1 block2 -> prPrec i 0 (concatD [doc (showString "if"), prt 0 exp, prt 0 block1, doc (showString "else"), prt 0 block2])
+    AbsLinguaggio.SWhile _ exp block -> prPrec i 0 (concatD [doc (showString "while"), prt 0 exp, prt 0 block])
   prtList _ [] = concatD []
   prtList _ (x:xs) = concatD [prt 0 x, prt 0 xs]
 
-instance Print [AbsLinguaggio.Exp] where
+instance Print [AbsLinguaggio.Exp' a] where
   prt = prtList
 
-instance Print AbsLinguaggio.Exp where
+instance Print (AbsLinguaggio.Exp' a) where
   prt i = \case
-    AbsLinguaggio.EOr exp1 exp2 -> prPrec i 0 (concatD [prt 0 exp1, doc (showString "||"), prt 1 exp2])
-    AbsLinguaggio.EAnd exp1 exp2 -> prPrec i 1 (concatD [prt 1 exp1, doc (showString "&&"), prt 2 exp2])
-    AbsLinguaggio.EEq exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "=="), prt 3 exp2])
-    AbsLinguaggio.ENeq exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "!="), prt 3 exp2])
-    AbsLinguaggio.ELt exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "<"), prt 3 exp2])
-    AbsLinguaggio.ELe exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "<="), prt 3 exp2])
-    AbsLinguaggio.EGt exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString ">"), prt 3 exp2])
-    AbsLinguaggio.EGe exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString ">="), prt 3 exp2])
-    AbsLinguaggio.EAdd exp1 exp2 -> prPrec i 3 (concatD [prt 3 exp1, doc (showString "+"), prt 4 exp2])
-    AbsLinguaggio.ESub exp1 exp2 -> prPrec i 3 (concatD [prt 3 exp1, doc (showString "-"), prt 4 exp2])
-    AbsLinguaggio.EMul exp1 exp2 -> prPrec i 4 (concatD [prt 4 exp1, doc (showString "*"), prt 5 exp2])
-    AbsLinguaggio.EDiv exp1 exp2 -> prPrec i 4 (concatD [prt 4 exp1, doc (showString "/"), prt 5 exp2])
-    AbsLinguaggio.ENeg exp -> prPrec i 5 (concatD [doc (showString "-"), prt 5 exp])
-    AbsLinguaggio.ENot exp -> prPrec i 5 (concatD [doc (showString "!"), prt 5 exp])
-    AbsLinguaggio.EDeref exp -> prPrec i 5 (concatD [doc (showString "*"), prt 5 exp])
-    AbsLinguaggio.EAddr exp -> prPrec i 5 (concatD [doc (showString "c_ptrTo"), doc (showString "("), prt 0 exp, doc (showString ")")])
-    AbsLinguaggio.EIdx exp1 exp2 -> prPrec i 6 (concatD [prt 6 exp1, doc (showString "["), prt 0 exp2, doc (showString "]")])
-    AbsLinguaggio.ECall id_ exps -> prPrec i 6 (concatD [prt 0 id_, doc (showString "("), prt 0 exps, doc (showString ")")])
-    AbsLinguaggio.EVar id_ -> prPrec i 7 (concatD [prt 0 id_])
-    AbsLinguaggio.EInt n -> prPrec i 7 (concatD [prt 0 n])
-    AbsLinguaggio.EReal d -> prPrec i 7 (concatD [prt 0 d])
-    AbsLinguaggio.EChar c -> prPrec i 7 (concatD [prt 0 c])
-    AbsLinguaggio.EStr str -> prPrec i 7 (concatD [prt 0 str])
-    AbsLinguaggio.ETrue -> prPrec i 7 (concatD [doc (showString "true")])
-    AbsLinguaggio.EFalse -> prPrec i 7 (concatD [doc (showString "false")])
+    AbsLinguaggio.EOr _ exp1 exp2 -> prPrec i 0 (concatD [prt 0 exp1, doc (showString "||"), prt 1 exp2])
+    AbsLinguaggio.EAnd _ exp1 exp2 -> prPrec i 1 (concatD [prt 1 exp1, doc (showString "&&"), prt 2 exp2])
+    AbsLinguaggio.EEq _ exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "=="), prt 3 exp2])
+    AbsLinguaggio.ENeq _ exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "!="), prt 3 exp2])
+    AbsLinguaggio.ELt _ exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "<"), prt 3 exp2])
+    AbsLinguaggio.ELe _ exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString "<="), prt 3 exp2])
+    AbsLinguaggio.EGt _ exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString ">"), prt 3 exp2])
+    AbsLinguaggio.EGe _ exp1 exp2 -> prPrec i 2 (concatD [prt 3 exp1, doc (showString ">="), prt 3 exp2])
+    AbsLinguaggio.EAdd _ exp1 exp2 -> prPrec i 3 (concatD [prt 3 exp1, doc (showString "+"), prt 4 exp2])
+    AbsLinguaggio.ESub _ exp1 exp2 -> prPrec i 3 (concatD [prt 3 exp1, doc (showString "-"), prt 4 exp2])
+    AbsLinguaggio.EMul _ exp1 exp2 -> prPrec i 4 (concatD [prt 4 exp1, doc (showString "*"), prt 5 exp2])
+    AbsLinguaggio.EDiv _ exp1 exp2 -> prPrec i 4 (concatD [prt 4 exp1, doc (showString "/"), prt 5 exp2])
+    AbsLinguaggio.ENeg _ exp -> prPrec i 5 (concatD [doc (showString "-"), prt 5 exp])
+    AbsLinguaggio.ENot _ exp -> prPrec i 5 (concatD [doc (showString "!"), prt 5 exp])
+    AbsLinguaggio.EDeref _ exp -> prPrec i 5 (concatD [doc (showString "*"), prt 5 exp])
+    AbsLinguaggio.EAddr _ exp -> prPrec i 5 (concatD [doc (showString "c_ptrTo"), doc (showString "("), prt 0 exp, doc (showString ")")])
+    AbsLinguaggio.EIdx _ exp1 exp2 -> prPrec i 6 (concatD [prt 6 exp1, doc (showString "["), prt 0 exp2, doc (showString "]")])
+    AbsLinguaggio.ECall _ id_ exps -> prPrec i 6 (concatD [prt 0 id_, doc (showString "("), prt 0 exps, doc (showString ")")])
+    AbsLinguaggio.EVar _ id_ -> prPrec i 7 (concatD [prt 0 id_])
+    AbsLinguaggio.EInt _ n -> prPrec i 7 (concatD [prt 0 n])
+    AbsLinguaggio.EReal _ d -> prPrec i 7 (concatD [prt 0 d])
+    AbsLinguaggio.EChar _ c -> prPrec i 7 (concatD [prt 0 c])
+    AbsLinguaggio.EStr _ str -> prPrec i 7 (concatD [prt 0 str])
+    AbsLinguaggio.ETrue _ -> prPrec i 7 (concatD [doc (showString "true")])
+    AbsLinguaggio.EFalse _ -> prPrec i 7 (concatD [doc (showString "false")])
   prtList _ [] = concatD []
   prtList _ [x] = concatD [prt 0 x]
   prtList _ (x:xs) = concatD [prt 0 x, doc (showString ","), prt 0 xs]
