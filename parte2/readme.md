@@ -71,7 +71,7 @@ Cosa fare:
 ---
 
 ## Step 6 — Type checker (implementazione)
-**Stato: 🔄 prossimo**
+**Stato: ✅ completato e validato in locale dall'utente** — 5 file (`SemTypes.hs`, `Environment.hs`, `TypedAst.hs`, `TypeErrors.hs`, `TypeCheck.hs`); ambiente esplicito senza stato mutabile (S2); `sup`/`mathtype`/`rel`/`assignableTo` per la compatibilità (Step 5); AST aumentata con tipo+posizione su ogni nodo e cast espliciti (T1/T2); `checkExp` su tutti i 24 costruttori, `checkStmt` su tutti i 9, `checkTopDecl` con inizializzazione array obbligatoria (S3); doppio passaggio per mutua ricorsione (T4) verificato con funzioni annidate mutuamente ricorsive; parametri per valore/riferimento (T6/T7) e invarianza puntatori verificati con test mirati; 5 errori distinti su un unico programma riportati tutti insieme (S1), nessun falso positivo su un caso di widening valido
 **Pagine:** 348–363
 **Durata stimata:** 6–10 h
 
@@ -85,6 +85,7 @@ Cosa fare:
 ---
 
 ## Step 7 — TAC: datatype e schema per espressioni/controllo di flusso
+**Stato: 🔄 prossimo**
 **Pagine:** 402–492
 **Durata stimata:** 4–6 h
 

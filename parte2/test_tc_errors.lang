@@ -1,0 +1,12 @@
+proc main(): void {
+    var x: int = 5;
+    var y: bool = true;
+    var a: [1..5] int;
+    writeInt(z);
+    x = y;
+    var r: real = x + 2.5;
+    if x {
+        writeInt(1);
+    }
+    writeInt(a[y]);
+}

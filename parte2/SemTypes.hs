@@ -43,3 +43,9 @@ rel :: SemType -> SemType -> SemType
 rel t1 t2 = case sup t1 t2 of
   STError -> STError
   _       -> STBool
+
+assignableTo :: SemType -> SemType -> Bool
+assignableTo t target
+  | t == target           = True
+  | t == STInt && target == STReal = True
+  | otherwise             = False

@@ -1,0 +1,12 @@
+proc bump(ref v: int): void {
+    v = v + 1;
+}
+
+proc main(): void {
+    var x: int = 5;
+    bump(x);
+    bump(5);
+    var p: c_ptr(int);
+    var q: c_ptr(real);
+    p = q;
+}
