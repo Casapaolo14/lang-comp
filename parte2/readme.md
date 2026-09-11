@@ -98,7 +98,7 @@ Cosa fare:
 ---
 
 ## Step 8 — TAC in front-end modulare: state monad, funzioni, parametri
-**Stato: 🔄 prossimo**
+**Stato: ✅ completato e validato in locale dall'utente** — `TacGen.hs`: `State` monad puro per `newtemp`/`newlabel` (niente `IORef`/`STRef`); `genExpr` su tutti i costruttori (letterali, variabili, aritmetica, cast, array multidimensionali con offset in elementi non byte, puntatori, booleani eager); `genCond` con jumping code short-circuit per le guardie; `genStmt` con l-value-prima-di-r-value (verificato nell'ordine reale delle istruzioni generate); `if`/`if-else`/`while` (schema preferito derivato autonomamente, non fornito per intero dal corso); chiamate a funzione con T6/T7 tradotti in TAC (riuso elegante di `genLValueAddr` per il passaggio per riferimento, incluso il caso `*p` → `p` diretto); funzioni annidate raccolte come routine separate (`FuncCode`), non inline. Due test end-to-end completi superati (aritmetica/if, array/while/puntatori/chiamata ref) con verifica manuale istruzione-per-istruzione. **Assunzione rivista durante i test**: S3 (Step 5) — l'obbligo di inizializzazione per gli array è stato **rimosso**, perché combinato con l'assenza di letterali array rendeva impossibile dichiarare il primo array di un programma; accettato il rischio noto di accesso a memoria non inizializzata (come in C). Altre assunzioni: etichette come elemento a sé in `Code`; indicizzazione array in elementi non byte (niente `sizeof`, fuori scopo backend); `IIndexAddr` aggiunta al set base per supportare `c_ptrTo` su elementi di array (P10); indicizzazione di array raggiunti per dereferenziazione di puntatore non supportata (limite dichiarato); short-circuit obbligatorio solo nelle guardie, eager altrove (scelta esplicita per semplicità)
 **Pagine:** 493–550
 **Durata stimata:** 6–10 h
 
@@ -110,6 +110,7 @@ Cosa fare:
 ---
 
 ## Step 9 — Pretty-printer, Main, test case, Makefile + demo
+**Stato: 🔄 prossimo**
 **Pagine:** nessuna specifica (tecniche standard)
 **Durata stimata:** 3–5 h
 
