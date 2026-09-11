@@ -20,7 +20,7 @@ addrType (AddrVar _ t)  = t
 addrType (AddrLit _ t)  = t
 addrType (AddrTemp _ t) = t
 
-data BinOp = OpAdd | OpSub | OpMul | OpDiv
+data BinOp = OpAdd | OpSub | OpMul | OpDiv | OpAnd | OpOr
   deriving (Eq, Show)
 
 data RelOp = OpEq | OpNeq | OpLt | OpLe | OpGt | OpGe
