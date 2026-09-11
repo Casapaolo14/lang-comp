@@ -1,0 +1,17 @@
+proc bump(ref v: int): void {
+    v = v + 1;
+}
+
+proc main(): void {
+    var a: [1..5] int;
+    var p: c_ptr(int);
+    var i: int = 0;
+
+    while i < 5 {
+        a[i] = i * 2;
+        i = i + 1;
+    }
+
+    p = c_ptrTo(a[2]);
+    bump(*p);
+}

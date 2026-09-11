@@ -38,6 +38,7 @@ data Instr
   | IIfFalse    Address String                  -- ifFalse r goto label
   | IIfRel      Address RelOp Address String    -- if r1 rel r2 goto label
   | IIndexGet   Address Address Address         -- l = id[r]
+  | IIndexAddr  Address Address Address         -- l = &id[r]
   | IIndexSet   Address Address Address         -- id[r1] = r2
   | IAddrOf     Address Address                 -- l = &id
   | IDerefGet   Address Address                 -- l1 = *l2

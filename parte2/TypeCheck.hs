@@ -191,7 +191,8 @@ checkCall pos env name args =
     Nothing ->
       let checkedArgs = map (checkExp env) args
           argErrs      = concatMap snd checkedArgs
-      in (TECall STError name (map fst checkedArgs),
+          pairedArgs   = [ (ByValue, te) | (te, _) <- checkedArgs ]
+      in (TECall STError name pairedArgs,
           mkError pos ("funzione non dichiarata: " ++ name) : argErrs)
     Just fi ->
       let params  = fiParams fi
@@ -203,16 +204,14 @@ checkCall pos env name args =
                                          ++ ": attesi " ++ show nParams
                                          ++ ", forniti " ++ show nArgs)]
           matched      = zip3 [1 ..] params args
-          checkedPairs = map (\(idx, p, a) -> checkArg pos env idx p a) matched
+          checkedPairs = [ (fst p, checkArg pos env idx p a) | (idx, p, a) <- matched ]
           extraArgs    = drop nParams args
           extraChecked = map (checkExp env) extraArgs
-          allTe        = map fst checkedPairs ++ map fst extraChecked
-          allErrs      = concatMap snd checkedPairs ++ concatMap snd extraChecked
+          allTe        = [ (intent, te) | (intent, (te, _)) <- checkedPairs ]
+                         ++ [ (ByValue, te) | (te, _) <- extraChecked ]
+          allErrs      = concatMap (snd . snd) checkedPairs ++ concatMap snd extraChecked
       in (TECall (fiReturn fi) name allTe, lenErrs ++ allErrs)
 
--- ============================================================
--- checkStmt: TUTTE le equazioni insieme, senza altro in mezzo
--- ============================================================
 
 checkStmt :: Env -> Abs.Stmt -> (TStmt, [TypeError])
 checkStmt env (Abs.SAssign pos lhs rhs) =
@@ -268,9 +267,6 @@ checkStmt env (Abs.SReturnV pos) =
       | viType vi == STVoid -> (TSReturnV, [])
       | otherwise -> (TSReturnV, [mkError pos "questa funzione richiede un valore di ritorno (return con espressione)"])
 
--- ============================================================
--- Funzioni ausiliarie per checkStmt / blocchi / liste di statement
--- ============================================================
 
 checkCondition :: Maybe (Int, Int) -> Env -> Abs.Exp -> (TExp, [TypeError])
 checkCondition pos env cond =
@@ -318,19 +314,13 @@ preScanFunctions env stmts = foldl addOne (env, []) stmts
           in (e', errs)
     addOne acc _ = acc
 
--- ============================================================
--- checkTopDecl: TUTTE le equazioni insieme, UNA SOLA VOLTA
--- ============================================================
 
 checkTopDecl :: Env -> Abs.TopDecl -> (TTopDecl, Env, [TypeError])
 checkTopDecl env (Abs.DVar pos (Abs.Ident name) ty) =
   let semTy = fromSyntacticType ty
-      errsArr
-        | isArrayType semTy = [mkError pos ("l'array '" ++ name ++ "' deve essere inizializzato alla dichiarazione")]
-        | otherwise          = []
-      vi  = VarInfo semTy pos
+      vi   = VarInfo semTy pos
       env' = env { envVars = Map.insert name vi (envVars env) }
-  in (TDVar name semTy pos, env', errsArr)
+  in (TDVar name semTy pos, env', [])
 checkTopDecl env (Abs.DVarInit pos (Abs.Ident name) ty initExpr) =
   let semTy          = fromSyntacticType ty
       (tinit, errsI) = checkExp env initExpr

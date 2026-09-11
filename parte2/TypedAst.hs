@@ -21,7 +21,7 @@ data TExp
     | TEDeref SemType TExp
     | TEAddr  SemType TExp
     | TEIdx   SemType TExp TExp
-    | TECall  SemType String [TExp]
+    | TECall  SemType String [(ParamIntent, TExp)]
     | TEVar   SemType (Maybe (Int, Int)) String
     | TEInt   SemType Integer
     | TEReal  SemType Double
@@ -67,7 +67,7 @@ data TBlock = TBlock [TStmt]
 data TStmt
     = TSBlock  TBlock
     | TSAssign TExp TExp
-    | TSCall   String [TExp]
+    | TSCall   String [(ParamIntent, TExp)]
     | TSReturn TExp
     | TSReturnV
     | TSDecl   TTopDecl
