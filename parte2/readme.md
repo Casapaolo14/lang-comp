@@ -85,8 +85,8 @@ Cosa fare:
 ---
 
 ## Step 7 — TAC: datatype e schema per espressioni/controllo di flusso
-**Stato: 🔄 prossimo**
-**Pagine:** 402–492
+**Stato: ✅ completato** — `Tac.hs`: `Address`/`Literal` (3 categorie: var/lit/temp, coerenti col corso), `Instr` (16 costruttori, tutte le 9 categorie del corso), `CodeItem`/`Code`/`gen`/`label` (etichette come elemento a sé, non "attaccate" — assunzione per gestire blocchi vuoti). Schemi progettati (non ancora implementati, rimandato a Step 8 con lo State monad): espressioni aritmetiche (diretto dal corso), assegnamento con l-value-prima-di-r-value (requisito esplicito del testo, non della teoria), booleani short-circuit obbligatorio nelle guardie / valutazione completa altrove (scelta esplicita, `OpAnd`/`OpOr` aggiunti a `BinOp`), if/if-else/while (schema "preferito" con goto iniziale condiviso tra if e while)
+**Pagine:** 402–435
 **Durata stimata:** 4–6 h
 
 Cosa fare:
@@ -98,6 +98,7 @@ Cosa fare:
 ---
 
 ## Step 8 — TAC in front-end modulare: state monad, funzioni, parametri
+**Stato: 🔄 prossimo**
 **Pagine:** 493–550
 **Durata stimata:** 6–10 h
 
