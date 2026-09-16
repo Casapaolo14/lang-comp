@@ -2,23 +2,23 @@ entrypoints Program ;
 
 Prog. Program ::= [TopDecl] ;
 
-// variabili globali
+-- variabili globali
 DVar.     TopDecl ::= "var" Ident ":" Type ";" ;
 DVarInit. TopDecl ::= "var" Ident ":" Type "=" Exp ";" ;
 
 separator TopDecl "" ;
 
-// procedure/funzioni
+-- procedure/funzioni
 DProc.   TopDecl ::= "proc" Ident "(" [Param] ")" ":" Type Block ;
 
 Par.     Param ::= Intent Ident ":" Type ;
 separator Param "," ;
 
-// parametri
+-- parametri
 IIn.     Intent ::= ;
 IRef.    Intent ::= "ref" ;
 
-// tipi
+-- tipi
 TInt.    Type ::= "int" ;
 TBool.   Type ::= "bool" ;
 TReal.   Type ::= "real" ;
@@ -28,11 +28,11 @@ TVoid.   Type ::= "void" ;
 TArr.    Type ::= "[" Integer ".." Integer "]" Type ;
 TPtr.    Type ::= "c_ptr" "(" Type ")" ;
 
-// blocchi di codice
+-- blocchi di codice
 BBlock.  Block ::= "{" [Stmt] "}" ;
 separator Stmt "" ;
 
-// istruzioni
+-- istruzioni
 SBlock.  Stmt ::= Block ;
 SAssign. Stmt ::= Exp "=" Exp ";" ;
 SCall.   Stmt ::= Ident "(" [Exp] ")" ";" ;
@@ -41,16 +41,16 @@ SReturnV.Stmt ::= "return" ";" ;
 SDecl.   Stmt ::= TopDecl ;
 separator Exp "," ;
 
-// controlli
+-- controlli
 SIf.     Stmt ::= "if" Exp Block ;
 SIfElse. Stmt ::= "if" Exp Block "else" Block ;
 SWhile.  Stmt ::= "while" Exp Block ;
 
-// operatori logici
+-- operatori logici
 EOr.  Exp  ::= Exp  "||" Exp1 ;
 EAnd. Exp1 ::= Exp1 "&&" Exp2 ;
 
-// operatori di confronto
+-- operatori di confronto
 EEq.  Exp2 ::= Exp3 "==" Exp3 ;
 ENeq. Exp2 ::= Exp3 "!=" Exp3 ;
 ELt.  Exp2 ::= Exp3 "<"  Exp3 ;
@@ -58,24 +58,24 @@ ELe.  Exp2 ::= Exp3 "<=" Exp3 ;
 EGt.  Exp2 ::= Exp3 ">"  Exp3 ;
 EGe.  Exp2 ::= Exp3 ">=" Exp3 ;
 
-// operatori aritmetici
+-- operatori aritmetici
 EAdd. Exp3 ::= Exp3 "+" Exp4 ;
 ESub. Exp3 ::= Exp3 "-" Exp4 ;
 EMul. Exp4 ::= Exp4 "*" Exp5 ;
 EDiv. Exp4 ::= Exp4 "/" Exp5 ;
 
-// operatori unari
+-- operatori unari
 ENeg.   Exp5 ::= "-" Exp5 ;
 ENot.   Exp5 ::= "!" Exp5 ;
 EDeref. Exp5 ::= "*" Exp5 ;
 EAddr.  Exp5 ::= "c_ptrTo" "(" Exp ")" ;
 
-// indice array e chiamata di funzione
+-- indice array e chiamata di funzione
 EIdx.  Exp6 ::= Exp6 "[" Exp "]" ;
 ECall. Exp6 ::= Ident "(" [Exp] ")" ;
 
 
-// espressioni
+-- espressioni
 EVar.   Exp7 ::= Ident ;
 EInt.   Exp7 ::= Integer ;
 EReal.  Exp7 ::= Double ;
@@ -84,9 +84,9 @@ EStr.   Exp7 ::= String ;
 ETrue.  Exp7 ::= "true" ;
 EFalse. Exp7 ::= "false" ;
 
-// gestione parentesi
+-- gestione parentesi
 coercions Exp 7 ;
 
-// gestione dei commenti
+-- gestione dei commenti
 comment "//" ;
 comment "/*" "*/" ;

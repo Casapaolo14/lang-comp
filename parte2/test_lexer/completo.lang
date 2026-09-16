@@ -1,0 +1,35 @@
+var g: int = 10;
+
+proc sum(x: int, y: int): int {
+    return x + y;
+}
+
+proc bump(ref v: int): void {
+    v = v + 1;
+}
+
+proc main(): void {
+    var a: [1..5] int;
+    var p: c_ptr(int);
+    var i: int = 0;
+
+    while (i < 5) {
+        a[i] = i * 2;
+        i = i + 1;
+    }
+
+    if (a[0] == 0) {
+        writeString("ok");
+    } else {
+        writeString("no");
+    }
+
+    p = c_ptrTo(g);
+    *p = sum(1, 2);
+    bump(g);
+
+    {
+        var t: bool = true && !false;
+        writeInt(*p);
+    }
+}

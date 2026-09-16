@@ -1,0 +1,4 @@
+proc main(): void {
+    var x: int = 5
+    writeInt(x);
+}
