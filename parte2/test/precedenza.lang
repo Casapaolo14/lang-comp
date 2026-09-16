@@ -1,3 +1,0 @@
-proc main(): void {
-    var r: bool = -a[0] * b + c == d && e || !f;
-}
