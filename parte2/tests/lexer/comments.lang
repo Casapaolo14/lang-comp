@@ -1,0 +1,8 @@
+// commento su singola riga, prima di una dichiarazione
+proc main(): void {
+  var x: int = 1; // commento a fine riga
+  /* commento
+     multilinea
+     su più righe */
+  var y: int = /* commento inline */ 2;
+}
