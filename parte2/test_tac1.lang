@@ -1,9 +1,0 @@
-proc main(): void {
-    var x: int = 5;
-    var y: int = 3;
-    var z: int;
-    z = x + y * 2;
-    if x < y {
-        z = 0;
-    }
-}
