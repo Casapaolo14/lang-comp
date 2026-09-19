@@ -1,0 +1,15 @@
+proc bump(ref v: int): void {
+    v = v + 1;
+}
+
+proc setPtr(ref p: c_ptr(real)): void {
+}
+
+proc main(): void {
+    var a: int = 5;
+    var pi: c_ptr(int);
+
+    bump(a);
+    bump(5);
+    setPtr(pi);
+}

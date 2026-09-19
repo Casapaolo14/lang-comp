@@ -110,14 +110,14 @@ Cosa fare:
 ---
 
 ## Step 9 — Pretty-printer, Main, test case, Makefile + demo
-**Stato: 🔄 prossimo**
-**Pagine:** nessuna specifica (tecniche standard)
-**Durata stimata:** 3–5 h
+**Stato: ✅ completato** — `PrintTac.hs` (nuovo modulo) stampa indirizzi, istruzioni e codice; gli identificatori che vengono da una variabile del programma sono annotati con la riga di dichiarazione (`AddrVar` ora porta `Maybe (Int,Int)`, propagato in tutti i punti di `TacGen.hs` che costruiscono un indirizzo — `genExpr`, `genArrayAddr`/`ArrayAddr`, `genLValueAddr`, `genStmt` su `TSAssign`, `genTopDecl` su `TDVarInit`), verificato con `x_12`-style su più casi (`a_12`, `g_1`, `i_14`, ecc.). `Main.hs` (nuovo) esegue la pipeline completa richiesta dal testo: parsing → type-check → pretty-print del sorgente (`PrintLinguaggio.printTree`) → generazione e pretty-print del TAC, su uno o più file passati da riga di comando, tenendo ben distinti errori di parsing ed errori di tipo. `Makefile` riscritto in stile GNU make: `make` costruisce `Main` dai sorgenti già presenti (senza rilanciare `bnfc`, per non rischiare di sovrascrivere le rifiniture manuali su `LexLinguaggio.x`), `make demo` esegue `Main` su tutti i test in `tests/{lexer,parser,errors,typecheck,tacgen}`. Aggiunte nuove cartelle di test dedicate al type checker (`mutua_ricorsione.lang`, `cinque_errori.lang`, `riferimenti.lang`) e alla generazione TAC (`aritmetica_if.lang`, `array_while_puntatori.lang`).
 
-Cosa fare:
+**Due bug pre-esistenti scoperti e corretti durante l'integrazione finale** (mai emersi prima perché `TestTacGen.hs` veniva lanciato solo su singole espressioni semplici): `genExpr` non gestiva affatto le stringhe letterali (`TEStr`, con `Literal` privo di un costruttore per le stringhe: aggiunto `LStr`) né i sei operatori di confronto usati come valore anziché come guardia di un `if`/`while` (`TEEq`/`TENeq`/`TELt`/`TELe`/`TEGt`/`TEGe`: mancava una funzione `genRel`, aggiunta con la tecnica di "materializzare" un booleano da jumping code già usata concettualmente per le guardie). Entrambi causavano un crash Haskell (`Non-exhaustive patterns`) su qualunque programma reale che li usasse — scoperti proprio grazie a `make demo` su un ventaglio ampio di test, il primo vero banco di prova end-to-end di tutta la pipeline insieme.
+
+Cosa fatto:
 - Pretty-printer TAC con annotazione del punto di dichiarazione (es. `t37 = x_12 + 5`).
 - Funzione `Main` che, dato un file: fa parsing → type-check → pretty-print del sorgente → genera e stampa il TAC.
-- Test case significativi (uno per costrutto/caso limite rilevante).
+- Test case significativi (uno per costrutto/caso limite rilevante) in `tests/typecheck/` e `tests/tacgen/`.
 - `Makefile` conforme GNU make con target di default e `make demo`.
 
 ---

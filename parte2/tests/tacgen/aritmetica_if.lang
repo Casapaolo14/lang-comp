@@ -1,0 +1,11 @@
+proc main(): void {
+    var a: int = 3;
+    var b: real = 4.5;
+    var c: real = a + b;
+
+    if (c > 5.0) {
+        writeReal(c);
+    } else {
+        writeInt(a);
+    }
+}
