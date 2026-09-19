@@ -7,14 +7,11 @@ import Environment
 import TypedAst
 import TypeErrors
 
--- Controlla un'espressione e restituisce sia la sua versione tipizzata
--- (TExp) sia la lista di eventuali errori trovati al suo interno. I
--- letterali (numeri, caratteri, stringhe, vero/falso) hanno sempre un
--- tipo fisso e non possono mai generare errori. Una variabile viene
--- cercata nel quaderno: se c'e', prende il suo tipo vero; se non c'e',
--- diventa di tipo STError e si segnala l'errore "variabile non
--- dichiarata". Tutti gli altri casi vengono smistati alle funzioni
--- ausiliarie sotto, una per ciascuna famiglia di operatori.
+-- Type-checka un'espressione: (TExp tipizzata, errori trovati dentro).
+-- Letterali: tipo fisso, mai errori. Variabile: lookup in rubrica; se
+-- trovata prende tipo vero, altrimenti STError + errore "non
+-- dichiarata". Tutti gli altri casi smistati alle funzioni ausiliarie
+-- sotto, una per famiglia di operatori.
 checkExp :: Env -> Abs.Exp -> (TExp, [TypeError])
 checkExp _ (Abs.EInt _ n)   = (TEInt STInt n, [])
 checkExp _ (Abs.EReal _ d)  = (TEReal STReal d, [])
@@ -46,15 +43,10 @@ checkExp env (Abs.EAddr pos e1) = checkAddr pos env e1
 checkExp env (Abs.EIdx pos e1 e2) = checkIdx pos env e1 e2
 checkExp env (Abs.ECall pos (Abs.Ident name) args) = checkCall pos env name args
 
--- Controlla un'operazione aritmetica binaria (+, -, *, /): controlla i
--- due operandi separatamente, poi usa "sup" per sapere che tipo risulta
--- dalla loro combinazione (o se sono incompatibili). Se serve, inserisce
--- il "post-it" di conversione (insertCast) su uno dei due lati, cosi'
--- entrambi arrivano allo stesso tipo prima di essere combinati davvero.
--- Se il tipo risultato e' STError ma nessuno dei due operandi lo era
--- gia' prima, allora l'errore e' proprio "questi due tipi non vanno
--- d'accordo fra loro"; se invece uno dei due era gia' STError, l'errore
--- e' gia' stato segnalato altrove e non lo si ripete.
+-- Operazione aritmetica binaria (+ - * /): controlla i due operandi
+-- separatamente, poi "sup" decide il tipo risultante (o STError se
+-- incompatibili). insertCast aggiunge la conversione dove serve per
+-- pareggiare i tipi. Errore nuovo solo se STError è effettivo
 checkArith :: Maybe (Int, Int) -> Env -> Abs.Exp -> Abs.Exp
            -> (SemType -> TExp -> TExp -> TExp) -> (TExp, [TypeError])
 checkArith pos env e1 e2 mkNode =
@@ -71,19 +63,15 @@ checkArith pos env e1 e2 mkNode =
         | otherwise = [mkError pos "operandi di tipo incompatibile nell'operazione aritmetica"]
   in (mkNode resultType te1' te2', errs1 ++ errs2 ++ errs3)
 
--- Avvolge un'espressione gia' tipizzata in un nodo TECast se il suo tipo
--- non e' gia' esattamente quello richiesto (target). Se il tipo e' gia'
--- quello giusto, restituisce l'espressione cosi' com'e', senza
--- aggiungere nulla.
+-- Avvolge in TECast solo se il tipo non è già quello richiesto altrimenti restituisce l'espressione invariata.
 insertCast :: SemType -> TExp -> TExp
 insertCast target texp
   | typeOf texp == target = texp
   | otherwise             = TECast target texp
 
--- Controlla un'operazione booleana binaria (||, &&): entrambi gli
--- operandi devono essere di tipo bool. Se anche uno solo dei due e'
--- gia' STError, il risultato e' STError senza aggiungere un nuovo
--- errore; altrimenti, se non sono entrambi bool, si segnala l'errore.
+-- Operazione booleana binaria (&&/||): entrambi gli operandi devono
+-- essere bool. STError già presente in un operando -> propaga senza
+-- duplicare l'errore altrimenti, se non sono entrambi bool, errore nuovo
 checkBoolOp :: Maybe (Int, Int) -> Env -> Abs.Exp -> Abs.Exp
             -> (SemType -> TExp -> TExp -> TExp) -> (TExp, [TypeError])
 checkBoolOp pos env e1 e2 mkNode =
@@ -97,10 +85,8 @@ checkBoolOp pos env e1 e2 mkNode =
         | otherwise = (STError, [mkError pos "gli operandi di || e && devono essere entrambi bool"])
   in (mkNode resultType te1 te2, errs1 ++ errs2 ++ errs3)
 
--- Controlla un confronto (==, !=, <, <=, >, >=): usa "sup" per sapere se
--- i due operandi sono confrontabili fra loro (inserendo l'eventuale
--- conversione), e "rel" per decidere il tipo del risultato, che e'
--- sempre bool se il confronto ha senso, STError altrimenti.
+-- Confronto (==, !=, <, <=, >, >=): "sup" verifica confrontabilitaà fra
+-- i due operandi, "rel" decide il tipo risultato: bool se il confronto ha senso, STError altrimenti.
 checkRel :: Maybe (Int, Int) -> Env -> Abs.Exp -> Abs.Exp
          -> (SemType -> TExp -> TExp -> TExp) -> (TExp, [TypeError])
 checkRel pos env e1 e2 mkNode =
@@ -118,8 +104,7 @@ checkRel pos env e1 e2 mkNode =
         | otherwise = [mkError pos "operandi di tipo incompatibile nel confronto"]
   in (mkNode resultType te1' te2', errs1 ++ errs2 ++ errs3)
 
--- Controlla un operatore matematico unario (il meno, "-x"): l'operando
--- deve essere int o real, altrimenti e' errore.
+-- Controlla un operatore matematico unario (il meno, "-x"): l'operando deve essere int o real, altrimenti è errore.
 checkUnaryMath :: Maybe (Int, Int) -> Env -> Abs.Exp
                -> (SemType -> TExp -> TExp) -> (TExp, [TypeError])
 checkUnaryMath pos env e1 mkNode =
@@ -132,8 +117,7 @@ checkUnaryMath pos env e1 mkNode =
         | otherwise = [mkError pos "operando non numerico per l'operatore unario"]
   in (mkNode resultType te1, errs1 ++ errs2)
 
--- Controlla la negazione booleana ("!x"): l'operando deve essere bool,
--- altrimenti e' errore.
+-- Controlla la negazione booleana ("!x"): l'operando deve essere bool, altrimenti è errore.
 checkUnaryBool :: Maybe (Int, Int) -> Env -> Abs.Exp
                -> (SemType -> TExp -> TExp) -> (TExp, [TypeError])
 checkUnaryBool pos env e1 mkNode =
@@ -146,8 +130,8 @@ checkUnaryBool pos env e1 mkNode =
   in (mkNode resultType te1, errs1 ++ errs2)
 
 -- Controlla la dereferenziazione di un puntatore ("*p"): l'operando
--- deve essere di tipo puntatore, e il risultato e' il tipo puntato
--- all'interno (STPtr inner -> inner); qualsiasi altro tipo e' errore.
+-- deve essere di tipo puntatore, e il risultato è il tipo puntato
+-- all'interno. qualsiasi altro tipo è errore.
 checkDeref :: Maybe (Int, Int) -> Env -> Abs.Exp -> (TExp, [TypeError])
 checkDeref pos env e1 =
   let (te1, errs1) = checkExp env e1
@@ -159,9 +143,7 @@ checkDeref pos env e1 =
   in (TEDeref resultType te1, errs1 ++ errs2)
 
 -- Controlla la presa dell'indirizzo di qualcosa ("c_ptrTo(x)"): x deve
--- essere un'l-expression (qualcosa con un vero posto in memoria: una
--- variabile, un elemento di array, il contenuto di un puntatore), non
--- un'espressione qualsiasi come "c_ptrTo(3+4)".
+-- essere un'l-expression
 checkAddr :: Maybe (Int, Int) -> Env -> Abs.Exp -> (TExp, [TypeError])
 checkAddr pos env e1 =
   let (te1, errs1) = checkExp env e1
@@ -172,20 +154,14 @@ checkAddr pos env e1 =
         | otherwise = (STError, [mkError pos "c_ptrTo richiede un'l-expression (una variabile, non un'espressione qualsiasi)"])
   in (TEAddr resultType te1, errs1 ++ errs2)
 
--- Dice se un'espressione e' un'l-expression, cioe' se ha un vero posto
--- in memoria a cui ci si puo' riferire: una variabile, un elemento di un
--- array che a sua volta e' un'l-expression, oppure il contenuto puntato
--- da un puntatore. Qualunque altra espressione (un numero, una somma,
--- ...) non lo e'.
+-- Dice se un'espressione è un'l-expression
 isLExpr :: Abs.Exp -> Bool
 isLExpr (Abs.EVar _ _)   = True
 isLExpr (Abs.EIdx _ e _) = isLExpr e
 isLExpr (Abs.EDeref _ _) = True
 isLExpr _                = False
 
--- Controlla un accesso a un elemento di array ("a[i]"): l'indice deve
--- essere di tipo int, e la base deve essere di tipo array; il risultato
--- e' il tipo degli elementi dell'array.
+-- Controlla un accesso a un elemento di array ("a[i]") l'indice deve essere di tipo int, e la base deve essere di tipo array
 checkIdx :: Maybe (Int, Int) -> Env -> Abs.Exp -> Abs.Exp -> (TExp, [TypeError])
 checkIdx pos env e1 e2 =
   let (te1, errs1) = checkExp env e1
@@ -202,13 +178,8 @@ checkIdx pos env e1 e2 =
         _               -> (STError, [mkError pos "indicizzazione [] applicata a un tipo che non è un array"])
   in (TEIdx resultType te1 te2, errs1 ++ errs2 ++ errsIdx ++ errsBase)
 
--- Controlla un singolo argomento di una chiamata di funzione rispetto al
--- parametro a cui corrisponde. Per un parametro per valore basta che il
--- tipo dell'argomento sia assegnabile al tipo atteso (inserendo
--- l'eventuale conversione). Per un parametro per riferimento serve il
--- tipo esattamente identico, e l'argomento deve essere un'l-expression
--- (altrimenti non ci sarebbe nessun vero posto in memoria a cui
--- riferirsi).
+-- Controlla un argomento rispetto al parametro corrispondente.
+-- ByValue: basta assignability. ByRef: tipo esattamente identico + l'argomento deve essere una l-expression
 checkArg :: Maybe (Int, Int) -> Env -> Int -> (ParamIntent, SemType) -> Abs.Exp -> (TExp, [TypeError])
 checkArg pos env idx (intent, paramType) argExpr =
   let (te, errs1) = checkExp env argExpr
@@ -233,14 +204,10 @@ checkArg pos env idx (intent, paramType) argExpr =
          in (te, errs1 ++ errs2)
 
 -- Controlla una chiamata di funzione: cerca il nome nella rubrica delle
--- funzioni (senza mai scriverci nulla, una ricerca fallita e' sempre e
--- solo una lettura). Se la funzione non esiste, si continuano comunque a
--- controllare gli argomenti (per trovare eventuali altri errori al loro
--- interno), ma il risultato della chiamata e' STError. Se la funzione
+-- funzioni. Se la funzione non esiste, si continuano comunque a
+-- controllare gli argomenti, ma il risultato della chiamata è STError. Se la funzione
 -- esiste, si controlla che il numero di argomenti sia quello atteso e si
 -- controlla ciascun argomento rispetto al parametro corrispondente
--- (checkArg); eventuali argomenti in eccesso vengono comunque controllati
--- (per non perdere altri errori) ma trattati come extra.
 checkCall :: Maybe (Int, Int) -> Env -> String -> [Abs.Exp] -> (TExp, [TypeError])
 checkCall pos env name args =
   case Map.lookup name (envFuns env) of
@@ -271,15 +238,12 @@ checkCall pos env name args =
 
 -- Controlla una singola istruzione. Per un assegnamento: il lato
 -- sinistro deve essere un'l-expression, e il tipo del lato destro deve
--- essere assegnabile al tipo del lato sinistro (con l'eventuale
--- conversione inserita). Una chiamata usata come istruzione riusa
+-- essere assegnabile al tipo del lato sinistro. Una chiamata usata come istruzione riusa
 -- checkCall e scarta il tipo del risultato. if/if-else/while controllano
 -- la condizione (deve essere bool) e ricorsivamente il/i blocco/i
 -- interno/i. Un blocco annidato viene controllato con checkBlock. Un
 -- return con valore controlla che il tipo restituito sia compatibile con
--- quello atteso dalla funzione corrente (letto dalla voce speciale
--- "$return" nella rubrica); un return senza valore richiede che la
--- funzione corrente sia void.
+-- quello atteso dalla funzione corrente. Un return senza valore richiede che la funzione sia void.
 checkStmt :: Env -> Abs.Stmt -> (TStmt, [TypeError])
 checkStmt env (Abs.SAssign pos lhs rhs) =
   let (tlhs, errsL) = checkExp env lhs
@@ -335,8 +299,7 @@ checkStmt env (Abs.SReturnV pos) =
       | otherwise -> (TSReturnV, [mkError pos "questa funzione richiede un valore di ritorno (return con espressione)"])
 
 
--- Controlla che un'espressione usata come condizione (di if/while) sia
--- di tipo bool.
+-- Controlla che un'espressione usata come condizione (di if/while) sia di tipo bool.
 checkCondition :: Maybe (Int, Int) -> Env -> Abs.Exp -> (TExp, [TypeError])
 checkCondition pos env cond =
   let (tcond, errs1) = checkExp env cond
@@ -347,21 +310,17 @@ checkCondition pos env cond =
         | otherwise = [mkError pos "la condizione deve essere di tipo bool"]
   in (tcond, errs1 ++ errs2)
 
--- Controlla un blocco "{ ... }": in pratica delega tutto a
--- checkStmtList sulla lista di istruzioni al suo interno.
+-- Controlla un blocco "{ ... }": in pratica delega tutto a checkStmtList sulla lista di istruzioni al suo interno.
 checkBlock :: Env -> Abs.Block -> (TBlock, [TypeError])
 checkBlock env (Abs.BBlock _ stmts) =
   let (tstmts, errs) = checkStmtList env stmts
   in (TBlock tstmts, errs)
 
--- Controlla una sequenza di istruzioni. Prima di guardare istruzione per
--- istruzione, fa una prescansione (preScanFunctions) che registra tutte
--- le funzioni dichiarate in questo blocco, per rendere possibile la
--- mutua ricorsione. Poi scorre le istruzioni una alla volta con "go":
--- se e' una dichiarazione (Abs.SDecl), la controlla con checkTopDecl e
--- usa il quaderno aggiornato (che ora include la nuova variabile/
--- funzione) per controllare tutto il resto; altrimenti controlla
--- l'istruzione con checkStmt riusando lo stesso quaderno per il resto.
+-- Controlla una sequenza di istruzioni. Prima preScanFunctions registra
+-- tutte le funzioni del blocco (per la mutua ricorsione), poi go
+-- scorre una istruzione alla volta: se è una dichiarazione, la
+-- controlla e passa avanti il quaderno aggiornato altrimenti controlla
+-- l'istruzione e passa avanti il quaderno invariato.
 checkStmtList :: Env -> [Abs.Stmt] -> ([TStmt], [TypeError])
 checkStmtList env stmts =
   let (env1, preErrs)   = preScanFunctions env stmts
@@ -379,14 +338,8 @@ checkStmtList env stmts =
             (trest, errs2) = go e ss
         in (ts : trest, errs1 ++ errs2)
 
--- Prima passata su una lista di istruzioni: scorre solo le dichiarazioni
--- di funzione (ignorando tutto il resto) e le registra tutte insieme
--- nella rubrica, prima ancora di controllare un solo corpo. Questo e'
--- il meccanismo che rende possibile la mutua ricorsione fra funzioni
--- dichiarate nello stesso blocco: quando piu' avanti si controllera' il
--- corpo di una di loro, tutte le altre risulteranno gia' conosciute.
--- Se una funzione con lo stesso nome e' gia' presente, si segnala
--- l'errore invece di sovrascriverla.
+-- Pre-scansione: registra tutte le funzioni dichiarate nel blocco prima di controllare un solo corpo, così la mutua ricorsione funziona. 
+-- Nome già presente -> errore, niente overwrite.
 preScanFunctions :: Env -> [Abs.Stmt] -> (Env, [TypeError])
 preScanFunctions env stmts = foldl addOne (env, []) stmts
   where
@@ -402,19 +355,12 @@ preScanFunctions env stmts = foldl addOne (env, []) stmts
     addOne acc _ = acc
 
 
--- Controlla una singola dichiarazione (variabile o funzione) e
--- restituisce, oltre alla sua versione tipizzata, il quaderno
--- aggiornato con la nuova voce (da usare per controllare tutto quello
--- che segue nello stesso blocco). Per una variabile senza inizializzatore
--- basta registrarla col suo tipo. Per una variabile con inizializzatore,
--- si controlla anche che il tipo del valore iniziale sia assegnabile al
--- tipo dichiarato. Per una funzione: si costruisce l'ambiente per
--- controllare il suo corpo aggiungendo all'ambiente esterno sia i suoi
--- parametri sia una voce speciale "$return" che ricorda il tipo di
--- ritorno atteso (usata da checkStmt per i return); la funzione stessa
--- viene registrata nella rubrica solo se preScanFunctions non lo ha gia'
--- fatto (altrimenti la si lascerebbe due volte, senza pero' causare
--- errori: e' semplicemente gia' presente).
+-- Controlla una dichiarazione, restituisce anche il
+-- quaderno aggiornato per il resto del blocco. Var senza init: si
+-- registra col tipo dichiarato. Var con init: verifica assignability
+-- del valore iniziale. Funzione: ambiente del corpo = esterno +
+-- parametri + voce speciale "$return" (per i return dentro checkStmt)
+-- si registra in rubrica solo se preScanFunctions non l'ha già fatto.
 checkTopDecl :: Env -> Abs.TopDecl -> (TTopDecl, Env, [TypeError])
 checkTopDecl env (Abs.DVar pos (Abs.Ident name) ty) =
   let semTy = fromSyntacticType ty
@@ -450,21 +396,12 @@ checkTopDecl env (Abs.DProc pos (Abs.Ident name) params retType body) =
             in env { envFuns = Map.insert name fi (envFuns env) }
   in (TDProc name semParams semRet pos tbody, env', errsBody)
 
--- Controlla se un SemType e' un tipo array (usata altrove nel progetto
--- per distinguere questo caso rapidamente).
+-- Controlla se un SemType è un tipo array
 isArrayType :: SemType -> Bool
 isArrayType (STArr _ _ _) = True
 isArrayType _             = False
 
--- Punto di ingresso del controllo dei tipi: prende l'intero programma
--- cosi' come uscito dal parser e restituisce la sua versione tipizzata
--- insieme a tutti gli errori trovati. Il trucco qui e' che checkStmtList
--- lavora su una lista di Abs.Stmt, non su una lista di Abs.TopDecl: per
--- riusarla anche per le dichiarazioni globali, ogni TopDecl viene
--- "travestito" da istruzione con il costruttore Abs.SDecl (con una
--- posizione fittizia, dato che TopDecl porta gia' la propria posizione
--- vera al suo interno). Alla fine, TSDecl viene tolto di nuovo per
--- riottenere una semplice lista di dichiarazioni globali tipizzate.
+-- Punto di ingresso del controllo dei tipi. Prende l'intero programma.
 checkProgram :: Abs.Program -> (TProgram, [TypeError])
 checkProgram (Abs.Prog _ topDecls) =
   let stmts = map (Abs.SDecl (Just (0,0))) topDecls

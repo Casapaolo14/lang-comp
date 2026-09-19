@@ -14,7 +14,7 @@ fromSyntacticIntent intent = case intent of
   Abs.IIn  _ -> ByValue
   Abs.IRef _ -> ByRef
 
--- Per ogni variabile, sappiamo: tipo + posizione (riga, colonna) in cui e' stata dichiarata (Nothing se non c'è posizione)
+-- Per ogni variabile, sappiamo: tipo + posizione (riga, colonna) in cui è stata dichiarata (Nothing se non c'è posizione)
 data VarInfo = VarInfo
   { viType     :: SemType
   , viDeclPos  :: Maybe (Int, Int)

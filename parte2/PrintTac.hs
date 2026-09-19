@@ -23,11 +23,9 @@ printSemType (STArr l h t) = "[" ++ show l ++ ".." ++ show h ++ "]" ++ printSemT
 printSemType (STPtr t)     = "c_ptr(" ++ printSemType t ++ ")"
 printSemType STError       = "ERROR"
 
--- Stampa un indirizzo. Il caso importante e' AddrVar: se porta con se'
+-- Stampa un indirizzo. Il caso importante è AddrVar: se porta con sè
 -- una posizione di dichiarazione, la aggiunge al nome come richiesto
--- dal testo dell'esercizio (una variabile "x" dichiarata alla riga 12
--- diventa "x_12"); se la posizione non e' nota (caso di fatto mai
--- prodotto per una vera variabile del programma), si stampa solo il
+-- dal testo dell'esercizio se la posizione non è nota si stampa solo il
 -- nome, senza inventare nulla.
 printAddr :: Address -> String
 printAddr (AddrVar name pos _) = name ++ suffix
@@ -92,13 +90,11 @@ printCodeItem :: CodeItem -> String
 printCodeItem (Lbl l) = l ++ ":"
 printCodeItem (Ins i) = "    " ++ printInstr i
 
--- Stampa una sequenza di codice, un'istruzione (o un'etichetta) per riga.
+-- Stampa una sequenza di codice, un'istruzione per riga.
 printCode :: Code -> String
 printCode = unlines . map printCodeItem
 
--- Stampa il risultato completo della generazione: il codice delle
--- dichiarazioni globali, seguito dal codice di ciascuna funzione, ognuno
--- con un'intestazione che ne indica il nome.
+-- Stampa il risultato completo della generazione
 printProgram :: Code -> [(String, Code)] -> String
 printProgram globalCode funcs =
   unlines (("=== codice globale ===") : lines (printCode globalCode))
