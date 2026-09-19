@@ -2,7 +2,7 @@ module Tac where
 
 import SemTypes
 
--- indirizzo
+-- Indirizzo
 data Address
   = AddrVar  String (Maybe (Int, Int)) SemType
   | AddrLit  Literal SemType
@@ -18,17 +18,17 @@ data Literal
   | LStr String
   deriving (Eq, Show)
 
--- Legge il tipo già allegato a un indirizzo, qualunque sia la sua categoria.
+-- Legge il tipo già allegato a un indirizzo, qualunque sia la sua categoria
 addrType :: Address -> SemType
 addrType (AddrVar _ _ t) = t
 addrType (AddrLit _ t)   = t
 addrType (AddrTemp _ t)  = t
 
--- Gli operatori binari aritmetici e logici utilizzabili in un'istruzione di assegnamento binario.
+-- Gli operatori binari aritmetici e logici utilizzabili in un'istruzione di assegnamento binario
 data BinOp = OpAdd | OpSub | OpMul | OpDiv | OpAnd | OpOr
   deriving (Eq, Show)
 
--- Gli operatori di confronto, usati da IIfRel.
+-- Gli operatori di confronto, usati da IIfRel
 data RelOp = OpEq | OpNeq | OpLt | OpLe | OpGt | OpGe
   deriving (Eq, Show)
 
@@ -58,7 +58,7 @@ data Instr
   | IReturnVal  Address                         -- return r                (uscire restituendo un valore)
   deriving (Eq, Show)
 
--- un'etichetta o una vera istruzione. Le etichette sono tenute separate dall'istruzione che segue, così anche un blocco privo di istruzioni puo' comunque avere la propria etichetta.
+-- un'etichetta o una vera istruzione - sono tenute separate dall'istruzione che segue, così anche un blocco privo di istruzioni può avere la propria
 data CodeItem = Lbl String | Ins Instr
   deriving (Eq, Show)
 

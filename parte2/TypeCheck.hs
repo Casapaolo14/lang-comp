@@ -236,8 +236,7 @@ checkCall pos env name args =
       in (TECall (fiReturn fi) name allTe, lenErrs ++ allErrs)
 
 
--- Controlla una singola istruzione. Per un assegnamento: il lato
--- sinistro deve essere un'l-expression, e il tipo del lato destro deve
+-- Controlla un'istruzione. Aassegnamento: il lato sinistro deve essere un'l-expression, e il tipo del lato destro deve
 -- essere assegnabile al tipo del lato sinistro. Una chiamata usata come istruzione riusa
 -- checkCall e scarta il tipo del risultato. if/if-else/while controllano
 -- la condizione (deve essere bool) e ricorsivamente il/i blocco/i

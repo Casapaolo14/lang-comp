@@ -294,11 +294,11 @@ genStmt (TSWhile cond blk) = do
           ++ [Lbl falseLbl],
           bodyFuncs)
 
--- Un blocco "{ ... }": delega a genStmtList.
+-- Un blocco "{ ... }": delega a genStmtList
 genBlock :: TBlock -> TacM (Code, [FuncCode])
 genBlock (TBlock stmts) = genStmtList stmts
 
--- Una sequenza di istruzioni: concatena codice e funzioni annidate di ciascuna.
+-- Una sequenza di istruzioni: concatena codice e funzioni annidate di ciascuna
 genStmtList :: [TStmt] -> TacM (Code, [FuncCode])
 genStmtList [] = return ([], [])
 genStmtList (s:ss) = do
@@ -306,7 +306,7 @@ genStmtList (s:ss) = do
   (c2, f2) <- genStmtList ss
   return (c1 ++ c2, f1 ++ f2)
 
--- Genera tutti gli argomenti di una chiamata, in ordine, con i loro indirizzi finali.
+-- Genera tutti gli argomenti di una chiamata con i loro indirizzi finali
 genCallArgs :: [(ParamIntent, TExp)] -> TacM (Code, [Address])
 genCallArgs [] = return ([], [])
 genCallArgs ((intent, te):rest) = do
@@ -314,14 +314,12 @@ genCallArgs ((intent, te):rest) = do
   (restCode, restAddrs) <- genCallArgs rest
   return (thisCode ++ restCode, thisAddr : restAddrs)
 
--- Per valore genera il valore vero e proprio; per riferimento genera
--- l'indirizzo, così la funzione chiamata legge/scrive la variabile del chiamante.
+-- Per valore genera il valore; per riferimento genera l'indirizzo, così la funzione chiamata legge/scrive la variabile del chiamante
 genCallArg :: ParamIntent -> TExp -> TacM (Code, Address)
 genCallArg ByValue te = genExpr te
 genCallArg ByRef   te = genLValueAddr (STPtr (typeOf te)) te
 
--- Variabile senza init: nessun codice. Con init: codice del valore più
--- una copia. Funzione: corpo generato a parte, come routine separata.
+-- Variabile senza init: nessun codice | Con init: codice del valore più una copia | Funzione: corpo generato a parte, come routine separata.
 genTopDecl :: TTopDecl -> TacM (Code, [FuncCode])
 genTopDecl (TDVar _ _ _) = return ([], [])
 
@@ -334,11 +332,11 @@ genTopDecl (TDProc name _ _ _ body) = do
   (bodyCode, nestedFuncs) <- genBlock body
   return ([], (name, bodyCode) : nestedFuncs)
 
--- Punto di ingresso: genera il codice globale e quello di ogni funzione, da zero.
+-- Punto di ingresso: genera il codice globale e quello di ogni funzione, da zero
 genProgram :: TProgram -> (Code, [FuncCode])
 genProgram (TProgram topDecls) = runTacM (genTopDeclList topDecls)
 
--- Tutte le dichiarazioni globali, una dopo l'altra.
+-- Tutte le dichiarazioni globali, una dopo l'altra
 genTopDeclList :: [TTopDecl] -> TacM (Code, [FuncCode])
 genTopDeclList [] = return ([], [])
 genTopDeclList (d:ds) = do

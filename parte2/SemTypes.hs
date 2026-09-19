@@ -43,13 +43,13 @@ mathtype STReal = STReal
 mathtype STInt  = STInt
 mathtype _      = STError
 
--- Tipo risultante da un confronto (==, <, >, ...) fra due valori. Se sono confrontabili il risultato è sempre booleano, altrimenti è STError.
+-- Tipo risultante da un confronto (==, <, >, ...) fra due valori. Se sono confrontabili il risultato è sempre booleano, altrimenti è STError
 rel :: SemType -> SemType -> SemType
 rel t1 t2 = case sup t1 t2 of
   STError -> STError
   _       -> STBool
 
--- Dice se un valore di tipo t puo' essere assegnato a qualcosa che si aspetta il tipo target: vale se sono
+-- Dice se un valore di tipo t può essere assegnato a qualcosa che si aspetta il tipo target: vale se sono
 -- esattamente lo stesso tipo, oppure nel solo caso di un intero assegnato dove serve un reale
 assignableTo :: SemType -> SemType -> Bool
 assignableTo t target

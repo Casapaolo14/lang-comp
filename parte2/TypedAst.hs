@@ -3,7 +3,7 @@ module TypedAst where
 import SemTypes
 import Environment
 
--- E' la stessaforma dell'albero sintattico prodotto dal parser, ma ogni nodo porta con sè anche il suo SemType
+-- Stessaforma dell'albero sintattico prodotto dal parser, ma ogni nodo porta con sè anche il suo SemType
 data TExp
     = TEOr    SemType TExp TExp
     | TEAnd   SemType TExp TExp
