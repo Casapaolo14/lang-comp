@@ -25,41 +25,50 @@ import LexLinguaggio
   '(' { PT _ (TS _ 4) }
   ')' { PT _ (TS _ 5) }
   '*' { PT _ (TS _ 6) }
-  '+' { PT _ (TS _ 7) }
-  ',' { PT _ (TS _ 8) }
-  '-' { PT _ (TS _ 9) }
-  '..' { PT _ (TS _ 10) }
-  '/' { PT _ (TS _ 11) }
-  ':' { PT _ (TS _ 12) }
-  ';' { PT _ (TS _ 13) }
-  '<' { PT _ (TS _ 14) }
-  '<=' { PT _ (TS _ 15) }
-  '=' { PT _ (TS _ 16) }
-  '==' { PT _ (TS _ 17) }
-  '>' { PT _ (TS _ 18) }
-  '>=' { PT _ (TS _ 19) }
-  '[' { PT _ (TS _ 20) }
-  ']' { PT _ (TS _ 21) }
-  'bool' { PT _ (TS _ 22) }
-  'c_ptr' { PT _ (TS _ 23) }
-  'c_ptrTo' { PT _ (TS _ 24) }
-  'char' { PT _ (TS _ 25) }
-  'else' { PT _ (TS _ 26) }
-  'false' { PT _ (TS _ 27) }
-  'if' { PT _ (TS _ 28) }
-  'int' { PT _ (TS _ 29) }
-  'proc' { PT _ (TS _ 30) }
-  'real' { PT _ (TS _ 31) }
-  'ref' { PT _ (TS _ 32) }
-  'return' { PT _ (TS _ 33) }
-  'string' { PT _ (TS _ 34) }
-  'true' { PT _ (TS _ 35) }
-  'var' { PT _ (TS _ 36) }
-  'void' { PT _ (TS _ 37) }
-  'while' { PT _ (TS _ 38) }
-  '{' { PT _ (TS _ 39) }
-  '||' { PT _ (TS _ 40) }
-  '}' { PT _ (TS _ 41) }
+  '*=' { PT _ (TS _ 7) }
+  '+' { PT _ (TS _ 8) }
+  '+=' { PT _ (TS _ 9) }
+  ',' { PT _ (TS _ 10) }
+  '-' { PT _ (TS _ 11) }
+  '-=' { PT _ (TS _ 12) }
+  '..' { PT _ (TS _ 13) }
+  '/' { PT _ (TS _ 14) }
+  ':' { PT _ (TS _ 15) }
+  ';' { PT _ (TS _ 16) }
+  '<' { PT _ (TS _ 17) }
+  '<=' { PT _ (TS _ 18) }
+  '=' { PT _ (TS _ 19) }
+  '==' { PT _ (TS _ 20) }
+  '>' { PT _ (TS _ 21) }
+  '>=' { PT _ (TS _ 22) }
+  '[' { PT _ (TS _ 23) }
+  ']' { PT _ (TS _ 24) }
+  'bool' { PT _ (TS _ 25) }
+  'break' { PT _ (TS _ 26) }
+  'c_ptr' { PT _ (TS _ 27) }
+  'c_ptrTo' { PT _ (TS _ 28) }
+  'char' { PT _ (TS _ 29) }
+  'continue' { PT _ (TS _ 30) }
+  'do' { PT _ (TS _ 31) }
+  'else' { PT _ (TS _ 32) }
+  'false' { PT _ (TS _ 33) }
+  'for' { PT _ (TS _ 34) }
+  'if' { PT _ (TS _ 35) }
+  'in' { PT _ (TS _ 36) }
+  'int' { PT _ (TS _ 37) }
+  'proc' { PT _ (TS _ 38) }
+  'real' { PT _ (TS _ 39) }
+  'ref' { PT _ (TS _ 40) }
+  'return' { PT _ (TS _ 41) }
+  'string' { PT _ (TS _ 42) }
+  'then' { PT _ (TS _ 43) }
+  'true' { PT _ (TS _ 44) }
+  'var' { PT _ (TS _ 45) }
+  'void' { PT _ (TS _ 46) }
+  'while' { PT _ (TS _ 47) }
+  '{' { PT _ (TS _ 48) }
+  '||' { PT _ (TS _ 49) }
+  '}' { PT _ (TS _ 50) }
   L_Ident  { PT _ (TV _) }
   L_charac { PT _ (TC _) }
   L_doubl  { PT _ (TD _) }
@@ -134,53 +143,67 @@ Stmt : Block { (fst $1, AbsLinguaggio.SBlock (fst $1) (snd $1)) }
      | 'if' Exp Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SIf (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $3)) }
      | 'if' Exp Block 'else' Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SIfElse (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $3) (snd $5)) }
      | 'while' Exp Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SWhile (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $3)) }
+     | 'do' Block 'while' Exp ';' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SDoWhile (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $4)) }
+     | 'for' Ident 'in' Exp '..' Exp Block { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SFor (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $4) (snd $6) (snd $7)) }
+     | 'break' ';' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SBreak (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | 'continue' ';' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.SContinue (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | Exp AssignOp Exp ';' { (fst $1, AbsLinguaggio.SOpAssign (fst $1) (snd $1) (snd $2) (snd $3)) }
 
 ListExp :: { (AbsLinguaggio.BNFC'Position, [AbsLinguaggio.Exp]) }
 ListExp : {- empty -} { (AbsLinguaggio.BNFC'NoPosition, []) }
         | Exp { (fst $1, (:[]) (snd $1)) }
         | Exp ',' ListExp { (fst $1, (:) (snd $1) (snd $3)) }
 
+AssignOp :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.AssignOp) }
+AssignOp : '+=' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.AAdd (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+         | '-=' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ASub (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+         | '*=' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.AMul (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+
 Exp :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp : Exp '||' Exp1 { (fst $1, AbsLinguaggio.EOr (fst $1) (snd $1) (snd $3)) }
+Exp : 'if' Exp 'then' Exp 'else' Exp { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EIf (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2) (snd $4) (snd $6)) }
     | Exp1 { (fst $1, (snd $1)) }
 
 Exp1 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp1 : Exp1 '&&' Exp2 { (fst $1, AbsLinguaggio.EAnd (fst $1) (snd $1) (snd $3)) }
+Exp1 : Exp1 '||' Exp2 { (fst $1, AbsLinguaggio.EOr (fst $1) (snd $1) (snd $3)) }
      | Exp2 { (fst $1, (snd $1)) }
 
 Exp2 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp2 : Exp3 '==' Exp3 { (fst $1, AbsLinguaggio.EEq (fst $1) (snd $1) (snd $3)) }
-     | Exp3 '!=' Exp3 { (fst $1, AbsLinguaggio.ENeq (fst $1) (snd $1) (snd $3)) }
-     | Exp3 '<' Exp3 { (fst $1, AbsLinguaggio.ELt (fst $1) (snd $1) (snd $3)) }
-     | Exp3 '<=' Exp3 { (fst $1, AbsLinguaggio.ELe (fst $1) (snd $1) (snd $3)) }
-     | Exp3 '>' Exp3 { (fst $1, AbsLinguaggio.EGt (fst $1) (snd $1) (snd $3)) }
-     | Exp3 '>=' Exp3 { (fst $1, AbsLinguaggio.EGe (fst $1) (snd $1) (snd $3)) }
+Exp2 : Exp2 '&&' Exp3 { (fst $1, AbsLinguaggio.EAnd (fst $1) (snd $1) (snd $3)) }
      | Exp3 { (fst $1, (snd $1)) }
 
 Exp3 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp3 : Exp3 '+' Exp4 { (fst $1, AbsLinguaggio.EAdd (fst $1) (snd $1) (snd $3)) }
-     | Exp3 '-' Exp4 { (fst $1, AbsLinguaggio.ESub (fst $1) (snd $1) (snd $3)) }
+Exp3 : Exp4 '==' Exp4 { (fst $1, AbsLinguaggio.EEq (fst $1) (snd $1) (snd $3)) }
+     | Exp4 '!=' Exp4 { (fst $1, AbsLinguaggio.ENeq (fst $1) (snd $1) (snd $3)) }
+     | Exp4 '<' Exp4 { (fst $1, AbsLinguaggio.ELt (fst $1) (snd $1) (snd $3)) }
+     | Exp4 '<=' Exp4 { (fst $1, AbsLinguaggio.ELe (fst $1) (snd $1) (snd $3)) }
+     | Exp4 '>' Exp4 { (fst $1, AbsLinguaggio.EGt (fst $1) (snd $1) (snd $3)) }
+     | Exp4 '>=' Exp4 { (fst $1, AbsLinguaggio.EGe (fst $1) (snd $1) (snd $3)) }
      | Exp4 { (fst $1, (snd $1)) }
 
 Exp4 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp4 : Exp4 '*' Exp5 { (fst $1, AbsLinguaggio.EMul (fst $1) (snd $1) (snd $3)) }
-     | Exp4 '/' Exp5 { (fst $1, AbsLinguaggio.EDiv (fst $1) (snd $1) (snd $3)) }
+Exp4 : Exp4 '+' Exp5 { (fst $1, AbsLinguaggio.EAdd (fst $1) (snd $1) (snd $3)) }
+     | Exp4 '-' Exp5 { (fst $1, AbsLinguaggio.ESub (fst $1) (snd $1) (snd $3)) }
      | Exp5 { (fst $1, (snd $1)) }
 
 Exp5 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp5 : '-' Exp5 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ENeg (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
-     | '!' Exp5 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ENot (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
-     | '*' Exp5 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EDeref (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
-     | 'c_ptrTo' '(' Exp ')' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EAddr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $3)) }
+Exp5 : Exp5 '*' Exp6 { (fst $1, AbsLinguaggio.EMul (fst $1) (snd $1) (snd $3)) }
+     | Exp5 '/' Exp6 { (fst $1, AbsLinguaggio.EDiv (fst $1) (snd $1) (snd $3)) }
      | Exp6 { (fst $1, (snd $1)) }
 
 Exp6 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp6 : Exp6 '[' Exp ']' { (fst $1, AbsLinguaggio.EIdx (fst $1) (snd $1) (snd $3)) }
-     | Ident '(' ListExp ')' { (fst $1, AbsLinguaggio.ECall (fst $1) (snd $1) (snd $3)) }
+Exp6 : '-' Exp6 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ENeg (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
+     | '!' Exp6 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ENot (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
+     | '*' Exp6 { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EDeref (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
+     | 'c_ptrTo' '(' Exp ')' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EAddr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $3)) }
      | Exp7 { (fst $1, (snd $1)) }
 
 Exp7 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
-Exp7 : Ident { (fst $1, AbsLinguaggio.EVar (fst $1) (snd $1)) }
+Exp7 : Exp7 '[' Exp ']' { (fst $1, AbsLinguaggio.EIdx (fst $1) (snd $1) (snd $3)) }
+     | Ident '(' ListExp ')' { (fst $1, AbsLinguaggio.ECall (fst $1) (snd $1) (snd $3)) }
+     | Exp8 { (fst $1, (snd $1)) }
+
+Exp8 :: { (AbsLinguaggio.BNFC'Position, AbsLinguaggio.Exp) }
+Exp8 : Ident { (fst $1, AbsLinguaggio.EVar (fst $1) (snd $1)) }
      | Integer { (fst $1, AbsLinguaggio.EInt (fst $1) (snd $1)) }
      | Double { (fst $1, AbsLinguaggio.EReal (fst $1) (snd $1)) }
      | Char { (fst $1, AbsLinguaggio.EChar (fst $1) (snd $1)) }

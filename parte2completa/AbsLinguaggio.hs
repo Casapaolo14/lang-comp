@@ -65,11 +65,21 @@ data Stmt' a
     | SIf a (Exp' a) (Block' a)
     | SIfElse a (Exp' a) (Block' a) (Block' a)
     | SWhile a (Exp' a) (Block' a)
+    | SDoWhile a (Block' a) (Exp' a)
+    | SFor a Ident (Exp' a) (Exp' a) (Block' a)
+    | SBreak a
+    | SContinue a
+    | SOpAssign a (Exp' a) (AssignOp' a) (Exp' a)
+  deriving (C.Eq, C.Ord, C.Show, C.Read, C.Functor, C.Foldable, C.Traversable)
+
+type AssignOp = AssignOp' BNFC'Position
+data AssignOp' a = AAdd a | ASub a | AMul a
   deriving (C.Eq, C.Ord, C.Show, C.Read, C.Functor, C.Foldable, C.Traversable)
 
 type Exp = Exp' BNFC'Position
 data Exp' a
-    = EOr a (Exp' a) (Exp' a)
+    = EIf a (Exp' a) (Exp' a) (Exp' a)
+    | EOr a (Exp' a) (Exp' a)
     | EAnd a (Exp' a) (Exp' a)
     | EEq a (Exp' a) (Exp' a)
     | ENeq a (Exp' a) (Exp' a)
@@ -159,9 +169,21 @@ instance HasPosition Stmt where
     SIf p _ _ -> p
     SIfElse p _ _ _ -> p
     SWhile p _ _ -> p
+    SDoWhile p _ _ -> p
+    SFor p _ _ _ _ -> p
+    SBreak p -> p
+    SContinue p -> p
+    SOpAssign p _ _ _ -> p
+
+instance HasPosition AssignOp where
+  hasPosition = \case
+    AAdd p -> p
+    ASub p -> p
+    AMul p -> p
 
 instance HasPosition Exp where
   hasPosition = \case
+    EIf p _ _ _ -> p
     EOr p _ _ -> p
     EAnd p _ _ -> p
     EEq p _ _ -> p

@@ -45,47 +45,58 @@ separator Exp "," ;
 SIf.     Stmt ::= "if" Exp Block ;
 SIfElse. Stmt ::= "if" Exp Block "else" Block ;
 SWhile.  Stmt ::= "while" Exp Block ;
+SDoWhile. Stmt ::= "do" Block "while" Exp ";" ;
+SFor.     Stmt ::= "for" Ident "in" Exp ".." Exp Block ;
+SBreak.    Stmt ::= "break" ";" ;
+SContinue. Stmt ::= "continue" ";" ;
+SOpAssign. Stmt ::= Exp AssignOp Exp ";" ;
+
+AAdd. AssignOp ::= "+=" ;
+ASub. AssignOp ::= "-=" ;
+AMul. AssignOp ::= "*=" ;
+
+-- espressione condizionale (livello di precedenza più basso)
+EIf.  Exp  ::= "if" Exp "then" Exp "else" Exp ;
 
 -- operatori logici
-EOr.  Exp  ::= Exp  "||" Exp1 ;
-EAnd. Exp1 ::= Exp1 "&&" Exp2 ;
+EOr.  Exp1 ::= Exp1 "||" Exp2 ;
+EAnd. Exp2 ::= Exp2 "&&" Exp3 ;
 
 -- operatori di confronto
-EEq.  Exp2 ::= Exp3 "==" Exp3 ;
-ENeq. Exp2 ::= Exp3 "!=" Exp3 ;
-ELt.  Exp2 ::= Exp3 "<"  Exp3 ;
-ELe.  Exp2 ::= Exp3 "<=" Exp3 ;
-EGt.  Exp2 ::= Exp3 ">"  Exp3 ;
-EGe.  Exp2 ::= Exp3 ">=" Exp3 ;
+EEq.  Exp3 ::= Exp4 "==" Exp4 ;
+ENeq. Exp3 ::= Exp4 "!=" Exp4 ;
+ELt.  Exp3 ::= Exp4 "<"  Exp4 ;
+ELe.  Exp3 ::= Exp4 "<=" Exp4 ;
+EGt.  Exp3 ::= Exp4 ">"  Exp4 ;
+EGe.  Exp3 ::= Exp4 ">=" Exp4 ;
 
 -- operatori aritmetici
-EAdd. Exp3 ::= Exp3 "+" Exp4 ;
-ESub. Exp3 ::= Exp3 "-" Exp4 ;
-EMul. Exp4 ::= Exp4 "*" Exp5 ;
-EDiv. Exp4 ::= Exp4 "/" Exp5 ;
+EAdd. Exp4 ::= Exp4 "+" Exp5 ;
+ESub. Exp4 ::= Exp4 "-" Exp5 ;
+EMul. Exp5 ::= Exp5 "*" Exp6 ;
+EDiv. Exp5 ::= Exp5 "/" Exp6 ;
 
 -- operatori unari
-ENeg.   Exp5 ::= "-" Exp5 ;
-ENot.   Exp5 ::= "!" Exp5 ;
-EDeref. Exp5 ::= "*" Exp5 ;
-EAddr.  Exp5 ::= "c_ptrTo" "(" Exp ")" ;
+ENeg.   Exp6 ::= "-" Exp6 ;
+ENot.   Exp6 ::= "!" Exp6 ;
+EDeref. Exp6 ::= "*" Exp6 ;
+EAddr.  Exp6 ::= "c_ptrTo" "(" Exp ")" ;
 
 -- indice array e chiamata di funzione
-EIdx.  Exp6 ::= Exp6 "[" Exp "]" ;
-ECall. Exp6 ::= Ident "(" [Exp] ")" ;
-
+EIdx.  Exp7 ::= Exp7 "[" Exp "]" ;
+ECall. Exp7 ::= Ident "(" [Exp] ")" ;
 
 -- espressioni
-EVar.   Exp7 ::= Ident ;
-EInt.   Exp7 ::= Integer ;
-EReal.  Exp7 ::= Double ;
-EChar.  Exp7 ::= Char ;
-EStr.   Exp7 ::= String ;
-ETrue.  Exp7 ::= "true" ;
-EFalse. Exp7 ::= "false" ;
+EVar.   Exp8 ::= Ident ;
+EInt.   Exp8 ::= Integer ;
+EReal.  Exp8 ::= Double ;
+EChar.  Exp8 ::= Char ;
+EStr.   Exp8 ::= String ;
+ETrue.  Exp8 ::= "true" ;
+EFalse. Exp8 ::= "false" ;
 
 -- gestione parentesi
-coercions Exp 7 ;
+coercions Exp 8 ;
 
 -- gestione dei commenti
 comment "//" ;

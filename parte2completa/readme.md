@@ -35,10 +35,10 @@ Si modifica solo ciò che serve a soddisfare un requisito della traccia. Per ogn
 | R3 | Semantica canonica del passaggio per riferimento | 🔧 |
 | R4 | Array passato per valore non modificato nel chiamante | ⬜ |
 | R5 | Puntatori a tipi qualsiasi con selezione, incluso `(*p)[i]` | 🔧 |
-| R6 | if-then-else come espressione | ⬜ |
-| R7 | `+=`, `-=`, `*=` con semantica canonica | ⬜ |
-| R8 | do-while e iterazione determinata (`for`) | ⬜ |
-| R9 | `break`/`continue` ammessi solo nei cicli | ⬜ |
+| R6 | if-then-else come espressione | ⬜ (grammatica ✅) |
+| R7 | `+=`, `-=`, `*=` con semantica canonica | ⬜ (grammatica ✅) |
+| R8 | do-while e iterazione determinata (`for`) | ⬜ (grammatica ✅) |
+| R9 | `break`/`continue` ammessi solo nei cicli | ⬜ (grammatica ✅) |
 | R10 | Visibilità definita e coerente per ogni dichiarazione (ridichiarazione, shadowing) | 🔧 |
 | R11 | Messaggi d'errore con entità coinvolte e posizione | 🔧 |
 | R12 | Identificatori del programma annotati con la riga nel TAC | 🔧 |
@@ -70,15 +70,50 @@ Colonna "In relazione":
 | Passaggio per valore (default) e `ref` | ✅ | cita |
 | if, if-else, while con sintassi Chapel | ✅ | cita |
 | Pretty-print del sorgente con formattazione minima | ✅ | cita |
-| do-while (R8) | ⬜ | cita |
-| `for i in a..b` (R8) | ⬜ | descrivi (scelta della forma) |
-| `break`/`continue` (R9) | ⬜ | cita |
-| `+=`, `-=`, `*=` (R7) | ⬜ | cita |
-| if-then-else come espressione (R6) | ⬜ | descrivi (sintassi e precedenza) |
-| Controllo dei conflitti dopo le modifiche | ⬜ | cita |
+| do-while (R8) | ✅ | cita |
+| `for i in a..b` (R8) | ✅ | descrivi (scelta della forma) |
+| `break`/`continue` (R9) | ✅ | cita |
+| `+=`, `-=`, `*=` (R7) | ✅ | cita |
+| if-then-else come espressione (R6) | ✅ | descrivi (sintassi e precedenza) |
+| Controllo dei conflitti dopo le modifiche | ✅ | cita |
+
+**Stato: ✅ completato.** Test di sintassi aggiunti: `tests/parser/cicli.lang`, `tests/parser/break_opassign.lang`, `tests/parser/ifexpr.lang`.
+Verificato che tutti i test precedenti di `tests/lexer` e `tests/parser` vengano ancora riconosciuti.
+Nota operativa: finché il type checker non gestisce i nuovi costrutti (Step 3), `make demo` si ferma sui nuovi test.
 
 **Note per la relazione:**
-- _(da compilare)_
+- Grammatica: 78 regole, nessun conflitto shift/reduce o reduce/reduce.
+- do-while e for con sintassi Chapel; corpo sempre un blocco, come if e while.
+- Variabile del for senza tipo dichiarato (tipo determinato dall'intervallo).
+- break/continue accettati sintatticamente ovunque; il vincolo "solo nei cicli" è controllato dalla semantica statica.
+- `+=`, `-=`, `*=` con un'unica regola e una categoria `AssignOp`: un solo costruttore nell'AST.
+- if-then-else espressione al livello di precedenza più basso: ramo else esteso il più a destra possibile, nessun conflitto con gli operatori binari; le parentesi le reinserisce il pretty-printer.
+- Nuove parole riservate: `do`, `for`, `in`, `break`, `continue`, `then`.
+
+**Testo per la relazione (bozza):**
+
+> **Sintassi concreta e grammatica**
+>
+> La grammatica, scritta in LBNF e trattata con BNFC, conta 78 regole e non presenta conflitti shift/reduce né reduce/reduce. La precedenza degli operatori è codificata con categorie numerate e coercions. Il lexer riconosce commenti su riga singola (`//`) e su più righe (`/* */`), letterali interi, reali (anche in notazione scientifica con esponente `e`), caratteri e stringhe con sequenze di escape.
+>
+> Dove Chapel prevede una sintassi per i costrutti richiesti, si è adottata quella. Le variabili si dichiarano con `var x : T;` o `var x : T = e;`, le funzioni con `proc f(…) : T { … }`, e le procedure sono funzioni con tipo di ritorno `void`. Dichiarazioni di variabili e funzioni sono ammesse in qualsiasi blocco. I parametri sono passati per valore in assenza di intent e per riferimento con l'intent `ref`, come in Chapel.
+>
+> Per i tipi composti si è scelta la forma `[lo..hi] T` per gli array, con estremi interi letterali, così che la dimensione sia nota staticamente. Per i puntatori si usano `c_ptr(T)` per il tipo, `c_ptrTo(e)` per ottenere l'indirizzo di una l-expression e `*e` per la dereferenziazione. I nomi `c_ptr` e `c_ptrTo` sono presi dalla libreria di interoperabilità con il C di Chapel.
+>
+> I comandi di controllo seguono la sintassi di Chapel:
+> - `if cond { … }` e `if cond { … } else { … }`;
+> - `while cond { … }` e `do { … } while cond;` per l'iterazione indeterminata;
+> - `for i in a..b { … }` per l'iterazione determinata.
+>
+> In tutti i costrutti il corpo è un blocco tra graffe. Questa uniformità evita l'ambiguità del *dangling else*. La variabile di iterazione del `for` non ha un tipo dichiarato: il suo tipo è determinato dall'intervallo di interi, e la sua visibilità è discussa nella sezione sul sistema di tipi.
+>
+> Le istruzioni `break;` e `continue;` sono accettate dalla grammatica in qualsiasi posizione di comando. Il vincolo che le ammette solo nel corpo di un ciclo è verificato dall'analisi di semantica statica, per non dover duplicare le categorie sintattiche dei comandi.
+>
+> Gli assegnamenti di aggiornamento `+=`, `-=` e `*=` usano la sintassi di Chapel. Sono descritti da un'unica produzione, `Exp AssignOp Exp ;`, con una categoria dedicata all'operatore: nella sintassi astratta c'è così un solo costruttore, parametrico nell'operazione.
+>
+> L'if-then-else nella categoria delle espressioni usa la forma di Chapel `if c then e1 else e2`, in cui entrambi i rami sono espressioni. È posto al livello di precedenza più basso, e gli operatori binari non possono avere un'espressione condizionale come operando se non tra parentesi. In questo modo il ramo `else` si estende il più a destra possibile (`if c then 1 else 2 + 3` equivale a `if c then 1 else (2 + 3)`), senza conflitti con gli operatori binari. Il comando e l'espressione condizionale si distinguono dal token che segue la condizione: `{` per il comando, `then` per l'espressione.
+>
+> Il pretty-printer del sorgente produce codice legale con indentazione per blocchi e reinserisce automaticamente le parentesi necessarie.
 
 ---
 
