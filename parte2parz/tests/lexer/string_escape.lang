@@ -1,0 +1,1 @@
+var s: string = "riga1\nriga2\tfine\"virgolette\"e\\backslash";

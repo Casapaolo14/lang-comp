@@ -1,0 +1,4 @@
+var x1: int = 1;
+var camelCase123: int = 2;
+var UPPERCASE_NAME: int = 3;
+var mixed_Name_42: int = 4;

@@ -1,0 +1,11 @@
+proc main(): void {
+    var a: [1..5] int;
+    var x: bool = true;
+    var y: char = 'c';
+
+    writeInt(z);
+    var w: bool = x + y;
+    a[x] = 1;
+    x[0] = 1;
+    writeInt(1, 2);
+}
