@@ -14,9 +14,8 @@ ALEX_OPTS  = --ghc
 
 all : Main
 
-#AbsLinguaggio.hs LexLinguaggio.x ParLinguaggio.y PrintLinguaggio.hs TestLinguaggio.hs : Linguaggio.cf
-#	bnfc --haskell Linguaggio.cf
-#! per rigenerare lanciare : bnfc --haskell --functor Linguaggio.cf
+AbsLinguaggio.hs ParLinguaggio.y LexLinguaggio.x PrintLinguaggio.hs TestLinguaggio.hs : Linguaggio.cf
+	bnfc --haskell --functor Linguaggio.cf
 
 %.hs : %.y
 	${HAPPY} ${HAPPY_OPTS} $<
