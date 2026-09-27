@@ -41,19 +41,21 @@ except ``"`` unless preceded by ``\``.
 The set of reserved words is the set of terminals appearing in the grammar. Those reserved words that consist of non-letter characters are called symbols, and they are treated in a different way from those that are similar to identifiers. The lexer follows rules familiar from languages like Haskell, C, and Java, including longest match and spacing conventions.
 
 The reserved words used in Linguaggio are the following:
-  | ``bool`` | ``c_ptr`` | ``c_ptrTo`` | ``char``
-  | ``else`` | ``false`` | ``if`` | ``int``
-  | ``proc`` | ``real`` | ``ref`` | ``return``
-  | ``string`` | ``true`` | ``var`` | ``void``
-  | ``while`` |  |  |
+  | ``bool`` | ``break`` | ``c_ptr`` | ``c_ptrTo``
+  | ``char`` | ``continue`` | ``do`` | ``else``
+  | ``false`` | ``for`` | ``if`` | ``in``
+  | ``int`` | ``proc`` | ``real`` | ``ref``
+  | ``return`` | ``string`` | ``then`` | ``true``
+  | ``var`` | ``void`` | ``while`` |
 
 The symbols used in Linguaggio are the following:
   | : | ; | = | (
   | ) | , | [ | ..
-  | ] | { | } | ||
-  | && | == | != | <
-  | <= | > | >= | +
-  | - | * | / | !
+  | ] | { | } | +=
+  | -= | *= | || | &&
+  | == | != | < | <=
+  | > | >= | + | -
+  | * | / | ! |
 
 ===Comments===
 Single-line comments begin with //.Multiple-line comments are  enclosed with /* and */.
@@ -96,41 +98,52 @@ All other symbols are terminals.
   |  |  **|**  | ``if`` //Exp// //Block//
   |  |  **|**  | ``if`` //Exp// //Block// ``else`` //Block//
   |  |  **|**  | ``while`` //Exp// //Block//
+  |  |  **|**  | ``do`` //Block// ``while`` //Exp// ``;``
+  |  |  **|**  | ``for`` //Ident// ``in`` //Exp// ``..`` //Exp// //Block//
+  |  |  **|**  | ``break`` ``;``
+  |  |  **|**  | ``continue`` ``;``
+  |  |  **|**  | //Exp// //AssignOp// //Exp// ``;``
   | //[Exp]// | -> | **eps**
   |  |  **|**  | //Exp//
   |  |  **|**  | //Exp// ``,`` //[Exp]//
-  | //Exp// | -> | //Exp// ``||`` //Exp1//
+  | //AssignOp// | -> | ``+=``
+  |  |  **|**  | ``-=``
+  |  |  **|**  | ``*=``
+  | //Exp// | -> | ``if`` //Exp// ``then`` //Exp// ``else`` //Exp//
   |  |  **|**  | //Exp1//
-  | //Exp1// | -> | //Exp1// ``&&`` //Exp2//
+  | //Exp1// | -> | //Exp1// ``||`` //Exp2//
   |  |  **|**  | //Exp2//
-  | //Exp2// | -> | //Exp3// ``==`` //Exp3//
-  |  |  **|**  | //Exp3// ``!=`` //Exp3//
-  |  |  **|**  | //Exp3// ``<`` //Exp3//
-  |  |  **|**  | //Exp3// ``<=`` //Exp3//
-  |  |  **|**  | //Exp3// ``>`` //Exp3//
-  |  |  **|**  | //Exp3// ``>=`` //Exp3//
+  | //Exp2// | -> | //Exp2// ``&&`` //Exp3//
   |  |  **|**  | //Exp3//
-  | //Exp3// | -> | //Exp3// ``+`` //Exp4//
-  |  |  **|**  | //Exp3// ``-`` //Exp4//
+  | //Exp3// | -> | //Exp4// ``==`` //Exp4//
+  |  |  **|**  | //Exp4// ``!=`` //Exp4//
+  |  |  **|**  | //Exp4// ``<`` //Exp4//
+  |  |  **|**  | //Exp4// ``<=`` //Exp4//
+  |  |  **|**  | //Exp4// ``>`` //Exp4//
+  |  |  **|**  | //Exp4// ``>=`` //Exp4//
   |  |  **|**  | //Exp4//
-  | //Exp4// | -> | //Exp4// ``*`` //Exp5//
-  |  |  **|**  | //Exp4// ``/`` //Exp5//
+  | //Exp4// | -> | //Exp4// ``+`` //Exp5//
+  |  |  **|**  | //Exp4// ``-`` //Exp5//
   |  |  **|**  | //Exp5//
-  | //Exp5// | -> | ``-`` //Exp5//
-  |  |  **|**  | ``!`` //Exp5//
-  |  |  **|**  | ``*`` //Exp5//
-  |  |  **|**  | ``c_ptrTo`` ``(`` //Exp// ``)``
+  | //Exp5// | -> | //Exp5// ``*`` //Exp6//
+  |  |  **|**  | //Exp5// ``/`` //Exp6//
   |  |  **|**  | //Exp6//
-  | //Exp6// | -> | //Exp6// ``[`` //Exp// ``]``
-  |  |  **|**  | //Ident// ``(`` //[Exp]// ``)``
+  | //Exp6// | -> | ``-`` //Exp6//
+  |  |  **|**  | ``!`` //Exp6//
+  |  |  **|**  | ``*`` //Exp6//
+  |  |  **|**  | ``c_ptrTo`` ``(`` //Exp// ``)``
   |  |  **|**  | //Exp7//
-  | //Exp7// | -> | //Ident//
+  | //Exp7// | -> | //Exp7// ``[`` //Exp// ``]``
+  |  |  **|**  | //Ident// ``(`` //[Exp]// ``)``
+  |  |  **|**  | //Exp8//
+  | //Exp8// | -> | //Ident//
   |  |  **|**  | //Integer//
   |  |  **|**  | //Double//
   |  |  **|**  | //Char//
   |  |  **|**  | //String//
   |  |  **|**  | ``true``
   |  |  **|**  | ``false``
+  |  |  **|**  | ``[`` //[Exp]// ``]``
   |  |  **|**  | ``(`` //Exp// ``)``
 
 

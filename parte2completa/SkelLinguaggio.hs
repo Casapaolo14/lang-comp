@@ -62,9 +62,21 @@ transStmt x = case x of
   AbsLinguaggio.SIf _ exp block -> failure x
   AbsLinguaggio.SIfElse _ exp block1 block2 -> failure x
   AbsLinguaggio.SWhile _ exp block -> failure x
+  AbsLinguaggio.SDoWhile _ block exp -> failure x
+  AbsLinguaggio.SFor _ ident exp1 exp2 block -> failure x
+  AbsLinguaggio.SBreak _ -> failure x
+  AbsLinguaggio.SContinue _ -> failure x
+  AbsLinguaggio.SOpAssign _ exp1 assignop exp2 -> failure x
+
+transAssignOp :: Show a => AbsLinguaggio.AssignOp' a -> Result
+transAssignOp x = case x of
+  AbsLinguaggio.AAdd _ -> failure x
+  AbsLinguaggio.ASub _ -> failure x
+  AbsLinguaggio.AMul _ -> failure x
 
 transExp :: Show a => AbsLinguaggio.Exp' a -> Result
 transExp x = case x of
+  AbsLinguaggio.EIf _ exp1 exp2 exp3 -> failure x
   AbsLinguaggio.EOr _ exp1 exp2 -> failure x
   AbsLinguaggio.EAnd _ exp1 exp2 -> failure x
   AbsLinguaggio.EEq _ exp1 exp2 -> failure x
@@ -90,3 +102,4 @@ transExp x = case x of
   AbsLinguaggio.EStr _ string -> failure x
   AbsLinguaggio.ETrue _ -> failure x
   AbsLinguaggio.EFalse _ -> failure x
+  AbsLinguaggio.EArr _ exps -> failure x
