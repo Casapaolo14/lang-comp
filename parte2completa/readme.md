@@ -4,6 +4,15 @@
 > Contiene una rielaborazione dei requisiti della traccia, che la traccia vieta di includere sia nella relazione sia nello ZIP.
 > Tenerlo fuori dalla cartella del progetto, oppure cancellarlo prima di creare lo ZIP.
 
+## Modifiche rispetto alla versione precedente
+
+- **R4**: chiarito che la copia riguarda solo gli array; l'assegnamento fra puntatori resta copia del solo indirizzo (nessuna modifica di comportamento, solo esplicitato per non fare confusione in fase di codice).
+- **R4**: aggiunto un controllo da fare — se il linguaggio ammette array come tipo di ritorno di una funzione, il `return` di un array richiede la stessa semantica di copia (altrimenti il chiamante otterrebbe un alias sulla cella locale della funzione, che nel frattempo viene deallocata/riusata).
+- **R1**: aggiunta una nota tecnica importante — la tecnica standard vista a lezione (`rel x y = case sup x y of ERROR -> ERROR; _ -> BOOL`) **da sola non basta** a rispettare il vincolo della traccia. Va sostituita da un controllo esplicito di appartenenza ai due insiemi ammessi (vedi Step 2).
+- **R1**: aggiunto un test consigliato — verificare esplicitamente che `==`/`!=` vengano *rifiutati* su array e puntatori (non solo che vengano accettati sui quattro tipi giusti).
+- **Pretty-print del sorgente** (Step 1): declassata da "✅ / cita" a "da verificare" — vedi nota nello Step 1.
+- Popolata la sezione "Note per la relazione" dello **Step 2** con una proposta di regole formali, da confermare prima di passare allo Step 3.
+
 ## Strumenti
 
 | Strumento | Versione |
@@ -30,16 +39,16 @@ Si modifica solo ciò che serve a soddisfare un requisito della traccia. Per ogn
 
 | Codice | Requisito | Stato |
 |---|---|---|
-| R1 | `==`/`!=` solo su bool, char, int, real; `<` `<=` `>` `>=` solo su int, real | 🔧 |
+| R1 | `==`/`!=` solo su bool, char, int, real; `<` `<=` `>` `>=` solo su int, real — **non tramite il semplice successo di `sup`** | 🔧 |
 | R2 | Operazioni aritmetiche solo su tipi numerici | 🔧 |
 | R3 | Semantica canonica del passaggio per riferimento | 🔧 |
-| R4 | Array passato per valore non modificato nel chiamante | ⬜ |
+| R4 | Array passato per valore o assegnato (`a = b`) non condivide memoria col chiamante/sorgente; puntatori esclusi da questa regola; verificare anche il `return` di un array | ⬜ |
 | R5 | Puntatori a tipi qualsiasi con selezione, incluso `(*p)[i]` | 🔧 |
 | R6 | if-then-else come espressione | ⬜ (grammatica ✅) |
 | R7 | `+=`, `-=`, `*=` con semantica canonica | ⬜ (grammatica ✅) |
 | R8 | do-while e iterazione determinata (`for`) | ⬜ (grammatica ✅) |
 | R9 | `break`/`continue` ammessi solo nei cicli | ⬜ (grammatica ✅) |
-| R10 | Visibilità definita e coerente per ogni dichiarazione (ridichiarazione, shadowing) | 🔧 |
+| R10 | Visibilità definita e coerente per ogni dichiarazione (ridichiarazione, shadowing) — occhio all'interazione con la pre-scansione per mutua ricorsione | 🔧 |
 | R11 | Messaggi d'errore con entità coinvolte e posizione | 🔧 |
 | R12 | Identificatori del programma annotati con la riga nel TAC | 🔧 |
 | R13 | TAC corretto per le procedure (`return` finale) | 🔧 |
@@ -69,7 +78,7 @@ Colonna "In relazione":
 | Tipi: base, `[lo..hi] T`, `c_ptr(T)`, `c_ptrTo(e)`, `*e` | ✅ | assunzione (sintassi di array e puntatori) |
 | Passaggio per valore (default) e `ref` | ✅ | cita |
 | if, if-else, while con sintassi Chapel | ✅ | cita |
-| Pretty-print del sorgente con formattazione minima | ✅ | cita |
+| Pretty-print del sorgente con formattazione minima | ✅ | **da verificare** (vedi nota) |
 | do-while (R8) | ✅ | cita |
 | `for i in a..b` (R8) | ✅ | descrivi (scelta della forma) |
 | `break`/`continue` (R9) | ✅ | cita |
@@ -80,6 +89,8 @@ Colonna "In relazione":
 **Stato: ✅ completato.** Test di sintassi aggiunti: `tests/parser/cicli.lang`, `tests/parser/break_opassign.lang`, `tests/parser/ifexpr.lang`.
 Verificato che tutti i test precedenti di `tests/lexer` e `tests/parser` vengano ancora riconosciuti.
 Nota operativa: finché il type checker non gestisce i nuovi costrutti (Step 3), `make demo` si ferma sui nuovi test.
+
+**Nota sul pretty-printer (da verificare prima di classificarlo "cita"):** il testo chiede una funzione di serializzazione con "minimo di formattazione (andando a capo in corrispondenza dei blocchi)". Se questo comportamento viene dal `Print.hs` generato da BNFC così com'è, è tecnica standard e basta citarla. Se invece è stato necessario modificare a mano il modulo generato per ottenere l'andare a capo sui blocchi o il reinserimento delle parentesi, quella parte va in "descrivi" perché non è più "solo" BNFC. Controllare il diff fra `Print.hs` generato e quello effettivamente usato.
 
 **Note per la relazione:**
 - Grammatica: 78 regole, nessun conflitto shift/reduce o reduce/reduce.
@@ -122,17 +133,50 @@ Nota operativa: finché il type checker non gestisce i nuovi costrutti (Step 3),
 | Voce | Stato | In relazione |
 |---|---|---|
 | Tipi base e composti; int compatibile con real e non viceversa | ✅ | grafico |
-| Array e puntatori compatibili solo con tipi identici | ✅ | descrivi con regole formali (da scrivere) |
+| Array e puntatori compatibili solo con tipi identici | ✅ | descrivi con regole formali (proposta sotto) |
 | Visibilità delle variabili: dal punto di dichiarazione a fine blocco | ✅ | descrivi |
 | Visibilità delle funzioni: tutto il blocco | ✅ | descrivi la regola; la pre-scansione va solo citata |
 | Parametri: visibili in tutto il corpo | ✅ | descrivi |
-| Ridichiarazione e shadowing (R10) | ⬜ | descrivi |
-| Overloading di `==`/`!=` e degli operatori d'ordine (R1) | ⬜ | descrivi (tabella delle istanze) |
-| Variabile del for: dichiarazione implicita e non modificabile | ⬜ | descrivi |
-| Tipo dell'if-espressione e regola di tipo per `op=` | ⬜ | descrivi |
+| Ridichiarazione e shadowing (R10) | ⬜ | descrivi (proposta sotto) |
+| Overloading di `==`/`!=` e degli operatori d'ordine (R1) | ⬜ | descrivi (proposta sotto) |
+| Variabile del for: dichiarazione implicita e non modificabile | ⬜ | descrivi (proposta sotto) |
+| Tipo dell'if-espressione e regola di tipo per `op=` | ⬜ | descrivi (proposta sotto) |
 
-**Note per la relazione:**
-- _(da compilare)_
+**Note per la relazione — PROPOSTA (da confermare prima di passare allo Step 3):**
+
+- **Compatibilità formale dei tipi composti.**
+  `ARRAY(lo1,hi1,τ1) ~ ARRAY(lo2,hi2,τ2) ⟺ lo1=lo2 ∧ hi1=hi2 ∧ τ1=τ2`
+  `PTR(τ1) ~ PTR(τ2) ⟺ τ1=τ2`
+  Nessuna coercion definita per ARRAY/PTR: `sup` con qualunque altro tipo (incluso un altro ARRAY/PTR non identico) restituisce ERROR.
+
+- **Overloading di `==`/`!=`/ordine (R1) — perché `rel` da solo non basta.**
+  La tecnica standard vista a lezione è
+  `rel x y = case sup x y of ERROR -> ERROR; _ -> BOOL`
+  Con la vostra `sup`, questa funzione accetterebbe `STRING == STRING` (perché `sup STRING STRING = STRING`, non ERROR) e accetterebbe `CHAR < CHAR` o `BOOL < BOOL` (perché `sup` di un tipo con se stesso ha successo). Nessuno dei due casi è ammesso dalla traccia. Serve quindi affiancare a `sup` un controllo di appartenenza esplicito:
+  ```haskell
+  eqOp t1 t2
+    | isERROR t1 || isERROR t2 = ERROR
+    | t' <- sup t1 t2, t' `elem` [BOOL,CHAR,INT,REAL] = BOOL
+    | otherwise = ERROR
+
+  ordOp t1 t2
+    | isERROR t1 || isERROR t2 = ERROR
+    | t' <- sup t1 t2, t' `elem` [INT,REAL] = BOOL
+    | otherwise = ERROR
+  ```
+  (nomi indicativi, da adattare ai vostri moduli). Da qui il test consigliato: un caso con `arr1 == arr2` e uno con `'a' < 'b'` che devono **entrambi** essere respinti.
+
+- **Variabile del `for`.** Dichiarazione locale implicita del corpo, tipo sempre `INT` (l'intervallo è di interi). Vincolo di semantica statica: `id` non può comparire come lato sinistro di un assegnamento (semplice o `op=`) nel corpo del ciclo, ma può essere letta liberamente. Proposta aggiuntiva: richiedere che gli estremi `a` e `b` siano esattamente di tipo `INT` (non solo compatibili con `INT`), per evitare l'ambiguità di un passo non intero.
+
+- **Tipo dell'if-espressione.**
+  `env⊢cond:BOOL   env⊢e1:τ1   env⊢e2:τ2   sup(τ1,τ2)=τ≠ERROR`
+  `⟹ env⊢(if cond then e1 else e2):τ`
+  Cast impliciti su entrambi i rami quando il loro tipo non coincide con `τ`, con lo stesso meccanismo (`mkCastNode`) già usato per gli operatori binari. Se `sup(τ1,τ2)=ERROR`: errore "i due rami hanno tipi incompatibili".
+
+- **Tipo di `op=`.** Stessa regola di un binario ordinario (`+`,`-`,`*`) applicata a `(el, er)`, poi si riusa `mkAssignErrs` verificando che `sup(tipo_risultato, tipo(el)) = tipo(el)`, più il vincolo — già garantito dalla grammatica — che `el` sia una l-expression.
+
+- **Ridichiarazione/shadowing (R10) — nota sull'interazione con la pre-scansione.**
+  Il bug del falso errore su funzioni shadowate viene quasi certamente dal fatto che la pre-scansione per la mutua ricorsione raccoglie le intestazioni delle funzioni globalmente invece che per-blocco. Regola da applicare in Step 3: la pre-scansione va rifatta ad ogni blocco annidato, e un nome ridichiarato in un blocco interno **sostituisce** (shadow) il binding esterno nell'ambiente locale, senza generare errore; l'errore va segnalato solo per una doppia dichiarazione dello stesso nome **all'interno dello stesso blocco**.
 
 ---
 
@@ -178,6 +222,7 @@ Nota operativa: finché il type checker non gestisce i nuovi costrutti (Step 3),
 | Array dichiarati senza inizializzazione | ✅ | assunzione |
 | Uso dei parametri `ref` tramite puntatore nel chiamato (R3) | 🔧 | descrivi brevemente |
 | Copia degli array passati per valore e in `a = b` (R4) | ⬜ | descrivi |
+| Copia dell'array anche sul `return`, se ammesso come tipo di ritorno (R4) | ⬜ | descrivi/verificare |
 | Indicizzazione tramite puntatore, `(*p)[i]` (R5) | 🔧 | cita |
 | `return` finale delle procedure (R13) | 🔧 | cita |
 | do-while (R8) | ⬜ | cita (schema visto a lezione) |
@@ -209,6 +254,7 @@ Nota operativa: finché il type checker non gestisce i nuovi costrutti (Step 3),
 | `make` costruisce tutto da `.x`/`.y` (alex, happy, ghc) | ✅ | cita |
 | `make demo` sui test organizzati per cartella | ✅ | cita l'organizzazione dei test |
 | Un test per ogni requisito nuovo o corretto (R16) | ⬜ | cita |
+| Test che il tipo checker *rifiuti* correttamente: `arr==arr`, `char<char`, `break` fuori da un ciclo, `for`-var modificata nel corpo | ⬜ | cita |
 | Checklist di consegna (sotto) | ⬜ | — |
 
 **Checklist di consegna:**
