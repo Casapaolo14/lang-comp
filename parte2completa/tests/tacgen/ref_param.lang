@@ -1,0 +1,8 @@
+proc incr(ref x : int) : void {
+  x = x + 1;
+}
+proc main() : void {
+  var y : int = 10;
+  incr(y);
+  writeInt(y);
+}

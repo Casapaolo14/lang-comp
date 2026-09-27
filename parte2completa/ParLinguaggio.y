@@ -210,6 +210,7 @@ Exp8 : Ident { (fst $1, AbsLinguaggio.EVar (fst $1) (snd $1)) }
      | String { (fst $1, AbsLinguaggio.EStr (fst $1) (snd $1)) }
      | 'true' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.ETrue (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
      | 'false' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EFalse (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1))) }
+     | '[' ListExp ']' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), AbsLinguaggio.EArr (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1)) (snd $2)) }
      | '(' Exp ')' { (uncurry AbsLinguaggio.BNFC'Position (tokenLineCol $1), (snd $2)) }
 {
 

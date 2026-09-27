@@ -94,6 +94,7 @@ EChar.  Exp8 ::= Char ;
 EStr.   Exp8 ::= String ;
 ETrue.  Exp8 ::= "true" ;
 EFalse. Exp8 ::= "false" ;
+EArr.   Exp8 ::= "[" [Exp] "]" ;
 
 -- gestione parentesi
 coercions Exp 8 ;

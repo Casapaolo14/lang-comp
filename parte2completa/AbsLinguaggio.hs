@@ -104,6 +104,7 @@ data Exp' a
     | EStr a String
     | ETrue a
     | EFalse a
+    | EArr a [Exp' a]
   deriving (C.Eq, C.Ord, C.Show, C.Read, C.Functor, C.Foldable, C.Traversable)
 
 newtype Ident = Ident String
@@ -209,4 +210,5 @@ instance HasPosition Exp where
     EStr p _ -> p
     ETrue p -> p
     EFalse p -> p
+    EArr p _ -> p
 

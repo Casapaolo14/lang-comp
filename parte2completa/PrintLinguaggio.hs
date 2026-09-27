@@ -214,6 +214,7 @@ instance Print (AbsLinguaggio.Exp' a) where
     AbsLinguaggio.EStr _ str -> prPrec i 8 (concatD [prt 0 str])
     AbsLinguaggio.ETrue _ -> prPrec i 8 (concatD [doc (showString "true")])
     AbsLinguaggio.EFalse _ -> prPrec i 8 (concatD [doc (showString "false")])
+    AbsLinguaggio.EArr _ exps -> prPrec i 8 (concatD [doc (showString "["), prt 0 exps, doc (showString "]")])
   prtList _ [] = concatD []
   prtList _ [x] = concatD [prt 0 x]
   prtList _ (x:xs) = concatD [prt 0 x, doc (showString ","), prt 0 xs]

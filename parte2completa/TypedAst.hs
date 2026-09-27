@@ -23,7 +23,7 @@ data TExp
     | TEAddr  SemType TExp
     | TEIdx   SemType TExp TExp
     | TECall  SemType String [(ParamIntent, TExp)]
-    | TEVar   SemType (Maybe (Int, Int)) String
+    | TEVar   SemType (Maybe (Int, Int)) String ParamIntent
     | TEInt   SemType Integer
     | TEReal  SemType Double
     | TEChar  SemType Char
@@ -31,6 +31,8 @@ data TExp
     | TETrue  SemType
     | TEFalse SemType
     | TECast  SemType TExp
+    | TEIf    SemType TExp TExp TExp   -- if-espressione (R6): condizione, ramo then, ramo else
+    | TEArr   SemType [TExp]           -- letterale array (R18)
   deriving (Eq, Show)
 
 -- Legge il tipo già calcolato e attaccato a un nodo, senza doverlo ricalcolare
@@ -54,7 +56,7 @@ typeOf texp = case texp of
   TEAddr  t _     -> t
   TEIdx   t _ _   -> t
   TECall  t _ _   -> t
-  TEVar   t _ _   -> t
+  TEVar   t _ _ _ -> t
   TEInt   t _     -> t
   TEReal  t _     -> t
   TEChar  t _     -> t
@@ -62,21 +64,32 @@ typeOf texp = case texp of
   TETrue  t       -> t
   TEFalse t       -> t
   TECast  t _     -> t
+  TEIf    t _ _ _ -> t
+  TEArr   t _     -> t
 
 data TBlock = TBlock [TStmt]
   deriving (Eq, Show)
 
+-- Versione semantica dell'operatore di un op= : AAdd/ASub/AMul del sorgente
+data TAssignOp = TAAdd | TASub | TAMul
+  deriving (Eq, Show)
+
 -- Le istruzioni dopo il type check
 data TStmt
-    = TSBlock  TBlock
-    | TSAssign TExp TExp
-    | TSCall   String [(ParamIntent, TExp)]
-    | TSReturn TExp
+    = TSBlock    TBlock
+    | TSAssign   TExp TExp
+    | TSCall     String [(ParamIntent, TExp)]
+    | TSReturn   TExp
     | TSReturnV
-    | TSDecl   TTopDecl
-    | TSIf     TExp TBlock
-    | TSIfElse TExp TBlock TBlock
-    | TSWhile  TExp TBlock
+    | TSDecl     TTopDecl
+    | TSIf       TExp TBlock
+    | TSIfElse   TExp TBlock TBlock
+    | TSWhile    TExp TBlock
+    | TSDoWhile  TBlock TExp                     -- R8
+    | TSFor      String (Maybe (Int, Int)) TExp TExp TBlock  -- R8: nome+pos della variabile del for, estremo lo, estremo hi, corpo
+    | TSBreak                                    -- R9
+    | TSContinue                                 -- R9
+    | TSOpAssign TExp TAssignOp TExp             -- R7
   deriving (Eq, Show)
 
 data TParam = TParam

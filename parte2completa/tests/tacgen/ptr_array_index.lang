@@ -1,0 +1,7 @@
+proc main() : void {
+  var a : [0..4] int = [10, 20, 30, 40, 50];
+  var p : c_ptr([0..4] int) = c_ptrTo(a);
+  writeInt((*p)[2]);
+  (*p)[2] = 99;
+  writeInt(a[2]);
+}

@@ -5,7 +5,7 @@ proc bump(ref v: int): void {
 }
 
 proc main(): void {
-    var a: [1..5] int;
+    var a: [1..5] int = [0, 0, 0, 0, 0];
     var p: c_ptr(int);
     var i: int = 1;
 

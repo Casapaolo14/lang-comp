@@ -29,8 +29,8 @@ runFile file = do
           mapM_ (\e -> putStrLn (showPos (errPos e) ++ ": " ++ errMsg e)) errs
         else do
           putStrLn "--- Three-address code ---"
-          let (globalCode, funcs) = genProgram tprog
-          putStr (printProgram globalCode funcs)
+          let (globalCode, funcs, statics) = genProgram tprog
+          putStr (printProgram globalCode funcs statics)
   putStrLn ""
 
 main :: IO ()

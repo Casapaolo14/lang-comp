@@ -1,0 +1,13 @@
+proc f(a : [0..2] int) : void {
+  a[0] = 99;
+}
+proc main() : void {
+  var b : [0..2] int = [1, 2, 3];
+  f(b);
+  writeInt(b[0]);
+  var c : [0..2] int = [4, 5, 6];
+  c = b;
+  c[0] = 100;
+  writeInt(b[0]);
+  writeInt(c[0]);
+}

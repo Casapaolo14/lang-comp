@@ -1,0 +1,7 @@
+proc main() : void {
+  var c1 : char = 'a';
+  var c2 : char = 'b';
+  if c1 < c2 {
+    writeInt(1);
+  }
+}

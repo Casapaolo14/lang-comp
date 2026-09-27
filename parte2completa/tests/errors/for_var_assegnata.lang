@@ -1,0 +1,5 @@
+proc main() : void {
+  for i in 1 .. 5 {
+    i = 10;
+  }
+}

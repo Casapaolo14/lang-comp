@@ -1,0 +1,8 @@
+// G/R18: letterali array semplici e annidati con la sintassi di Chapel [e1, ..., en].
+// Esito atteso: il file viene riconosciuto dal parser e ristampato correttamente (test di sola sintassi).
+proc main () : void {
+  var v : [1..3] int = [1, 2, 3];
+  var m : [1..2] [1..2] int = [[1, 2], [3, 4]];
+  var r : [0..1] real = [1.5, 2 + 3];
+  var e : [1..3] int = [];
+}

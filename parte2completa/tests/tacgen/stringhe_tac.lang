@@ -1,0 +1,7 @@
+proc main() : void {
+  var s : string = "ciao";
+  var t : string;
+  t = s;
+  writeString(t);
+  writeString("ciao");
+}
